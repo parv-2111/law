@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | DK CORPORATE LAW FIRM</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <div class="bg-overlay"></div>
+
+  <div class="container">
+    <div class="form-card">
+
+      <div class="form-header">
+        <div class="logo">
+          <i class="fas fa-balance-scale"></i>
+        </div>
+        <h1>DK CORPORATE LAW FIRM</h1>
+        <p>CIVIL | CRIMINAL | REVENUE </p>
+      </div>
+
+      <form id="registerForm" novalidate>
+
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="fullname" placeholder="Full Name" required />
+          <span class="error-msg" id="err-fullname"></span>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-briefcase"></i>
+          <input type="text" id="business" placeholder="Business Name" required />
+          <span class="error-msg" id="err-business"></span>
+        </div>
+
+        <div class="row-two">
+          <div class="input-group">
+            <i class="fas fa-phone"></i>
+            <input type="tel" id="mobile" placeholder="Mobile No." required />
+            <span class="error-msg" id="err-mobile"></span>
+          </div>
+
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email Address" required />
+            <span class="error-msg" id="err-email"></span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-id-badge"></i>
+          <select id="position" required>
+            <option value="" disabled selected>Select Position</option>
+            <option>Attorney</option>
+            <option>Paralegal</option>
+            <option>Legal Consultant</option>
+            <option>Corporate Counsel</option>
+            <option>Law Clerk</option>
+            <option>Other</option>
+          </select>
+          <span class="error-msg" id="err-position"></span>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Password" required />
+          <i class="fas fa-eye toggle-pw" id="togglePw"></i>
+          <span class="error-msg" id="err-password"></span>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>Create Account</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+
+      </form>
+
+      <div class="login-line">
+        Already a client? &nbsp;<a href="login.html">Log in to continue</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="./script/script.js"></script>
+</body>
+</html>
