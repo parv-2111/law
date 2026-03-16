@@ -3,7 +3,7 @@
 body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  background: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat fixed;
+  background: url('images/login_back.jpg') center/cover no-repeat fixed;
   display: flex;
   align-items: center;
   justify-content: center;

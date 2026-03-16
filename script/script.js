@@ -27,7 +27,7 @@ document.getElementById('togglePw').addEventListener('click', function () {
 
 // ── Validation helpers
 const rules = {
-  fullname: { el: 'fullname', err: 'err-fullname', test: v => v.trim().length >= 3,       msg: 'Enter at least 3 characters.' },
+  fullname: { el: 'fullname', err: 'err-fullname', test: v => v.trim().length >= 5,       msg: 'Enter at least 5 characters.' },
   business: { el: 'business', err: 'err-business', test: v => v.trim().length >= 2,       msg: 'Enter your business name.' },
   mobile:   { el: 'mobile',   err: 'err-mobile',   test: v => /^[0-9]{10}$/.test(v.trim()), msg: 'Mobile number must be exactly 10 digits.' },
   email:    { el: 'email',    err: 'err-email',     test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), msg: 'Enter a valid email address.' },
