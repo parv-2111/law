@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat | DK CORPORATE LAW FIRM</title>
+  <link rel="stylesheet" href="css/chat.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <div class="chat-app">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="chat-sidebar">
+      <div class="sidebar-top">
+        <div class="my-profile">
+          <div class="avatar-me" id="sideAvatar">S</div>
+          <span id="sideEmail">You</span>
+        </div>
+        <div class="sidebar-icons">
+          <a href="matter.html" title="Back"><i class="fas fa-arrow-left"></i></a>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search or start new chat"/>
+      </div>
+
+      <div class="contact-list">
+        <div class="contact-item active">
+          <div class="contact-avatar firm">
+            <i class="fas fa-balance-scale"></i>
+          </div>
+          <div class="contact-info">
+            <div class="contact-top">
+              <span class="contact-name">DK LAW Team</span>
+              <span class="contact-time" id="lastTime">Now</span>
+            </div>
+            <div class="contact-preview" id="lastPreview">Hello! How can we help you today?</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── CHAT WINDOW ── -->
+    <div class="chat-window">
+
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <a href="matter.html" class="mobile-back"><i class="fas fa-arrow-left"></i></a>
+          <div class="contact-avatar firm sm">
+            <i class="fas fa-balance-scale"></i>
+          </div>
+          <div>
+            <div class="chat-name">DK LAW Team</div>
+            <div class="chat-status" id="chatStatus">
+              <span class="status-dot online"></span> Online
+            </div>
+          </div>
+        </div>
+        <div class="chat-header-right">
+          <button title="Search"><i class="fas fa-magnifying-glass"></i></button>
+          <button title="More"><i class="fas fa-ellipsis-vertical"></i></button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="chat-messages" id="chatMessages">
+        <!-- Date divider -->
+        <div class="date-divider"><span>Today</span></div>
+
+        <!-- Firm welcome message -->
+        <div class="msg-row received">
+          <div class="msg-avatar"><i class="fas fa-balance-scale"></i></div>
+          <div class="msg-bubble received">
+            <p>👋 Hello! Welcome to <strong>DK CORPORATE LAW FIRM Legal Associates</strong>.</p>
+            <p>How can we assist you today? Feel free to describe your legal matter.</p>
+            <span class="msg-time">Just now <i class="fas fa-check-double"></i></span>
+          </div>
+        </div>
+
+        <div class="msg-row received">
+          <div class="msg-avatar"><i class="fas fa-balance-scale"></i></div>
+          <div class="msg-bubble received">
+            <p>Our team is available <strong>Mon–Sat, 9AM–7PM</strong>. We'll respond as quickly as possible. ⚖️</p>
+            <span class="msg-time">Just now <i class="fas fa-check-double"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="typing-indicator" id="typingIndicator">
+        <div class="msg-avatar sm"><i class="fas fa-balance-scale"></i></div>
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+      </div>
+
+      <!-- Input Bar -->
+      <div class="chat-input-bar">
+        <button class="attach-btn" id="attachBtn" title="Attach file">
+          <i class="fas fa-paperclip"></i>
+        </button>
+        <input type="file" id="fileAttach" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" style="display:none"/>
+        <div class="input-box" id="msgInput" contenteditable="true" data-placeholder="Type a message"></div>
+        <button class="emoji-btn" id="emojiBtn" title="Emoji"><i class="fas fa-face-smile"></i></button>
+        <button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="script/chat.js"></script>
+</body>
+</html>

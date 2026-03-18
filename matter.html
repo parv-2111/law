@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Matters | DK CORPORATE LAW FIRM</title>
+  <link rel="stylesheet" href="css/matter.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- ── TOPBAR ── -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <i class="fas fa-balance-scale"></i>
+      <span class="firm-name">DK CORPORATE LAW FIRM</span>
+    </div>
+    <div class="topbar-right">
+
+      <!-- Chat Button -->
+      <a href="chat.html" class="chat-btn"><i class="fas fa-comments"></i> Chat with Us</a>
+
+      <div class="topbar-right-icons">
+      <!-- Notification Bell -->
+      <div class="notif-wrap" id="notifWrap">
+        <button class="notif-btn" id="notifBtn">
+          <i class="fas fa-bell"></i>
+          <span class="notif-badge" id="notifBadge">2</span>
+        </button>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="notif-header">
+            <span>Notifications</span>
+            <button id="markAllRead">Mark all read</button>
+          </div>
+          <div class="notif-list" id="notifList">
+            <div class="notif-item unread" data-id="1">
+              <div class="notif-dot"></div>
+              <div class="notif-body">
+                <p>Your matter <strong>"Property Dispute"</strong> has received a reply from the admin.</p>
+                <span>2 hours ago</span>
+              </div>
+            </div>
+            <div class="notif-item unread" data-id="2">
+              <div class="notif-dot"></div>
+              <div class="notif-body">
+                <p>New hearing date added: <strong>23 Mar 2026</strong> at 10:00 AM.</p>
+                <span>Yesterday</span>
+              </div>
+            </div>
+            <div class="notif-item read" data-id="3">
+              <div class="notif-dot"></div>
+              <div class="notif-body">
+                <p>Your matter <strong>"Contract Review"</strong> has been accepted.</p>
+                <span>3 days ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Info -->
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">S</div>
+        <div class="user-text">
+          <span class="welcome-text">Welcome,</span>
+          <span class="user-email" id="userEmail">user@email.com</span>
+        </div>
+        <a href="login.html" class="logout-btn" title="Logout"><i class="fas fa-right-from-bracket"></i></a>
+      </div>
+      </div><!-- /.topbar-right-icons -->
+
+    </div>
+  </header>
+
+  <!-- ── MAIN LAYOUT ── -->
+  <div class="layout">
+
+    <!-- ── LEFT: MATTER FORM + OUR WORKS ── -->
+    <div class="left-col">
+
+    <!-- ── STAT CARDS ── -->
+      <div class="matter-stats">
+        <div class="mstat-card card-blue">
+          <div class="mstat-icon"><i class="fas fa-scale-balanced"></i></div>
+          <div class="mstat-num" id="statTotal">0</div>
+          <div class="mstat-label">Total Matters</div>
+        </div>
+        <div class="mstat-card card-purple">
+          <div class="mstat-icon"><i class="fas fa-spinner"></i></div>
+          <div class="mstat-num" id="statRunning">0</div>
+          <div class="mstat-label">Running Matters</div>
+        </div>
+        <div class="mstat-card card-green">
+          <div class="mstat-icon"><i class="fas fa-circle-check"></i></div>
+          <div class="mstat-num" id="statCompleted">0</div>
+          <div class="mstat-label">Completed Matters</div>
+        </div>
+      </div>
+
+      <!-- Matter Form -->
+      <div class="card" id="matterFormCard">
+        <div class="card-head">
+          <i class="fas fa-scale-balanced"></i>
+          <h2>Submit a Matter</h2>
+        </div>
+
+        <form id="matterForm" novalidate>
+
+          <div class="field-group">
+            <label>Matter Name</label>
+            <div class="input-wrap">
+              <i class="fas fa-tag"></i>
+              <input type="text" id="matterName" placeholder="e.g. Property Dispute – Mumbai"/>
+            </div>
+            <span class="ferr" id="err-matterName"></span>
+          </div>
+
+          <div class="field-group">
+            <label>Describe Your Matter</label>
+            <textarea id="matterDesc" rows="4" placeholder="Briefly describe your legal matter…"></textarea>
+            <span class="ferr" id="err-matterDesc"></span>
+          </div>
+
+          <div class="field-group">
+            <label>Type of Matter</label>
+            <div class="input-wrap">
+              <i class="fas fa-list"></i>
+              <select id="matterType">
+                <option value="" disabled selected>Select type</option>
+                <option value="notice">Notice</option>
+                <option value="agreement">Agreement</option>
+                <option value="case">Case</option>
+                <option value="advise">Legal Advise</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <span class="ferr" id="err-matterType"></span>
+          </div>
+
+          <div class="field-group">
+            <label>Attach Documents</label>
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="fileInput" multiple
+                accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.csv"/>
+              <i class="fas fa-cloud-arrow-up"></i>
+              <p>Drag & drop files here or <span>browse</span></p>
+              <small>Images, PDF, DOC, PPT, XLS — Max 10MB per file</small>
+            </div>
+            <div class="file-list" id="fileList"></div>
+            <span class="ferr" id="err-file"></span>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <span>Submit Matter</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+
+        </form>
+      </div>
+
+
+    </div>
+
+    <!-- ── RIGHT: CALENDAR ── -->
+    <div class="right-col">
+      <div class="card calendar-card">
+        <div class="card-head">
+          <i class="fas fa-calendar-days"></i>
+          <h2>Upcoming Hearings</h2>
+        </div>
+
+        <!-- Calendar -->
+        <div class="calendar">
+          <div class="cal-nav">
+            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+            <span id="calTitle"></span>
+            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <div class="cal-days-head">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+
+        <!-- Events List -->
+        <div class="events-list" id="eventsList">
+          <p class="events-title">Scheduled Events</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── SUCCESS TOAST ── -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span>Matter submitted successfully!</span>
+  </div>
+
+  <script src="script/matter.js"></script>
+</body>
+</html>

@@ -68,5 +68,6 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     btn.innerHTML = '<i class="fas fa-check"></i> Account Created!';
     btn.style.background = 'linear-gradient(135deg,#4caf82,#2e7d5e)';
     btn.style.color = '#fff';
+    setTimeout(() => { window.location.href = 'login.html'; }, 800);
   }, 1800);
 });

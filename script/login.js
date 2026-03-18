@@ -62,6 +62,9 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     btn.innerHTML = '<i class="fas fa-check"></i> Welcome Back!';
     btn.style.background = 'linear-gradient(135deg,#4caf82,#2e7d5e)';
     btn.style.color = '#fff';
-    setTimeout(() => { window.location.href = 'index.html'; }, 800);
-  }, 1800);
+    // Save email to sessionStorage for matter.html
+    sessionStorage.setItem('userEmail', document.getElementById('email').value.trim());
+    setTimeout(() => { window.location.href = 'matter.html'; }, 800);
+  }, 500);
 });
+  
