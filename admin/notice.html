@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notice | DK CORPORATE LAW FIRM Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="dashboard-body">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <i class="fas fa-balance-scale"></i>
+      <span>DK CORPORATE LAW FIRM</span>
+    </div>
+    <div class="sidebar-search">
+      <i class="fas fa-search"></i>
+      <input type="text" id="masterSearch" placeholder="Search…"/>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><i class="fas fa-gauge-high"></i><span>Dashboard</span></a></li>
+      <li><a href="cases.html"><i class="fas fa-folder-open"></i><span>Cases</span></a></li>
+      <li><a href="notice.html" class="active"><i class="fas fa-envelope"></i><span>Notice</span></a></li>
+      <li><a href="clients.html"><i class="fas fa-users"></i><span>Clients</span></a></li>
+      <li><a href="payments.html"><i class="fas fa-credit-card"></i><span>Payments</span></a></li>
+      <li><a href="matters.html"><i class="fas fa-scale-balanced"></i><span>Matters</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <h1 class="page-title">Notice</h1>
+    <p class="page-sub">Track all legal notices sent to clients — delivery status, dates and return reasons.</p>
+
+    <!-- ── NOTICE PANEL ── -->
+    <div class="matters-panel">
+      <div class="matters-panel-head">
+        <div class="dash-section-head" style="margin-bottom:0;border:none;padding:0;">
+          <i class="fas fa-envelope"></i>
+          <h2>All Notices</h2>
+          <span class="hearing-count" id="noticeCount">0</span>
+        </div>
+        <button class="btn-add-matter" id="btnAddNotice">
+          <i class="fas fa-plus"></i> Add Notice
+        </button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="matters-toolbar">
+        <div class="mt-search">
+          <i class="fas fa-search"></i>
+          <input type="text" id="noticeSearch" placeholder="Search by client, address, track ID…"/>
+        </div>
+        <div class="mt-filters">
+          <select id="filterNoticeStatus">
+            <option value="">All Status</option>
+            <option value="sent">Sent</option>
+            <option value="received">Received</option>
+            <option value="returned">Returned</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="matters-table-wrap">
+        <table class="matters-table" id="noticeTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client Name</th>
+              <th>Address</th>
+              <th>Track ID</th>
+              <th>Send Date</th>
+              <th>Received Date</th>
+              <th>Returned Date</th>
+              <th>Reason for Return</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="noticeBody"></tbody>
+        </table>
+        <div class="matters-empty" id="noticeEmpty" style="display:none;">
+          <i class="fas fa-envelope-open"></i>
+          <p>No notices found. Click "Add Notice" to create one.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VIEW DETAIL MODAL ── -->
+    <div class="matter-modal-overlay" id="noticeViewOverlay">
+      <div class="matter-modal" style="max-width:600px;">
+        <div class="matter-modal-head view-modal-head">
+          <h3>Notice Details</h3>
+          <button class="modal-close" id="noticeViewClose"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div id="noticeViewBody" class="view-detail-grid"></div>
+      </div>
+    </div>
+
+    <!-- ── ADD / EDIT NOTICE MODAL ── -->
+    <div class="matter-modal-overlay" id="noticeModalOverlay">
+      <div class="matter-modal">
+        <div class="matter-modal-head">
+          <h3 id="noticeModalTitle">Add Notice</h3>
+          <button class="modal-close" id="noticeModalClose"><i class="fas fa-xmark"></i></button>
+        </div>
+        <form id="noticeModalForm" novalidate>
+          <div class="mm-grid">
+            <div class="mm-field">
+              <label>Client Name <span>*</span></label>
+              <input type="text" id="nm-client" placeholder="Full client name"/>
+              <span class="mm-err" id="nm-err-client"></span>
+            </div>
+            <div class="mm-field">
+              <label>Track ID <span>*</span></label>
+              <input type="text" id="nm-trackid" placeholder="e.g. TRACK-2026-001"/>
+              <span class="mm-err" id="nm-err-trackid"></span>
+            </div>
+            <div class="mm-field mm-full">
+              <label>Address <span>*</span></label>
+              <input type="text" id="nm-address" placeholder="Full postal address"/>
+              <span class="mm-err" id="nm-err-address"></span>
+            </div>
+            <div class="mm-field">
+              <label>Send Date <span>*</span></label>
+              <input type="date" id="nm-senddate" style="color-scheme:dark;"/>
+              <span class="mm-err" id="nm-err-senddate"></span>
+            </div>
+            <div class="mm-field">
+              <label>Received Date</label>
+              <input type="date" id="nm-receiveddate" style="color-scheme:dark;"/>
+            </div>
+            <div class="mm-field">
+              <label>Returned Date</label>
+              <input type="date" id="nm-returneddate" style="color-scheme:dark;"/>
+            </div>
+            <div class="mm-field">
+              <label>Status <span>*</span></label>
+              <select id="nm-status">
+                <option value="" disabled selected>Select status</option>
+                <option value="sent">Sent</option>
+                <option value="received">Received</option>
+                <option value="returned">Returned</option>
+                <option value="pending">Pending</option>
+              </select>
+              <span class="mm-err" id="nm-err-status"></span>
+            </div>
+            <div class="mm-field mm-full">
+              <label>Reason for Return</label>
+              <input type="text" id="nm-returnreason" placeholder="e.g. Address not found, Refused by recipient…"/>
+            </div>
+          </div>
+          <div class="mm-actions">
+            <button type="button" class="mm-btn-cancel" id="noticeModalCancel">Cancel</button>
+            <button type="submit" class="mm-btn-save"><i class="fas fa-floppy-disk"></i> Save Notice</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ── DELETE CONFIRM MODAL ── -->
+    <div class="matter-modal-overlay" id="noticeDeleteOverlay">
+      <div class="matter-modal" style="max-width:400px;">
+        <div class="matter-modal-head">
+          <h3>Delete Notice</h3>
+          <button class="modal-close" id="noticeDeleteClose"><i class="fas fa-xmark"></i></button>
+        </div>
+        <p style="color:var(--muted);font-size:0.88rem;margin:16px 0 24px;">Are you sure you want to delete the notice for <strong id="deleteNoticeName" style="color:var(--white);"></strong>? This cannot be undone.</p>
+        <div class="mm-actions">
+          <button class="mm-btn-cancel" id="noticeDeleteCancel">Cancel</button>
+          <button class="mm-btn-delete" id="noticeDeleteConfirm"><i class="fas fa-trash"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script/search.js"></script>
+  <script src="script/notice.js"></script>
+</body>
+</html>

@@ -26,6 +26,7 @@
     <ul class="sidebar-nav">
       <li><a href="index.html" class="active"><i class="fas fa-gauge-high"></i><span>Dashboard</span></a></li>
       <li><a href="cases.html"><i class="fas fa-folder-open"></i><span>Cases</span></a></li>
+      <li><a href="notice.html"><i class="fas fa-envelope"></i><span>Notice</span></a></li>
       <li><a href="clients.html"><i class="fas fa-users"></i><span>Clients</span></a></li>
       <li><a href="payments.html"><i class="fas fa-credit-card"></i><span>Payments</span></a></li>
       <li><a href="matters.html"><i class="fas fa-scale-balanced"></i><span>Matters</span></a></li>
@@ -70,8 +71,64 @@
       </a>
 
     </div>
+
+    <!-- ── HEARING CALENDAR ── -->
+    <div class="dash-calendar-wrap">
+
+      <!-- Left: Calendar -->
+      <div class="dash-cal-panel">
+        <div class="dash-section-head">
+          <i class="fas fa-calendar-days"></i>
+          <h2>Hearing Calendar</h2>
+        </div>
+        <div class="dash-cal">
+          <div class="dash-cal-nav">
+            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+            <span id="calTitle"></span>
+            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <div class="dash-cal-days-head">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="dash-cal-grid" id="calGrid"></div>
+        </div>
+      </div>
+
+      <!-- Right: Hearings list -->
+      <div class="dash-hearings-panel">
+        <div class="dash-section-head">
+          <i class="fas fa-gavel"></i>
+          <h2>Scheduled Hearings</h2>
+          <span class="hearing-count" id="hearingCount">0</span>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="hearing-filters">
+          <button class="hf-btn active" data-filter="all">All</button>
+          <button class="hf-btn" data-filter="upcoming">Upcoming</button>
+          <button class="hf-btn" data-filter="today">Today</button>
+          <button class="hf-btn" data-filter="past">Past</button>
+        </div>
+
+        <div class="hearings-list" id="hearingsList"></div>
+      </div>
+
+    </div>
+
+    <!-- ── HEARING DETAIL MODAL ── -->
+    <div class="hearing-modal-overlay" id="hearingModalOverlay">
+      <div class="hearing-modal" id="hearingModal">
+        <button class="modal-close" id="modalClose"><i class="fas fa-xmark"></i></button>
+        <div class="modal-badge" id="modalBadge"></div>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <div class="modal-meta" id="modalMeta"></div>
+        <div class="modal-details" id="modalDetails"></div>
+      </div>
+    </div>
+
   </main>
 
   <script src="script/search.js"></script>
+  <script src="script/dashboard.js"></script>
 </body>
 </html>
