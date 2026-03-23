@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog | DK CORPORATE LAW FIRM</title>
+  <link rel="stylesheet" href="css/matter.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <i class="fas fa-balance-scale"></i>
+      <span class="firm-name">DK CORPORATE LAW FIRM</span>
+    </div>
+    <ul class="topbar-nav" id="topbarNav">
+      <li><a href="matter.html" class="tnav-link">Home</a></li>
+      <li><a href="contact.html" class="tnav-link">Contact Us</a></li>
+      <li><a href="blog.html" class="tnav-link active">Blog</a></li>
+      <li><a href="terms.html" class="tnav-link">Terms &amp; Conditions</a></li>
+    </ul>
+    <div class="topbar-right">
+      <a href="chat.html" class="chat-btn"><i class="fas fa-comments"></i><span class="chat-btn-text"> Chat with Us</span></a>
+      <div class="topbar-right-icons">
+        <div class="notif-wrap" id="notifWrap">
+          <button class="notif-btn" id="notifBtn">
+            <i class="fas fa-bell"></i>
+            <span class="notif-badge hidden" id="notifBadge">0</span>
+          </button>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-header">
+              <span>Notifications</span>
+              <button id="markAllRead">Mark all read</button>
+            </div>
+            <div class="notif-list" id="notifList"></div>
+          </div>
+        </div>
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div class="user-text">
+            <span class="welcome-text">Welcome,</span>
+            <span class="user-email" id="userEmail">user@email.com</span>
+          </div>
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <a href="login.html" class="logout-btn" title="Logout"><i class="fas fa-right-from-bracket"></i></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT — to be designed later -->
+  <div class="layout">
+    <div style="grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--muted);">
+      <i class="fas fa-newspaper" style="font-size:3rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
+      <h2 style="font-family:'Playfair Display',serif;color:var(--white);margin-bottom:8px;">Blog</h2>
+      <p>This page is coming soon.</p>
+    </div>
+  </div>
+
+  <script>
+    const s = sessionStorage.getItem('lexfirm_user');
+    if(s){ const u=JSON.parse(s); document.getElementById('userEmail').textContent=u.email; document.getElementById('userAvatar').textContent=u.email[0].toUpperCase(); }
+    document.getElementById('mobileMenuBtn').addEventListener('click',function(){
+      document.getElementById('topbarNav').classList.toggle('open');
+      this.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

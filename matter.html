@@ -16,10 +16,19 @@
       <i class="fas fa-balance-scale"></i>
       <span class="firm-name">DK CORPORATE LAW FIRM</span>
     </div>
+
+    <!-- Nav links in topbar -->
+    <ul class="topbar-nav" id="topbarNav">
+      <li><a href="matter.html" class="tnav-link active">Home</a></li>
+      <li><a href="contact.html" class="tnav-link">Contact Us</a></li>
+      <li><a href="blog.html" class="tnav-link">Blog</a></li>
+      <li><a href="terms.html" class="tnav-link">Terms &amp; Conditions</a></li>
+    </ul>
+
     <div class="topbar-right">
 
       <!-- Chat Button -->
-      <a href="chat.html" class="chat-btn"><i class="fas fa-comments"></i> Chat with Us</a>
+      <a href="chat.html" class="chat-btn"><i class="fas fa-comments"></i><span class="chat-btn-text"> Chat with Us</span></a>
 
       <div class="topbar-right-icons">
       <!-- Notification Bell -->
@@ -66,6 +75,10 @@
           <span class="welcome-text">Welcome,</span>
           <span class="user-email" id="userEmail">user@email.com</span>
         </div>
+        <!-- Hamburger sits between avatar and logout on mobile -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
         <a href="login.html" class="logout-btn" title="Logout"><i class="fas fa-right-from-bracket"></i></a>
       </div>
       </div><!-- /.topbar-right-icons -->
@@ -200,5 +213,11 @@
   </div>
 
   <script src="script/matter.js"></script>
+  <script>
+    document.getElementById('mobileMenuBtn').addEventListener('click',function(){
+      document.getElementById('topbarNav').classList.toggle('open');
+      this.classList.toggle('active');
+    });
+  </script>
 </body>
 </html>

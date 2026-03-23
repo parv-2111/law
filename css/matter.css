@@ -588,32 +588,61 @@ textarea:focus {
 ══════════════════════════════ */
 @media (max-width: 768px) {
 
-  /* Topbar */
+  /* Topbar — single row, no wrap */
   .topbar {
-    padding: 10px 14px;
-    flex-wrap: wrap;
-    gap: 10px;
+    padding: 10px 12px;
+    flex-wrap: nowrap;
+    gap: 8px;
   }
-  .topbar-left { font-size: 1rem; }
-  .topbar-left .firm-name { display: block; font-size: 0.95rem; }
+
+  /* Firm name: show only icon + "DK LAW" */
+  .topbar-left {
+    font-size: 0.9rem;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .topbar-left .firm-name { font-size: 0.88rem; }
+  /* Hide full name, show short name via data trick — we use CSS content override */
+  .topbar-left .firm-name {
+    font-size: 0; /* hide original text */
+  }
+  .topbar-left .firm-name::before {
+    content: 'DK LAW FIRM';
+    font-size: 0.9rem;
+  }
+
+  /* Nav links already hidden at ≤900px — no change needed */
+
+  /* topbar-right: no width:100%, stays inline */
   .topbar-right {
-    gap: 10px;
-    width: 100%;
-    justify-content: space-between;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
   }
-  .chat-btn { padding: 7px 13px; border-radius: 7px; font-size: 0.78rem; }
-  .topbar-right-icons { display: flex; align-items: center; gap: 10px; }
+
+  /* Chat button: icon only, no text */
+  .chat-btn {
+    padding: 8px 10px;
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    justify-content: center;
+  }
+  .chat-btn-text { display: none; }
+
+  /* Hamburger: visible, placed between avatar and logout via DOM order */
+  .mobile-menu-btn { display: flex; }
+
+  /* Right icons group */
+  .topbar-right-icons { display: flex; align-items: center; gap: 8px; }
+
   .user-text { display: none; }
   .notif-dropdown { width: 290px; right: -10px; }
 
   /* Layout */
   .layout { padding: 14px; gap: 16px; }
 
-  /* Stat cards — always 3 in one row */
-  .matter-stats {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
+  /* Stat cards */
+  .matter-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .mstat-card { padding: 14px 10px; gap: 6px; }
   .mstat-num  { font-size: 1.5rem; }
   .mstat-label { font-size: 0.68rem; }
@@ -654,11 +683,85 @@ textarea:focus {
   .layout { padding: 10px; }
 
   /* Topbar */
-  .topbar { padding: 10px 12px; }
+  .topbar { padding: 8px 10px; }
   .user-avatar { width: 30px; height: 30px; font-size: 0.75rem; }
+  .chat-btn { width: 32px; height: 32px; padding: 6px 8px; }
 
   /* Calendar days smaller */
   .cal-day { font-size: 0.72rem; border-radius: 6px; }
   .cal-days-head span { font-size: 0.65rem; }
   .cal-nav span { font-size: 0.88rem; }
+}
+
+/* ── TOPBAR NAV LINKS ── */
+.topbar-nav {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.tnav-link {
+  display: inline-block;
+  padding: 6px 14px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.83rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+.tnav-link:hover { color: var(--gold); background: rgba(201,162,39,0.07); }
+.tnav-link.active { color: var(--gold); background: rgba(201,162,39,0.1); }
+
+/* Mobile hamburger — hidden on desktop */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+.mobile-menu-btn span {
+  display: block;
+  width: 20px; height: 2px;
+  background: var(--muted);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.mobile-menu-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+.mobile-menu-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── NAVBAR MOBILE ── */
+@media (max-width: 900px) {
+  .topbar-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: var(--dark2);
+    border-bottom: 1px solid rgba(201,162,39,0.15);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 14px 12px;
+    gap: 2px;
+    z-index: 98;
+  }
+  .topbar-nav.open { display: flex; }
+  .tnav-link {
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    border-radius: 8px;
+  }
+  .mobile-menu-btn { display: flex; }
+  .topbar { position: relative; }
 }

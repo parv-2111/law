@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Chat | DK CORPORATE LAW FIRM</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="dashboard-body">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <i class="fas fa-balance-scale"></i>
+      <span>DK CORPORATE LAW FIRM</span>
+    </div>
+    <div class="sidebar-search">
+      <i class="fas fa-search"></i>
+      <input type="text" id="masterSearch" placeholder="Search…"/>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><i class="fas fa-gauge-high"></i><span>Dashboard</span></a></li>
+      <li><a href="cases.html"><i class="fas fa-folder-open"></i><span>Cases</span></a></li>
+      <li><a href="notice.html"><i class="fas fa-envelope"></i><span>Notice</span></a></li>
+      <li><a href="clients.html"><i class="fas fa-users"></i><span>Clients</span></a></li>
+      <li><a href="payments.html"><i class="fas fa-credit-card"></i><span>Payments</span></a></li>
+      <li><a href="matters.html"><i class="fas fa-scale-balanced"></i><span>Matters</span></a></li>
+      <li><a href="admin_chat.html" class="active"><i class="fas fa-comments"></i><span>Chat</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
+    </div>
+  </aside>
+
+  <main class="main-content" style="padding:0; display:flex; flex-direction:column; height:100vh; overflow:hidden;">
+
+    <div class="admin-chat-wrap">
+
+      <!-- ── CLIENT LIST ── -->
+      <div class="ac-sidebar" id="acSidebar">
+        <div class="ac-sidebar-head">
+          <h2><i class="fas fa-comments"></i> Client Chats</h2>
+          <span class="hearing-count" id="clientCount">0</span>
+        </div>
+        <div class="ac-search">
+          <i class="fas fa-search"></i>
+          <input type="text" id="acSearch" placeholder="Search clients…"/>
+        </div>
+        <div class="ac-client-list" id="acClientList">
+          <div class="ac-empty"><i class="fas fa-inbox"></i><p>No client chats yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ── CHAT PANEL ── -->
+      <div class="ac-chat-panel" id="acChatPanel">
+
+        <!-- No chat selected -->
+        <div class="ac-no-chat" id="acNoChat">
+          <i class="fas fa-comments"></i>
+          <p>Select a client to view their chat</p>
+        </div>
+
+        <!-- Active chat -->
+        <div class="ac-active-chat" id="acActiveChat" style="display:none;">
+
+          <div class="ac-chat-header" id="acChatHeader">
+            <div class="ac-chat-header-left">
+              <div class="ac-avatar" id="acHeaderAvatar">?</div>
+              <div>
+                <div class="ac-header-name" id="acHeaderName">Client</div>
+                <div class="ac-header-sub" id="acHeaderSub">client@email.com</div>
+              </div>
+            </div>
+            <div class="ac-header-actions">
+              <button class="ac-clear-btn" id="acClearBtn" title="Clear chat history">
+                <i class="fas fa-trash"></i> Clear
+              </button>
+            </div>
+          </div>
+
+          <div class="ac-messages" id="acMessages"></div>
+
+          <div class="ac-typing" id="acTyping" style="display:none;">
+            <span></span><span></span><span></span>
+          </div>
+
+          <div class="ac-input-bar">
+            <div class="ac-input" id="acInput" contenteditable="true" data-placeholder="Type a reply…"></div>
+            <button class="ac-send-btn" id="acSendBtn"><i class="fas fa-paper-plane"></i></button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="script/search.js"></script>
+  <script src="script/admin_chat.js"></script>
+</body>
+</html>

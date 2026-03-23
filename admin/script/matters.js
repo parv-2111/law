@@ -53,7 +53,7 @@ function renderTable(list) {
       <td><span class="status-badge ${m.status}">${m.status}</span></td>
       <td style="color:var(--muted);">${m.preparedBy}</td>
       <td onclick="event.stopPropagation()">
-        <a href="../chat.html" class="td-icon-btn" title="Open Chat for ${m.client}">
+        <a href="admin_chat.html" class="td-icon-btn" title="Open Chat for ${m.client}">
           <i class="fas fa-comments"></i>
         </a>
       </td>
