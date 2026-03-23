@@ -30,6 +30,10 @@
       <li><a href="admin_chat.html"><i class="fas fa-comments"></i><span>Chat</span></a></li>
     </ul>
     <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+        <span id="themeLabel">Light Mode</span>
+      </button>
       <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </aside>
@@ -38,7 +42,6 @@
     <h1 class="page-title">Cases</h1>
     <p class="page-sub">Manage all legal cases, track dates and parties involved.</p>
 
-    <!-- ── CASES PANEL ── -->
     <div class="matters-panel">
       <div class="matters-panel-head">
         <div class="dash-section-head" style="margin-bottom:0;border:none;padding:0;">
@@ -46,12 +49,8 @@
           <h2>All Cases</h2>
           <span class="hearing-count" id="caseCount">0</span>
         </div>
-        <button class="btn-add-matter" id="btnAddCase">
-          <i class="fas fa-plus"></i> Add Case
-        </button>
+        <button class="btn-add-matter" id="btnAddCase"><i class="fas fa-plus"></i> Add Case</button>
       </div>
-
-      <!-- Toolbar -->
       <div class="matters-toolbar">
         <div class="mt-search">
           <i class="fas fa-search"></i>
@@ -67,22 +66,13 @@
           <input type="date" id="filterNextDate" title="Filter by Next Date" style="padding:9px 12px;background:var(--navy3);border:1.5px solid rgba(255,255,255,0.08);border-radius:9px;color:var(--white);font-size:0.83rem;font-family:'Inter',sans-serif;outline:none;cursor:pointer;color-scheme:dark;"/>
         </div>
       </div>
-
-      <!-- Table -->
       <div class="matters-table-wrap">
         <table class="matters-table" id="casesTable">
           <thead>
             <tr>
-              <th>Matter No.</th>
-              <th>Case No.</th>
-              <th>Client Name</th>
-              <th>Company Name</th>
-              <th>Applicant</th>
-              <th>Opposite Party</th>
-              <th>Date of Filing</th>
-              <th>Next Date</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>Matter No.</th><th>Case No.</th><th>Client Name</th><th>Company Name</th>
+              <th>Applicant</th><th>Opposite Party</th><th>Date of Filing</th>
+              <th>Next Date</th><th>Status</th><th>Actions</th>
             </tr>
           </thead>
           <tbody id="casesBody"></tbody>
@@ -94,7 +84,7 @@
       </div>
     </div>
 
-    <!-- ── VIEW DETAIL MODAL ── -->
+    <!-- VIEW MODAL -->
     <div class="matter-modal-overlay" id="caseViewOverlay">
       <div class="matter-modal" style="max-width:600px;">
         <div class="matter-modal-head view-modal-head">
@@ -105,7 +95,7 @@
       </div>
     </div>
 
-    <!-- ── ADD / EDIT CASE MODAL ── -->
+    <!-- ADD/EDIT MODAL -->
     <div class="matter-modal-overlay" id="caseModalOverlay">
       <div class="matter-modal">
         <div class="matter-modal-head">
@@ -114,52 +104,17 @@
         </div>
         <form id="caseModalForm" novalidate>
           <div class="mm-grid">
-            <div class="mm-field">
-              <label>Matter No. <span>*</span></label>
-              <input type="text" id="cm-matterno" placeholder="e.g. MAT-2026-001"/>
-              <span class="mm-err" id="cm-err-matterno"></span>
-            </div>
-            <div class="mm-field">
-              <label>Case No. <span>*</span></label>
-              <input type="text" id="cm-caseno" placeholder="e.g. CASE/2026/123"/>
-              <span class="mm-err" id="cm-err-caseno"></span>
-            </div>
-            <div class="mm-field">
-              <label>Client Name <span>*</span></label>
-              <input type="text" id="cm-client" placeholder="Full client name"/>
-              <span class="mm-err" id="cm-err-client"></span>
-            </div>
-            <div class="mm-field">
-              <label>Company Name</label>
-              <input type="text" id="cm-company" placeholder="Company / Organisation"/>
-            </div>
-            <div class="mm-field">
-              <label>Applicant Name <span>*</span></label>
-              <input type="text" id="cm-applicant" placeholder="Applicant / Petitioner"/>
-              <span class="mm-err" id="cm-err-applicant"></span>
-            </div>
-            <div class="mm-field">
-              <label>Opposite Party Name <span>*</span></label>
-              <input type="text" id="cm-opposite" placeholder="Respondent / Opposite party"/>
-              <span class="mm-err" id="cm-err-opposite"></span>
-            </div>
-            <div class="mm-field">
-              <label>Date of Filing <span>*</span></label>
-              <input type="date" id="cm-filingdate" style="color-scheme:dark;"/>
-              <span class="mm-err" id="cm-err-filingdate"></span>
-            </div>
-            <div class="mm-field">
-              <label>Next Date</label>
-              <input type="date" id="cm-nextdate" style="color-scheme:dark;"/>
-            </div>
+            <div class="mm-field"><label>Matter No. <span>*</span></label><input type="text" id="cm-matterno" placeholder="e.g. MAT-2026-001"/><span class="mm-err" id="cm-err-matterno"></span></div>
+            <div class="mm-field"><label>Case No. <span>*</span></label><input type="text" id="cm-caseno" placeholder="e.g. CASE/2026/123"/><span class="mm-err" id="cm-err-caseno"></span></div>
+            <div class="mm-field"><label>Client Name <span>*</span></label><input type="text" id="cm-client" placeholder="Full client name"/><span class="mm-err" id="cm-err-client"></span></div>
+            <div class="mm-field"><label>Company Name</label><input type="text" id="cm-company" placeholder="Company / Organisation"/></div>
+            <div class="mm-field"><label>Applicant Name <span>*</span></label><input type="text" id="cm-applicant" placeholder="Applicant / Petitioner"/><span class="mm-err" id="cm-err-applicant"></span></div>
+            <div class="mm-field"><label>Opposite Party Name <span>*</span></label><input type="text" id="cm-opposite" placeholder="Respondent / Opposite party"/><span class="mm-err" id="cm-err-opposite"></span></div>
+            <div class="mm-field"><label>Date of Filing <span>*</span></label><input type="date" id="cm-filingdate" style="color-scheme:dark;"/><span class="mm-err" id="cm-err-filingdate"></span></div>
+            <div class="mm-field"><label>Next Date</label><input type="date" id="cm-nextdate" style="color-scheme:dark;"/></div>
             <div class="mm-field mm-full">
               <label>Status <span>*</span></label>
-              <select id="cm-status">
-                <option value="" disabled selected>Select status</option>
-                <option value="running">Running</option>
-                <option value="pending">Pending</option>
-                <option value="completed">Completed</option>
-              </select>
+              <select id="cm-status"><option value="" disabled selected>Select status</option><option value="running">Running</option><option value="pending">Pending</option><option value="completed">Completed</option></select>
               <span class="mm-err" id="cm-err-status"></span>
             </div>
           </div>
@@ -171,7 +126,7 @@
       </div>
     </div>
 
-    <!-- ── DELETE CONFIRM MODAL ── -->
+    <!-- DELETE MODAL -->
     <div class="matter-modal-overlay" id="caseDeleteOverlay">
       <div class="matter-modal" style="max-width:400px;">
         <div class="matter-modal-head">
@@ -190,5 +145,19 @@
 
   <script src="script/search.js"></script>
   <script src="script/cases.js"></script>
+  <script>
+    (function(){
+      function applyTheme(m){
+        document.body.classList.toggle('admin-light',m==='light');
+        document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun');
+        document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode';
+      }
+      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){
+        var n=document.body.classList.contains('admin-light')?'dark':'light';
+        localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+  </script>
 </body>
 </html>

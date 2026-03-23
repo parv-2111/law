@@ -68,6 +68,11 @@
         </div>
       </div>
 
+      <!-- Theme Toggle -->
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+      </button>
+
       <!-- User Info -->
       <div class="user-info">
         <div class="user-avatar" id="userAvatar">S</div>
@@ -78,6 +83,10 @@
         <!-- Hamburger sits between avatar and logout on mobile -->
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
           <span></span><span></span><span></span>
+        </button>
+        <!-- Theme toggle visible only on mobile, after hamburger -->
+        <button class="theme-toggle-btn theme-toggle-mobile" id="themeToggleMobile" title="Toggle light/dark mode">
+          <i class="fas fa-sun" id="themeIconMobile"></i>
         </button>
         <a href="login.html" class="logout-btn" title="Logout"><i class="fas fa-right-from-bracket"></i></a>
       </div>
@@ -214,10 +223,27 @@
 
   <script src="script/matter.js"></script>
   <script>
+    // Nav hamburger
     document.getElementById('mobileMenuBtn').addEventListener('click',function(){
       document.getElementById('topbarNav').classList.toggle('open');
       this.classList.toggle('active');
     });
+    // Theme toggle
+    function applyTheme(mode){
+      document.body.classList.toggle('light-mode', mode==='light');
+      const icon = mode==='light' ? 'fa-moon' : 'fa-sun';
+      document.getElementById('themeIcon').className = 'fas '+icon;
+      document.getElementById('themeIconMobile').className = 'fas '+icon;
+    }
+    const savedTheme = localStorage.getItem('lexfirm_theme') || 'dark';
+    applyTheme(savedTheme);
+    function toggleTheme(){
+      const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+      localStorage.setItem('lexfirm_theme', next);
+      applyTheme(next);
+    }
+    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+    document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
   </script>
 </body>
 </html>

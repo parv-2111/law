@@ -15,14 +15,11 @@
       <i class="fas fa-balance-scale"></i>
       <span>DK CORPORATE LAW FIRM</span>
     </div>
-
-    <!-- Search box in sidebar -->
     <div class="sidebar-search">
       <i class="fas fa-search"></i>
       <input type="text" id="masterSearch" placeholder="Search…"/>
       <div class="search-results" id="searchResults"></div>
     </div>
-
     <ul class="sidebar-nav">
       <li><a href="index.html" class="active"><i class="fas fa-gauge-high"></i><span>Dashboard</span></a></li>
       <li><a href="cases.html"><i class="fas fa-folder-open"></i><span>Cases</span></a></li>
@@ -33,6 +30,10 @@
       <li><a href="admin_chat.html"><i class="fas fa-comments"></i><span>Chat</span></a></li>
     </ul>
     <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+        <span id="themeLabel">Light Mode</span>
+      </button>
       <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </aside>
@@ -42,41 +43,34 @@
     <p class="page-sub">Welcome back, Admin. Here's your overview.</p>
 
     <div class="cards-grid">
-
       <a href="cases.html" class="stat-card card-blue">
         <div class="card-icon"><i class="fas fa-folder-open"></i></div>
         <div class="stat-num">55</div>
         <div class="stat-label">Total Cases</div>
         <i class="fas fa-arrow-right stat-arrow"></i>
       </a>
-
       <a href="clients.html" class="stat-card card-gold">
         <div class="card-icon"><i class="fas fa-users"></i></div>
         <div class="stat-num">63</div>
         <div class="stat-label">Total Clients</div>
         <i class="fas fa-arrow-right stat-arrow"></i>
       </a>
-
       <a href="payments.html" class="stat-card card-purple">
         <div class="card-icon"><i class="fas fa-credit-card"></i></div>
         <div class="stat-num">$48k</div>
         <div class="stat-label">Total Payments</div>
         <i class="fas fa-arrow-right stat-arrow"></i>
       </a>
-
       <a href="matters.html" class="stat-card card-green">
         <div class="card-icon"><i class="fas fa-scale-balanced"></i></div>
         <div class="stat-num">42</div>
         <div class="stat-label">Total Matters</div>
         <i class="fas fa-arrow-right stat-arrow"></i>
       </a>
-
     </div>
 
     <!-- ── HEARING CALENDAR ── -->
     <div class="dash-calendar-wrap">
-
-      <!-- Left: Calendar -->
       <div class="dash-cal-panel">
         <div class="dash-section-head">
           <i class="fas fa-calendar-days"></i>
@@ -94,26 +88,20 @@
           <div class="dash-cal-grid" id="calGrid"></div>
         </div>
       </div>
-
-      <!-- Right: Hearings list -->
       <div class="dash-hearings-panel">
         <div class="dash-section-head">
           <i class="fas fa-gavel"></i>
           <h2>Scheduled Hearings</h2>
           <span class="hearing-count" id="hearingCount">0</span>
         </div>
-
-        <!-- Filter bar -->
         <div class="hearing-filters">
           <button class="hf-btn active" data-filter="all">All</button>
           <button class="hf-btn" data-filter="upcoming">Upcoming</button>
           <button class="hf-btn" data-filter="today">Today</button>
           <button class="hf-btn" data-filter="past">Past</button>
         </div>
-
         <div class="hearings-list" id="hearingsList"></div>
       </div>
-
     </div>
 
     <!-- ── HEARING DETAIL MODAL ── -->
@@ -131,5 +119,19 @@
 
   <script src="script/search.js"></script>
   <script src="script/dashboard.js"></script>
+  <script>
+    (function(){
+      function applyTheme(m){
+        document.body.classList.toggle('admin-light',m==='light');
+        document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun');
+        document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode';
+      }
+      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){
+        var n=document.body.classList.contains('admin-light')?'dark':'light';
+        localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+  </script>
 </body>
 </html>

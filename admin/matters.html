@@ -30,6 +30,10 @@
       <li><a href="admin_chat.html"><i class="fas fa-comments"></i><span>Chat</span></a></li>
     </ul>
     <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+        <span id="themeLabel">Light Mode</span>
+      </button>
       <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </aside>
@@ -38,7 +42,6 @@
     <h1 class="page-title">Matters</h1>
     <p class="page-sub">View and manage all client matters with scheduled hearings.</p>
 
-    <!-- ── MATTERS TABLE ── -->
     <div class="matters-panel">
       <div class="matters-panel-head">
         <div class="dash-section-head" style="margin-bottom:0;border:none;padding:0;">
@@ -46,12 +49,8 @@
           <h2>All Matters</h2>
           <span class="hearing-count" id="matterCount">0</span>
         </div>
-        <button class="btn-add-matter" id="btnAddMatter">
-          <i class="fas fa-plus"></i> Add Matter
-        </button>
+        <button class="btn-add-matter" id="btnAddMatter"><i class="fas fa-plus"></i> Add Matter</button>
       </div>
-
-      <!-- Search + Filter bar -->
       <div class="matters-toolbar">
         <div class="mt-search">
           <i class="fas fa-search"></i>
@@ -74,23 +73,13 @@
           </select>
         </div>
       </div>
-
-      <!-- Table -->
       <div class="matters-table-wrap">
         <table class="matters-table" id="mattersTable">
           <thead>
             <tr>
-              <th>Matter No.</th>
-              <th>Matter Name</th>
-              <th>Client Name</th>
-              <th>File No.</th>
-              <th>Case No.</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Prepared By</th>
-              <th>Chat</th>
-              <th>Docs</th>
-              <th>Actions</th>
+              <th>Matter No.</th><th>Matter Name</th><th>Client Name</th><th>File No.</th>
+              <th>Case No.</th><th>Type</th><th>Status</th><th>Prepared By</th>
+              <th>Chat</th><th>Docs</th><th>Actions</th>
             </tr>
           </thead>
           <tbody id="mattersBody"></tbody>
@@ -102,7 +91,7 @@
       </div>
     </div>
 
-    <!-- ── VIEW DETAIL MODAL ── -->
+    <!-- VIEW MODAL -->
     <div class="matter-modal-overlay" id="matterViewOverlay">
       <div class="matter-modal" style="max-width:600px;">
         <div class="matter-modal-head view-modal-head">
@@ -113,7 +102,7 @@
       </div>
     </div>
 
-    <!-- ── ADD / EDIT MATTER MODAL ── -->
+    <!-- ADD/EDIT MODAL -->
     <div class="matter-modal-overlay" id="matterModalOverlay">
       <div class="matter-modal">
         <div class="matter-modal-head">
@@ -122,59 +111,23 @@
         </div>
         <form id="matterModalForm" novalidate>
           <div class="mm-grid">
-            <div class="mm-field">
-              <label>Matter Name <span>*</span></label>
-              <input type="text" id="mm-name" placeholder="e.g. Property Dispute"/>
-              <span class="mm-err" id="mm-err-name"></span>
-            </div>
-            <div class="mm-field">
-              <label>Client Name <span>*</span></label>
-              <input type="text" id="mm-client" placeholder="Full client name"/>
-              <span class="mm-err" id="mm-err-client"></span>
-            </div>
-            <div class="mm-field">
-              <label>Client Email</label>
-              <input type="email" id="mm-email" placeholder="client@email.com"/>
-            </div>
-            <div class="mm-field">
-              <label>File No.</label>
-              <input type="text" id="mm-fileno" placeholder="e.g. FILE-2026-001"/>
-            </div>
-            <div class="mm-field">
-              <label>Case No.</label>
-              <input type="text" id="mm-caseno" placeholder="e.g. CASE/2026/123"/>
-            </div>
-            <div class="mm-field">
-              <label>Prepared By <span>*</span></label>
-              <input type="text" id="mm-preparedby" placeholder="Advocate / Staff name"/>
-              <span class="mm-err" id="mm-err-preparedby"></span>
-            </div>
+            <div class="mm-field"><label>Matter Name <span>*</span></label><input type="text" id="mm-name" placeholder="e.g. Property Dispute"/><span class="mm-err" id="mm-err-name"></span></div>
+            <div class="mm-field"><label>Client Name <span>*</span></label><input type="text" id="mm-client" placeholder="Full client name"/><span class="mm-err" id="mm-err-client"></span></div>
+            <div class="mm-field"><label>Client Email</label><input type="email" id="mm-email" placeholder="client@email.com"/></div>
+            <div class="mm-field"><label>File No.</label><input type="text" id="mm-fileno" placeholder="e.g. FILE-2026-001"/></div>
+            <div class="mm-field"><label>Case No.</label><input type="text" id="mm-caseno" placeholder="e.g. CASE/2026/123"/></div>
+            <div class="mm-field"><label>Prepared By <span>*</span></label><input type="text" id="mm-preparedby" placeholder="Advocate / Staff name"/><span class="mm-err" id="mm-err-preparedby"></span></div>
             <div class="mm-field">
               <label>Type <span>*</span></label>
-              <select id="mm-type">
-                <option value="" disabled selected>Select type</option>
-                <option value="notice">Notice</option>
-                <option value="agreement">Agreement</option>
-                <option value="case">Case</option>
-                <option value="advise">Legal Advise</option>
-                <option value="other">Other</option>
-              </select>
+              <select id="mm-type"><option value="" disabled selected>Select type</option><option value="notice">Notice</option><option value="agreement">Agreement</option><option value="case">Case</option><option value="advise">Legal Advise</option><option value="other">Other</option></select>
               <span class="mm-err" id="mm-err-type"></span>
             </div>
             <div class="mm-field">
               <label>Status <span>*</span></label>
-              <select id="mm-status">
-                <option value="" disabled selected>Select status</option>
-                <option value="running">Running</option>
-                <option value="pending">Pending</option>
-                <option value="completed">Completed</option>
-              </select>
+              <select id="mm-status"><option value="" disabled selected>Select status</option><option value="running">Running</option><option value="pending">Pending</option><option value="completed">Completed</option></select>
               <span class="mm-err" id="mm-err-status"></span>
             </div>
-            <div class="mm-field mm-full">
-              <label>Attached Documents (links or filenames)</label>
-              <input type="text" id="mm-docs" placeholder="e.g. sale_deed.pdf, contract.docx"/>
-            </div>
+            <div class="mm-field mm-full"><label>Attached Documents (links or filenames)</label><input type="text" id="mm-docs" placeholder="e.g. sale_deed.pdf, contract.docx"/></div>
           </div>
           <div class="mm-actions">
             <button type="button" class="mm-btn-cancel" id="matterModalCancel">Cancel</button>
@@ -184,7 +137,7 @@
       </div>
     </div>
 
-    <!-- ── DELETE CONFIRM MODAL ── -->
+    <!-- DELETE MODAL -->
     <div class="matter-modal-overlay" id="deleteOverlay">
       <div class="matter-modal" style="max-width:400px;">
         <div class="matter-modal-head">
@@ -199,10 +152,8 @@
       </div>
     </div>
 
-    <!-- ── HEARING CALENDAR ── -->
+    <!-- HEARING CALENDAR -->
     <div class="dash-calendar-wrap">
-
-      <!-- Left: Calendar -->
       <div class="dash-cal-panel">
         <div class="dash-section-head">
           <i class="fas fa-calendar-days"></i>
@@ -220,28 +171,22 @@
           <div class="dash-cal-grid" id="calGrid"></div>
         </div>
       </div>
-
-      <!-- Right: Hearings list -->
       <div class="dash-hearings-panel">
         <div class="dash-section-head">
           <i class="fas fa-gavel"></i>
           <h2>Scheduled Hearings</h2>
           <span class="hearing-count" id="hearingCount">0</span>
         </div>
-
         <div class="hearing-filters">
           <button class="hf-btn active" data-filter="all">All</button>
           <button class="hf-btn" data-filter="upcoming">Upcoming</button>
           <button class="hf-btn" data-filter="today">Today</button>
           <button class="hf-btn" data-filter="past">Past</button>
         </div>
-
         <div class="hearings-list" id="hearingsList"></div>
       </div>
-
     </div>
 
-    <!-- ── HEARING DETAIL MODAL ── -->
     <div class="hearing-modal-overlay" id="hearingModalOverlay">
       <div class="hearing-modal" id="hearingModal">
         <button class="modal-close" id="modalClose"><i class="fas fa-xmark"></i></button>
@@ -257,5 +202,19 @@
   <script src="script/search.js"></script>
   <script src="script/dashboard.js"></script>
   <script src="script/matters.js"></script>
+  <script>
+    (function(){
+      function applyTheme(m){
+        document.body.classList.toggle('admin-light',m==='light');
+        document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun');
+        document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode';
+      }
+      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){
+        var n=document.body.classList.contains('admin-light')?'dark':'light';
+        localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+  </script>
 </body>
 </html>

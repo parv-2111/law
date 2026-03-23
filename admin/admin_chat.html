@@ -30,6 +30,10 @@
       <li><a href="admin_chat.html" class="active"><i class="fas fa-comments"></i><span>Chat</span></a></li>
     </ul>
     <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+        <span id="themeLabel">Light Mode</span>
+      </button>
       <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </aside>
@@ -38,7 +42,7 @@
 
     <div class="admin-chat-wrap">
 
-      <!-- ── CLIENT LIST ── -->
+      <!-- CLIENT LIST -->
       <div class="ac-sidebar" id="acSidebar">
         <div class="ac-sidebar-head">
           <h2><i class="fas fa-comments"></i> Client Chats</h2>
@@ -53,18 +57,13 @@
         </div>
       </div>
 
-      <!-- ── CHAT PANEL ── -->
+      <!-- CHAT PANEL -->
       <div class="ac-chat-panel" id="acChatPanel">
-
-        <!-- No chat selected -->
         <div class="ac-no-chat" id="acNoChat">
           <i class="fas fa-comments"></i>
           <p>Select a client to view their chat</p>
         </div>
-
-        <!-- Active chat -->
         <div class="ac-active-chat" id="acActiveChat" style="display:none;">
-
           <div class="ac-chat-header" id="acChatHeader">
             <div class="ac-chat-header-left">
               <div class="ac-avatar" id="acHeaderAvatar">?</div>
@@ -79,18 +78,14 @@
               </button>
             </div>
           </div>
-
           <div class="ac-messages" id="acMessages"></div>
-
           <div class="ac-typing" id="acTyping" style="display:none;">
             <span></span><span></span><span></span>
           </div>
-
           <div class="ac-input-bar">
             <div class="ac-input" id="acInput" contenteditable="true" data-placeholder="Type a reply…"></div>
             <button class="ac-send-btn" id="acSendBtn"><i class="fas fa-paper-plane"></i></button>
           </div>
-
         </div>
       </div>
 
@@ -100,5 +95,19 @@
 
   <script src="script/search.js"></script>
   <script src="script/admin_chat.js"></script>
+  <script>
+    (function(){
+      function applyTheme(m){
+        document.body.classList.toggle('admin-light',m==='light');
+        document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun');
+        document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode';
+      }
+      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){
+        var n=document.body.classList.contains('admin-light')?'dark':'light';
+        localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+  </script>
 </body>
 </html>

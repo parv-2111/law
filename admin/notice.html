@@ -30,6 +30,10 @@
       <li><a href="admin_chat.html"><i class="fas fa-comments"></i><span>Chat</span></a></li>
     </ul>
     <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+        <i class="fas fa-sun" id="themeIcon"></i>
+        <span id="themeLabel">Light Mode</span>
+      </button>
       <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
     </div>
   </aside>
@@ -38,7 +42,6 @@
     <h1 class="page-title">Notice</h1>
     <p class="page-sub">Track all legal notices sent to clients — delivery status, dates and return reasons.</p>
 
-    <!-- ── NOTICE PANEL ── -->
     <div class="matters-panel">
       <div class="matters-panel-head">
         <div class="dash-section-head" style="margin-bottom:0;border:none;padding:0;">
@@ -46,12 +49,8 @@
           <h2>All Notices</h2>
           <span class="hearing-count" id="noticeCount">0</span>
         </div>
-        <button class="btn-add-matter" id="btnAddNotice">
-          <i class="fas fa-plus"></i> Add Notice
-        </button>
+        <button class="btn-add-matter" id="btnAddNotice"><i class="fas fa-plus"></i> Add Notice</button>
       </div>
-
-      <!-- Toolbar -->
       <div class="matters-toolbar">
         <div class="mt-search">
           <i class="fas fa-search"></i>
@@ -67,22 +66,13 @@
           </select>
         </div>
       </div>
-
-      <!-- Table -->
       <div class="matters-table-wrap">
         <table class="matters-table" id="noticeTable">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Client Name</th>
-              <th>Address</th>
-              <th>Track ID</th>
-              <th>Send Date</th>
-              <th>Received Date</th>
-              <th>Returned Date</th>
-              <th>Reason for Return</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>#</th><th>Client Name</th><th>Address</th><th>Track ID</th>
+              <th>Send Date</th><th>Received Date</th><th>Returned Date</th>
+              <th>Reason for Return</th><th>Status</th><th>Actions</th>
             </tr>
           </thead>
           <tbody id="noticeBody"></tbody>
@@ -94,7 +84,7 @@
       </div>
     </div>
 
-    <!-- ── VIEW DETAIL MODAL ── -->
+    <!-- VIEW MODAL -->
     <div class="matter-modal-overlay" id="noticeViewOverlay">
       <div class="matter-modal" style="max-width:600px;">
         <div class="matter-modal-head view-modal-head">
@@ -105,7 +95,7 @@
       </div>
     </div>
 
-    <!-- ── ADD / EDIT NOTICE MODAL ── -->
+    <!-- ADD/EDIT MODAL -->
     <div class="matter-modal-overlay" id="noticeModalOverlay">
       <div class="matter-modal">
         <div class="matter-modal-head">
@@ -114,49 +104,18 @@
         </div>
         <form id="noticeModalForm" novalidate>
           <div class="mm-grid">
-            <div class="mm-field">
-              <label>Client Name <span>*</span></label>
-              <input type="text" id="nm-client" placeholder="Full client name"/>
-              <span class="mm-err" id="nm-err-client"></span>
-            </div>
-            <div class="mm-field">
-              <label>Track ID <span>*</span></label>
-              <input type="text" id="nm-trackid" placeholder="e.g. TRACK-2026-001"/>
-              <span class="mm-err" id="nm-err-trackid"></span>
-            </div>
-            <div class="mm-field mm-full">
-              <label>Address <span>*</span></label>
-              <input type="text" id="nm-address" placeholder="Full postal address"/>
-              <span class="mm-err" id="nm-err-address"></span>
-            </div>
-            <div class="mm-field">
-              <label>Send Date <span>*</span></label>
-              <input type="date" id="nm-senddate" style="color-scheme:dark;"/>
-              <span class="mm-err" id="nm-err-senddate"></span>
-            </div>
-            <div class="mm-field">
-              <label>Received Date</label>
-              <input type="date" id="nm-receiveddate" style="color-scheme:dark;"/>
-            </div>
-            <div class="mm-field">
-              <label>Returned Date</label>
-              <input type="date" id="nm-returneddate" style="color-scheme:dark;"/>
-            </div>
+            <div class="mm-field"><label>Client Name <span>*</span></label><input type="text" id="nm-client" placeholder="Full client name"/><span class="mm-err" id="nm-err-client"></span></div>
+            <div class="mm-field"><label>Track ID <span>*</span></label><input type="text" id="nm-trackid" placeholder="e.g. TRACK-2026-001"/><span class="mm-err" id="nm-err-trackid"></span></div>
+            <div class="mm-field mm-full"><label>Address <span>*</span></label><input type="text" id="nm-address" placeholder="Full postal address"/><span class="mm-err" id="nm-err-address"></span></div>
+            <div class="mm-field"><label>Send Date <span>*</span></label><input type="date" id="nm-senddate" style="color-scheme:dark;"/><span class="mm-err" id="nm-err-senddate"></span></div>
+            <div class="mm-field"><label>Received Date</label><input type="date" id="nm-receiveddate" style="color-scheme:dark;"/></div>
+            <div class="mm-field"><label>Returned Date</label><input type="date" id="nm-returneddate" style="color-scheme:dark;"/></div>
             <div class="mm-field">
               <label>Status <span>*</span></label>
-              <select id="nm-status">
-                <option value="" disabled selected>Select status</option>
-                <option value="sent">Sent</option>
-                <option value="received">Received</option>
-                <option value="returned">Returned</option>
-                <option value="pending">Pending</option>
-              </select>
+              <select id="nm-status"><option value="" disabled selected>Select status</option><option value="sent">Sent</option><option value="received">Received</option><option value="returned">Returned</option><option value="pending">Pending</option></select>
               <span class="mm-err" id="nm-err-status"></span>
             </div>
-            <div class="mm-field mm-full">
-              <label>Reason for Return</label>
-              <input type="text" id="nm-returnreason" placeholder="e.g. Address not found, Refused by recipient…"/>
-            </div>
+            <div class="mm-field mm-full"><label>Reason for Return</label><input type="text" id="nm-returnreason" placeholder="e.g. Address not found, Refused by recipient…"/></div>
           </div>
           <div class="mm-actions">
             <button type="button" class="mm-btn-cancel" id="noticeModalCancel">Cancel</button>
@@ -166,7 +125,7 @@
       </div>
     </div>
 
-    <!-- ── DELETE CONFIRM MODAL ── -->
+    <!-- DELETE MODAL -->
     <div class="matter-modal-overlay" id="noticeDeleteOverlay">
       <div class="matter-modal" style="max-width:400px;">
         <div class="matter-modal-head">
@@ -185,5 +144,19 @@
 
   <script src="script/search.js"></script>
   <script src="script/notice.js"></script>
+  <script>
+    (function(){
+      function applyTheme(m){
+        document.body.classList.toggle('admin-light',m==='light');
+        document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun');
+        document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode';
+      }
+      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){
+        var n=document.body.classList.contains('admin-light')?'dark':'light';
+        localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+  </script>
 </body>
 </html>
