@@ -127,8 +127,7 @@ function closeMatterModal() {
 }
 
 window.openEdit = function(id) {
-  const m = loadMatters().find(x => x.id === id);
-  if (m) openMatterModal(m);
+  location.href = 'matters_edit.html?id=' + id;
 };
 
 document.getElementById('btnAddMatter').addEventListener('click',    () => openMatterModal());

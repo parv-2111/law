@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Matter | DK CORPORATE LAW FIRM Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .ep-topbar { position:sticky;top:0;z-index:50;background:var(--navy2);border-bottom:1px solid rgba(201,162,39,0.15);padding:14px 28px;display:flex;align-items:center;gap:16px; }
+    .ep-back { width:38px;height:38px;border-radius:10px;background:var(--navy3);border:1px solid rgba(255,255,255,0.08);color:var(--muted);font-size:0.95rem;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background 0.2s,color 0.2s;flex-shrink:0; }
+    .ep-back:hover { background:rgba(201,162,39,0.12);color:var(--gold); }
+    .ep-title-wrap { flex:1; }
+    .ep-title-wrap h1 { font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--white);line-height:1.2; }
+    .ep-title-wrap p { font-size:0.78rem;color:var(--muted);margin-top:2px; }
+    .ep-actions { display:flex;align-items:center;gap:10px; }
+    .ep-btn-cancel { padding:9px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:var(--muted);font-size:0.85rem;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;transition:background 0.2s,color 0.2s; }
+    .ep-btn-cancel:hover { background:rgba(255,255,255,0.1);color:var(--white); }
+    .ep-btn-save { display:inline-flex;align-items:center;gap:8px;padding:9px 22px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:9px;color:#1a1200;font-size:0.85rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(201,162,39,0.3); }
+    .ep-btn-save:hover { transform:translateY(-1px);box-shadow:0 8px 22px rgba(201,162,39,0.45); }
+
+    .ep-hero { background:linear-gradient(135deg,#0f1e35 0%,#1a2e4a 60%,#0f1e35 100%);border-bottom:1px solid rgba(201,162,39,0.15);padding:28px;display:flex;align-items:center;gap:20px; }
+    .ep-hero-icon { width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,rgba(201,162,39,0.2),rgba(232,200,74,0.1));border:1px solid rgba(201,162,39,0.3);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--gold);flex-shrink:0; }
+    .ep-hero-info h2 { font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:6px; }
+    .ep-hero-meta { display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
+    .ep-meta-pill { display:inline-flex;align-items:center;gap:6px;font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:20px; }
+    .ep-meta-pill.gold { background:rgba(201,162,39,0.12);color:var(--gold);border:1px solid rgba(201,162,39,0.25); }
+    .ep-meta-pill.blue { background:rgba(74,144,217,0.12);color:#4a90d9;border:1px solid rgba(74,144,217,0.25); }
+    .ep-meta-pill.green { background:rgba(62,207,142,0.12);color:var(--green);border:1px solid rgba(62,207,142,0.25); }
+    .ep-meta-pill.purple { background:rgba(155,109,255,0.12);color:#9b6dff;border:1px solid rgba(155,109,255,0.25); }
+
+    .ep-body { padding:28px;display:flex;flex-direction:column;gap:24px; }
+    .ep-section { background:var(--navy2);border:1px solid rgba(255,255,255,0.06);border-radius:16px;overflow:hidden; }
+    .ep-section-head { display:flex;align-items:center;gap:12px;padding:16px 22px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.06); }
+    .ep-section-head i { color:var(--gold);font-size:1rem;width:20px;text-align:center; }
+    .ep-section-head h3 { font-family:'Playfair Display',serif;font-size:1rem;color:var(--white); }
+    .ep-section-head span { margin-left:auto;font-size:0.72rem;color:var(--muted); }
+    .ep-fields { padding:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
+    .ep-fields.cols2 { grid-template-columns:repeat(2,1fr); }
+    .ep-full { grid-column:1/-1; }
+
+    .ef { display:flex;flex-direction:column;gap:7px; }
+    .ef label { font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px; }
+    .ef label i { color:var(--gold);font-size:0.7rem; }
+    .ef label .req { color:var(--red); }
+    .ef-input-wrap { position:relative; }
+    .ef-input-wrap>.ef-icon { position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:0.82rem;pointer-events:none; }
+    .ef input,.ef select,.ef textarea { width:100%;padding:12px 14px 12px 38px;background:var(--navy3);border:1.5px solid rgba(255,255,255,0.07);border-radius:10px;color:var(--white);font-size:0.88rem;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.25s,box-shadow 0.25s,background 0.25s;appearance:none; }
+    .ef textarea { padding:12px 14px;resize:vertical;min-height:90px; }
+    .ef input:focus,.ef select:focus,.ef textarea:focus { border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,0.12);background:rgba(201,162,39,0.04); }
+    .ef input::placeholder,.ef textarea::placeholder { color:var(--muted); }
+    .ef select option { background:var(--navy3); }
+    .ef-err { font-size:0.72rem;color:var(--red);min-height:14px;padding-left:2px; }
+
+    .ef select.status-running { border-color:rgba(155,109,255,0.4);color:#9b6dff; }
+    .ef select.status-pending  { border-color:rgba(201,162,39,0.4);color:var(--gold); }
+    .ef select.status-completed{ border-color:rgba(62,207,142,0.4);color:var(--green); }
+    .ef select.type-notice    { border-color:rgba(74,144,217,0.4);color:#4a90d9; }
+    .ef select.type-agreement { border-color:rgba(201,162,39,0.4);color:var(--gold); }
+    .ef select.type-case      { border-color:rgba(224,85,85,0.4);color:var(--red); }
+    .ef select.type-advise    { border-color:rgba(62,207,142,0.4);color:var(--green); }
+    .ef select.type-other     { border-color:rgba(155,109,255,0.4);color:#9b6dff; }
+
+    .toast { position:fixed;bottom:28px;right:28px;background:var(--navy3);border:1px solid rgba(62,207,142,0.3);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--white);box-shadow:0 8px 24px rgba(0,0,0,0.4);transform:translateY(80px);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;z-index:999; }
+    .toast.show { transform:translateY(0);opacity:1; }
+    .toast i { color:var(--green);font-size:1.1rem; }
+
+    body.admin-light .ep-topbar { border-bottom-color:rgba(201,162,39,0.2); }
+    body.admin-light .ep-hero { background:linear-gradient(135deg,#e0e8f5 0%,#f0f4ff 60%,#e0e8f5 100%);border-bottom-color:rgba(201,162,39,0.2); }
+    body.admin-light .ep-section { border-color:rgba(0,0,0,0.08); }
+    body.admin-light .ep-section-head { border-bottom-color:rgba(0,0,0,0.07); }
+    body.admin-light .ep-back { border-color:rgba(0,0,0,0.1); }
+    body.admin-light .ef input,body.admin-light .ef select,body.admin-light .ef textarea { border-color:rgba(0,0,0,0.1);color:var(--white); }
+
+    @media (max-width:900px) { .ep-fields { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:600px) { .ep-fields,.ep-fields.cols2 { grid-template-columns:1fr; } .ep-body { padding:16px;gap:16px; } .ep-topbar { padding:12px 16px; } .ep-hero { padding:20px 16px; } }
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <i class="fas fa-balance-scale"></i>
+      <span>DK CORPORATE LAW FIRM</span>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar"><i class="fas fa-bars"></i></button>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><i class="fas fa-gauge-high"></i><span>Dashboard</span></a></li>
+      <li><a href="cases.html"><i class="fas fa-folder-open"></i><span>Cases</span></a></li>
+      <li><a href="notice.html"><i class="fas fa-envelope"></i><span>Notice</span></a></li>
+      <li><a href="clients.html"><i class="fas fa-users"></i><span>Clients</span></a></li>
+      <li><a href="payments.html"><i class="fas fa-credit-card"></i><span>Payments</span></a></li>
+      <li><a href="matters.html" class="active"><i class="fas fa-scale-balanced"></i><span>Matters</span></a></li>
+      <li><a href="admin_chat.html"><i class="fas fa-comments"></i><span>Chat</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn"><i class="fas fa-sun" id="themeIcon"></i><span id="themeLabel">Light Mode</span></button>
+      <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
+    </div>
+  </aside>
+
+  <main class="main-content" style="padding:0;">
+    <form id="editForm" novalidate>
+
+      <div class="ep-topbar">
+        <a href="matters.html" class="ep-back"><i class="fas fa-arrow-left"></i></a>
+        <div class="ep-title-wrap">
+          <h1>Edit Matter</h1>
+          <p id="ep-subtitle">Loading…</p>
+        </div>
+        <div class="ep-actions">
+          <a href="matters.html" class="ep-btn-cancel"><span>Discard</span></a>
+          <button type="submit" class="ep-btn-save"><i class="fas fa-floppy-disk"></i> Save Changes</button>
+        </div>
+      </div>
+
+      <div class="ep-hero">
+        <div class="ep-hero-icon"><i class="fas fa-scale-balanced"></i></div>
+        <div class="ep-hero-info">
+          <h2 id="hero-title">Matter Details</h2>
+          <div class="ep-hero-meta">
+            <span class="ep-meta-pill gold"><i class="fas fa-hashtag"></i><span id="hero-matterno">—</span></span>
+            <span class="ep-meta-pill" id="hero-type-pill"><i class="fas fa-tag"></i><span id="hero-type">—</span></span>
+            <span class="ep-meta-pill" id="hero-status-pill"><i class="fas fa-circle-dot"></i><span id="hero-status">—</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ep-body">
+
+        <!-- Section 1: Matter Info -->
+        <div class="ep-section">
+          <div class="ep-section-head">
+            <i class="fas fa-scale-balanced"></i>
+            <h3>Matter Information</h3>
+            <span>Core details of this matter</span>
+          </div>
+          <div class="ep-fields">
+            <div class="ef ep-full">
+              <label><i class="fas fa-pen-nib"></i> Matter Name <span class="req">*</span></label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-pen-nib"></i>
+                <input type="text" id="f-name" placeholder="e.g. Property Dispute – Mumbai"/>
+              </div>
+              <span class="ef-err" id="e-name"></span>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-tag"></i> Type <span class="req">*</span></label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-tag"></i>
+                <select id="f-type">
+                  <option value="" disabled>Select type</option>
+                  <option value="notice">Notice</option>
+                  <option value="agreement">Agreement</option>
+                  <option value="case">Case</option>
+                  <option value="advise">Legal Advise</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <span class="ef-err" id="e-type"></span>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-circle-dot"></i> Status <span class="req">*</span></label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-circle-dot"></i>
+                <select id="f-status">
+                  <option value="" disabled>Select status</option>
+                  <option value="running">Running</option>
+                  <option value="pending">Pending</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+              <span class="ef-err" id="e-status"></span>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-user-tie"></i> Prepared By <span class="req">*</span></label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-user-tie"></i>
+                <input type="text" id="f-preparedby" placeholder="Advocate / Staff name"/>
+              </div>
+              <span class="ef-err" id="e-preparedby"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Client -->
+        <div class="ep-section">
+          <div class="ep-section-head">
+            <i class="fas fa-user"></i>
+            <h3>Client Details</h3>
+            <span>Client contact & reference numbers</span>
+          </div>
+          <div class="ep-fields">
+            <div class="ef">
+              <label><i class="fas fa-user"></i> Client Name <span class="req">*</span></label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-user"></i>
+                <input type="text" id="f-client" placeholder="Full client name"/>
+              </div>
+              <span class="ef-err" id="e-client"></span>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-envelope"></i> Client Email</label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-envelope"></i>
+                <input type="email" id="f-email" placeholder="client@email.com"/>
+              </div>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-folder"></i> File No.</label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-folder"></i>
+                <input type="text" id="f-fileno" placeholder="e.g. FILE-2026-001"/>
+              </div>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-gavel"></i> Case No.</label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-gavel"></i>
+                <input type="text" id="f-caseno" placeholder="e.g. CASE/2026/123"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Documents -->
+        <div class="ep-section">
+          <div class="ep-section-head">
+            <i class="fas fa-paperclip"></i>
+            <h3>Attached Documents</h3>
+            <span>File names or document references</span>
+          </div>
+          <div class="ep-fields cols1">
+            <div class="ef">
+              <label><i class="fas fa-paperclip"></i> Documents</label>
+              <div class="ef-input-wrap">
+                <i class="ef-icon fas fa-paperclip"></i>
+                <input type="text" id="f-docs" placeholder="e.g. sale_deed.pdf, contract.docx, affidavit.pdf"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </main>
+
+  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span>Matter updated successfully!</span></div>
+
+  <script>
+    const MATTERS_KEY = 'lexfirm_admin_matters';
+    const id = parseInt(new URLSearchParams(location.search).get('id'));
+    function load() { return JSON.parse(localStorage.getItem(MATTERS_KEY) || '[]'); }
+    function save(list) { localStorage.setItem(MATTERS_KEY, JSON.stringify(list)); }
+
+    const m = load().find(x => x.id === id);
+    if (!m) { location.href = 'matters.html'; throw 0; }
+
+    document.getElementById('ep-subtitle').textContent   = m.client + ' — ' + m.matterNo;
+    document.getElementById('hero-title').textContent    = m.name;
+    document.getElementById('hero-matterno').textContent = m.matterNo;
+    document.getElementById('hero-type').textContent     = m.type;
+    document.getElementById('hero-status').textContent   = m.status;
+    document.getElementById('hero-type-pill').className  = 'ep-meta-pill ' + (m.type==='case'?'red':m.type==='agreement'?'gold':m.type==='advise'?'green':'blue');
+    document.getElementById('hero-status-pill').className= 'ep-meta-pill ' + (m.status==='running'?'blue':m.status==='completed'?'green':'gold');
+
+    document.getElementById('f-name').value       = m.name       || '';
+    document.getElementById('f-client').value     = m.client     || '';
+    document.getElementById('f-email').value      = m.email      || '';
+    document.getElementById('f-fileno').value     = m.fileNo     || '';
+    document.getElementById('f-caseno').value     = m.caseNo     || '';
+    document.getElementById('f-preparedby').value = m.preparedBy || '';
+    document.getElementById('f-type').value       = m.type       || '';
+    document.getElementById('f-status').value     = m.status     || '';
+    document.getElementById('f-docs').value       = m.docs       || '';
+
+    const selStatus = document.getElementById('f-status');
+    const selType   = document.getElementById('f-type');
+    function colorSel(el, prefix){ el.className = el.value ? prefix+el.value : ''; }
+    selStatus.addEventListener('change', () => colorSel(selStatus, 'status-'));
+    selType.addEventListener('change',   () => colorSel(selType,   'type-'));
+    colorSel(selStatus, 'status-'); colorSel(selType, 'type-');
+
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+      const req = (fid, eid) => {
+        const v = document.getElementById(fid).value.trim();
+        if (!v) { document.getElementById(eid).textContent = 'This field is required.'; valid = false; return ''; }
+        document.getElementById(eid).textContent = ''; return v;
+      };
+      const name       = req('f-name',       'e-name');
+      const client     = req('f-client',     'e-client');
+      const preparedBy = req('f-preparedby', 'e-preparedby');
+      const type       = req('f-type',       'e-type');
+      const status     = req('f-status',     'e-status');
+      if (!valid) return;
+
+      const list = load(), idx = list.findIndex(x => x.id === id);
+      if (idx > -1) {
+        list[idx] = { ...list[idx], name, client, preparedBy, type, status,
+          email:  document.getElementById('f-email').value.trim(),
+          fileNo: document.getElementById('f-fileno').value.trim(),
+          caseNo: document.getElementById('f-caseno').value.trim(),
+          docs:   document.getElementById('f-docs').value.trim(),
+        };
+        save(list);
+      }
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => { t.classList.remove('show'); location.href = 'matters.html'; }, 1500);
+    });
+
+    (function(){
+      function applyTheme(m){ document.body.classList.toggle('admin-light',m==='light'); document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun'); document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode'; }
+      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){ var n=document.body.classList.contains('admin-light')?'dark':'light'; localStorage.setItem('lexfirm_theme',n); applyTheme(n); });
+    })();
+    (function(){
+      var s=document.querySelector('.sidebar'),mc=document.querySelector('.main-content');
+      var exp=localStorage.getItem('sidebarExpanded')==='1'; if(exp)s.classList.add('expanded');
+      if(mc)mc.style.marginLeft=exp?'var(--sidebar-w)':'64px';
+      document.getElementById('sidebarToggle').addEventListener('click',function(){ var open=s.classList.toggle('expanded'); if(mc)mc.style.marginLeft=open?'var(--sidebar-w)':'64px'; localStorage.setItem('sidebarExpanded',open?'1':'0'); });
+    })();
+  </script>
+</body>
+</html>

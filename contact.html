@@ -7,6 +7,329 @@
   <link rel="stylesheet" href="css/matter.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ── CONTACT PAGE STYLES ── */
+    .contact-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Page heading */
+    .contact-heading {
+      text-align: center;
+    }
+    .contact-heading h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .contact-heading p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .contact-heading .gold-line {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 2px;
+      margin: 12px auto 0;
+    }
+
+    /* Info cards row */
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .cinfo-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      transition: transform 0.2s, border-color 0.2s;
+      text-decoration: none;
+    }
+    .cinfo-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,162,39,0.3);
+    }
+    .cinfo-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .cinfo-icon.gold   { background: rgba(201,162,39,0.15); color: var(--gold); }
+    .cinfo-icon.green  { background: rgba(62,207,142,0.15);  color: var(--green); }
+    .cinfo-icon.pink   { background: rgba(224,85,85,0.12);   color: #e05599; }
+    .cinfo-icon.blue   { background: rgba(74,144,217,0.15);  color: var(--blue); }
+    .cinfo-card h4 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .cinfo-card p {
+      font-size: 0.85rem;
+      color: var(--white);
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    /* Main two-column layout */
+    .contact-main {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* Map */
+    .map-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .map-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .map-card-head i { color: var(--gold); font-size: 1rem; }
+    .map-card-head h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--white);
+    }
+    .map-card iframe {
+      width: 100%;
+      height: 380px;
+      border: none;
+      display: block;
+      filter: grayscale(20%) contrast(1.05);
+    }
+    .map-address {
+      padding: 16px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .map-address i { color: var(--gold); margin-top: 3px; font-size: 0.9rem; flex-shrink: 0; }
+    .map-address p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+    .map-address p strong { color: var(--white); display: block; margin-bottom: 2px; }
+
+    /* Contact form card */
+    .form-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 28px 24px;
+    }
+    .form-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .form-card-head i { color: var(--gold); font-size: 1rem; }
+    .form-card-head h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--white);
+    }
+
+    .cf-field { margin-bottom: 18px; }
+    .cf-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 7px;
+      letter-spacing: 0.3px;
+    }
+    .cf-field label span { color: var(--red); }
+
+    .cf-input-wrap { position: relative; }
+    .cf-input-wrap > i {
+      position: absolute;
+      left: 13px; top: 13px;
+      color: var(--gold); font-size: 13px;
+      pointer-events: none;
+    }
+    .cf-input-wrap input,
+    .cf-input-wrap select {
+      width: 100%;
+      padding: 11px 14px 11px 38px;
+      background: var(--dark3);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 0.86rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      appearance: none;
+    }
+    .cf-input-wrap input::placeholder { color: var(--muted); }
+    .cf-input-wrap input:focus,
+    .cf-input-wrap select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+    }
+    .cf-input-wrap select option { background: var(--dark3); }
+
+    .cf-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--dark3);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 0.86rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      resize: vertical;
+      min-height: 110px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .cf-textarea::placeholder { color: var(--muted); }
+    .cf-textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+    }
+
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .cf-err {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--red);
+      margin-top: 5px;
+      min-height: 13px;
+    }
+
+    .cf-submit {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border: none; border-radius: 10px;
+      color: #1a1200;
+      font-size: 0.92rem; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      box-shadow: 0 6px 20px rgba(201,162,39,0.35);
+      margin-top: 6px;
+    }
+    .cf-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,162,39,0.5); filter: brightness(1.08); }
+    .cf-submit i { transition: transform 0.3s; }
+    .cf-submit:hover i { transform: translateX(4px); }
+
+    /* Success state */
+    .cf-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 30px 10px;
+      gap: 14px;
+    }
+    .cf-success.show { display: flex; }
+    .cf-success-icon {
+      width: 64px; height: 64px;
+      background: rgba(62,207,142,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      color: var(--green);
+    }
+    .cf-success h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+    }
+    .cf-success p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .cf-success-back {
+      padding: 9px 22px;
+      background: rgba(201,162,39,0.12);
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: 8px;
+      color: var(--gold);
+      font-size: 0.84rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cf-success-back:hover { background: rgba(201,162,39,0.22); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      background: var(--dark3);
+      border: 1px solid rgba(62,207,142,0.3);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem; color: var(--white);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      z-index: 999;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast i { color: var(--green); font-size: 1.1rem; }
+
+    /* Light mode overrides */
+    body.light-mode .map-card,
+    body.light-mode .form-card,
+    body.light-mode .cinfo-card {
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    body.light-mode .map-card-head,
+    body.light-mode .map-address,
+    body.light-mode .form-card-head { border-color: rgba(0,0,0,0.07); }
+    body.light-mode .cf-input-wrap input,
+    body.light-mode .cf-input-wrap select,
+    body.light-mode .cf-textarea { border-color: rgba(0,0,0,0.12); color: var(--white); }
+    body.light-mode .map-card iframe { filter: none; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .contact-info-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-main { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .contact-wrap { padding: 20px 14px; gap: 20px; }
+      .contact-info-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .cinfo-card { padding: 16px 12px; }
+      .cf-row { grid-template-columns: 1fr; gap: 0; }
+      .contact-heading h1 { font-size: 1.5rem; }
+      .map-card iframe { height: 260px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -18,12 +341,12 @@
     </div>
     <ul class="topbar-nav" id="topbarNav">
       <li><a href="matter.html" class="tnav-link">Home</a></li>
-      <li><a href="contact.html" class="tnav-link active">Contact Us</a></li>
-      <li><a href="blog.html" class="tnav-link">Blog</a></li>
       <li><a href="terms.html" class="tnav-link">Terms &amp; Conditions</a></li>
+      <li><a href="blog.html" class="tnav-link">Blog</a></li>
+      <li><a href="contact.html" class="tnav-link active">Contact Us</a></li>
     </ul>
     <div class="topbar-right">
-      <a href="chat.html" class="chat-btn"><i class="fas fa-comments"></i><span class="chat-btn-text"> Chat with Us</span></a>
+
       <div class="topbar-right-icons">
         <div class="notif-wrap" id="notifWrap">
           <button class="notif-btn" id="notifBtn">
@@ -38,7 +361,6 @@
             <div class="notif-list" id="notifList"></div>
           </div>
         </div>
-        <!-- Theme Toggle -->
         <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
           <i class="fas fa-sun" id="themeIcon"></i>
         </button>
@@ -60,37 +382,233 @@
     </div>
   </header>
 
-  <!-- PAGE CONTENT — to be designed later -->
-  <div class="layout">
-    <div style="grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--muted);">
-      <i class="fas fa-envelope" style="font-size:3rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
-      <h2 style="font-family:'Playfair Display',serif;color:var(--white);margin-bottom:8px;">Contact Us</h2>
-      <p>This page is coming soon.</p>
+  <!-- CONTACT PAGE -->
+  <div class="contact-wrap">
+
+    <!-- Heading -->
+    <div class="contact-heading">
+      <h1>Get In Touch</h1>
+      <p>We're here to help. Reach out to us through any of the channels below.</p>
+      <div class="gold-line"></div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="contact-info-grid">
+      <a class="cinfo-card" href="tel:+919662633144">
+        <div class="cinfo-icon green"><i class="fas fa-phone"></i></div>
+        <h4>Phone</h4>
+        <p>+91 96626 33144</p>
+      </a>
+      <a class="cinfo-card" href="mailto:dkcorporatelawfirm@gmail.com">
+        <div class="cinfo-icon gold"><i class="fas fa-envelope"></i></div>
+        <h4>Email</h4>
+        <p>dkcorporatelawfirm@gmail.com</p>
+      </a>
+      <a class="cinfo-card" href="https://instagram.com/dk_corporate_law_firm" target="_blank" rel="noopener">
+        <div class="cinfo-icon pink"><i class="fab fa-instagram"></i></div>
+        <h4>Instagram</h4>
+        <p>@dk_corporate_law_firm</p>
+      </a>
+      <a class="cinfo-card" href="https://maps.google.com/?q=B-718,The+One+World,Ayodhya+Chowk,150+ft+Ring+Road,Rajkot" target="_blank" rel="noopener">
+        <div class="cinfo-icon blue"><i class="fas fa-location-dot"></i></div>
+        <h4>Office</h4>
+        <p>B-718, The One World, Ayodhya Chowk, Rajkot – 360006</p>
+      </a>
+    </div>
+
+    <!-- Map + Form -->
+    <div class="contact-main">
+
+      <!-- Google Map -->
+      <div class="map-card">
+        <div class="map-card-head">
+          <i class="fas fa-map-location-dot"></i>
+          <h3>Our Location</h3>
+        </div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.686!2d70.7780!3d22.2965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959ca2b9b5b5b5b%3A0x1234567890abcdef!2sAyodhya%20Chowk%2C%20150%20Ft%20Ring%20Rd%2C%20Rajkot%2C%20Gujarat%20360006!5e0!3m2!1sen!2sin!4v1700000000000"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="DK Corporate Law Firm Location">
+        </iframe>
+        <div class="map-address">
+          <i class="fas fa-location-dot"></i>
+          <p>
+            <strong>DK Corporate Law Firm</strong>
+            B-718, "The One World", Ayodhya Chowk,<br>
+            150 ft Ring Road, Rajkot – 360006,<br>
+            Gujarat, India
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="form-card">
+        <div class="form-card-head">
+          <i class="fas fa-paper-plane"></i>
+          <h3>Send Us a Message</h3>
+        </div>
+
+        <form id="contactForm" novalidate>
+          <div class="cf-row">
+            <div class="cf-field">
+              <label>Full Name <span>*</span></label>
+              <div class="cf-input-wrap">
+                <i class="fas fa-user"></i>
+                <input type="text" id="cfName" placeholder="Your full name"/>
+              </div>
+              <span class="cf-err" id="cfNameErr"></span>
+            </div>
+            <div class="cf-field">
+              <label>Phone Number <span>*</span></label>
+              <div class="cf-input-wrap">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="cfPhone" placeholder="+91 XXXXX XXXXX"/>
+              </div>
+              <span class="cf-err" id="cfPhoneErr"></span>
+            </div>
+          </div>
+
+          <div class="cf-field">
+            <label>Email Address <span>*</span></label>
+            <div class="cf-input-wrap">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="cfEmail" placeholder="you@example.com"/>
+            </div>
+            <span class="cf-err" id="cfEmailErr"></span>
+          </div>
+
+          <div class="cf-field">
+            <label>Subject / Service Required</label>
+            <div class="cf-input-wrap">
+              <i class="fas fa-briefcase"></i>
+              <select id="cfSubject">
+                <option value="">— Select a service —</option>
+                <option>Legal Consultation</option>
+                <option>Case Filing</option>
+                <option>Notice / Legal Notice</option>
+                <option>Agreement / Contract</option>
+                <option>Corporate Advisory</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="cf-field">
+            <label>Message <span>*</span></label>
+            <textarea id="cfMessage" class="cf-textarea" placeholder="Describe your legal matter or query…"></textarea>
+            <span class="cf-err" id="cfMessageErr"></span>
+          </div>
+
+          <button type="submit" class="cf-submit">
+            Send Message <i class="fas fa-paper-plane"></i>
+          </button>
+        </form>
+
+        <!-- Success state -->
+        <div class="cf-success" id="cfSuccess">
+          <div class="cf-success-icon"><i class="fas fa-check"></i></div>
+          <h4>Message Sent!</h4>
+          <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+          <button class="cf-success-back" id="cfSuccessBack">Send Another Message</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMsg">Message sent successfully!</span>
+  </div>
+
   <script>
+    // User session
     const s = sessionStorage.getItem('lexfirm_user');
-    if(s){ const u=JSON.parse(s); document.getElementById('userEmail').textContent=u.email; document.getElementById('userAvatar').textContent=u.email[0].toUpperCase(); }
-    document.getElementById('mobileMenuBtn').addEventListener('click',function(){
+    if (s) {
+      const u = JSON.parse(s);
+      document.getElementById('userEmail').textContent = u.email;
+      document.getElementById('userAvatar').textContent = u.email[0].toUpperCase();
+    }
+
+    // Mobile nav
+    document.getElementById('mobileMenuBtn').addEventListener('click', function () {
       document.getElementById('topbarNav').classList.toggle('open');
       this.classList.toggle('active');
     });
-    function applyTheme(mode){
-      document.body.classList.toggle('light-mode', mode==='light');
-      const icon = mode==='light' ? 'fa-moon' : 'fa-sun';
-      document.getElementById('themeIcon').className = 'fas '+icon;
-      document.getElementById('themeIconMobile').className = 'fas '+icon;
+
+    // Theme
+    function applyTheme(mode) {
+      document.body.classList.toggle('light-mode', mode === 'light');
+      const icon = mode === 'light' ? 'fa-moon' : 'fa-sun';
+      document.getElementById('themeIcon').className = 'fas ' + icon;
+      document.getElementById('themeIconMobile').className = 'fas ' + icon;
     }
-    const savedTheme = localStorage.getItem('lexfirm_theme') || 'dark';
-    applyTheme(savedTheme);
-    function toggleTheme(){
+    applyTheme(localStorage.getItem('lexfirm_theme') || 'dark');
+    function toggleTheme() {
       const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
       localStorage.setItem('lexfirm_theme', next);
       applyTheme(next);
     }
     document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
     document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+    // Toast helper
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // Form validation & submit
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      let valid = true;
+
+      const name    = document.getElementById('cfName').value.trim();
+      const phone   = document.getElementById('cfPhone').value.trim();
+      const email   = document.getElementById('cfEmail').value.trim();
+      const message = document.getElementById('cfMessage').value.trim();
+
+      document.getElementById('cfNameErr').textContent    = '';
+      document.getElementById('cfPhoneErr').textContent   = '';
+      document.getElementById('cfEmailErr').textContent   = '';
+      document.getElementById('cfMessageErr').textContent = '';
+
+      if (!name) {
+        document.getElementById('cfNameErr').textContent = 'Full name is required.';
+        valid = false;
+      }
+      if (!phone || !/^[+\d\s\-]{7,15}$/.test(phone)) {
+        document.getElementById('cfPhoneErr').textContent = 'Enter a valid phone number.';
+        valid = false;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('cfEmailErr').textContent = 'Enter a valid email address.';
+        valid = false;
+      }
+      if (!message) {
+        document.getElementById('cfMessageErr').textContent = 'Please enter your message.';
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      // Show success
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('cfSuccess').classList.add('show');
+      showToast('Message sent successfully!');
+    });
+
+    // Reset form
+    document.getElementById('cfSuccessBack').addEventListener('click', function () {
+      document.getElementById('contactForm').reset();
+      document.getElementById('contactForm').style.display = 'block';
+      document.getElementById('cfSuccess').classList.remove('show');
+    });
   </script>
 </body>
 </html>

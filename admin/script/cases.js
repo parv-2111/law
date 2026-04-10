@@ -122,8 +122,7 @@ function closeModal() {
 }
 
 window.openEdit = function(id) {
-  const c = loadCases().find(x => x.id === id);
-  if (c) openModal(c);
+  location.href = 'cases_edit.html?id=' + id;
 };
 
 document.getElementById('btnAddCase').addEventListener('click',    () => openModal());

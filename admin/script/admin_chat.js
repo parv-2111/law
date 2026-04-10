@@ -10,57 +10,88 @@ function getDateLabel(ts) {
   return d.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
 }
 
-// ── Load all client chat keys from localStorage
-function getAllClientEmails() {
-  const emails = [];
+// ── Load all per-matter chat keys from localStorage
+// Key format: lexfirm_chat_{email}_{matterId}
+function getAllChatEntries() {
+  const entries = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key.startsWith('lexfirm_chat_')) {
-      emails.push(key.replace('lexfirm_chat_', ''));
+    if (!key.startsWith('lexfirm_chat_')) continue;
+
+    // Strip prefix
+    const rest = key.replace('lexfirm_chat_', '');
+
+    // Split on last underscore to separate email from matterId
+    // email can contain underscores so we split from the right
+    // matterId is numeric (Date.now()) or 'general'
+    const lastUnderscore = rest.lastIndexOf('_');
+    if (lastUnderscore === -1) {
+      // Old format: lexfirm_chat_{email} — treat as general
+      entries.push({ key, email: rest, matterId: 'general', matterName: 'General Chat' });
+    } else {
+      const email    = rest.slice(0, lastUnderscore);
+      const matterId = rest.slice(lastUnderscore + 1);
+      // Resolve matter name from user's matters in localStorage
+      const matterName = getMatterName(email, matterId);
+      entries.push({ key, email, matterId, matterName });
     }
   }
-  return emails;
+  return entries;
 }
 
-function loadChat(email) {
-  const raw = localStorage.getItem(`lexfirm_chat_${email}`);
+function getMatterName(email, matterId) {
+  if (matterId === 'general') return 'General Chat';
+  try {
+    const matters = JSON.parse(localStorage.getItem(`lexfirm_matters_${email}`) || '[]');
+    const m = matters.find(x => String(x.id) === String(matterId));
+    return m ? m.name : `Matter #${String(matterId).slice(-6)}`;
+  } catch(e) { return `Matter #${String(matterId).slice(-6)}`; }
+}
+
+function loadChat(key) {
+  const raw = localStorage.getItem(key);
   return raw ? JSON.parse(raw) : [];
 }
 
-function saveChat(email, msgs) {
-  localStorage.setItem(`lexfirm_chat_${email}`, JSON.stringify(msgs));
+function saveChat(key, msgs) {
+  localStorage.setItem(key, JSON.stringify(msgs));
 }
 
 // ── State
-let activeEmail = null;
+let activeKey = null;
 
 // ── Render client list
 function renderClientList(filter = '') {
-  const emails = getAllClientEmails();
-  const list   = document.getElementById('acClientList');
-  document.getElementById('clientCount').textContent = emails.length;
+  const entries = getAllChatEntries();
+  const list    = document.getElementById('acClientList');
+  document.getElementById('clientCount').textContent = entries.length;
 
-  const filtered = emails.filter(e => e.toLowerCase().includes(filter.toLowerCase()));
+  const q = filter.toLowerCase();
+  const filtered = entries.filter(e =>
+    e.email.toLowerCase().includes(q) ||
+    e.matterName.toLowerCase().includes(q)
+  );
 
   if (!filtered.length) {
     list.innerHTML = `<div class="ac-empty"><i class="fas fa-inbox"></i><p>No client chats yet.</p></div>`;
     return;
   }
 
-  list.innerHTML = filtered.map(email => {
-    const msgs     = loadChat(email);
-    const last     = msgs[msgs.length - 1];
-    const unread   = msgs.filter(m => m.type === 'sent' && !m.adminRead).length;
-    const preview  = last ? (last.fileData ? `📎 ${last.fileData.name}` : last.text) : 'No messages';
-    const timeStr  = last ? getTime(last.ts) : '';
-    const initial  = email.charAt(0).toUpperCase();
-    const isActive = email === activeEmail ? 'active' : '';
+  list.innerHTML = filtered.map(entry => {
+    const msgs    = loadChat(entry.key);
+    const last    = msgs[msgs.length - 1];
+    const unread  = msgs.filter(m => m.type === 'sent' && !m.adminRead).length;
+    const preview = last ? (last.fileData ? `📎 ${last.fileData.name}` : last.text) : 'No messages yet';
+    const timeStr = last ? getTime(last.ts) : '';
+    const initial = entry.email.charAt(0).toUpperCase();
+    const isActive = entry.key === activeKey ? 'active' : '';
 
     return `
-      <div class="ac-client-item ${isActive}" onclick="selectClient('${email}')">
+      <div class="ac-client-item ${isActive}" onclick="selectChat('${entry.key}')">
         <div class="ac-client-avatar">${initial}</div>
         <div class="ac-client-info">
-          <div class="ac-client-name">${email}</div>
+          <div class="ac-client-name">${entry.matterName}</div>
+          <div class="ac-client-preview" style="font-size:0.7rem;color:var(--muted);margin-bottom:2px;">${entry.email}</div>
           <div class="ac-client-preview">${preview}</div>
         </div>
         <div class="ac-client-meta">
@@ -71,29 +102,33 @@ function renderClientList(filter = '') {
   }).join('');
 }
 
-// ── Select a client and load their chat
-window.selectClient = function(email) {
-  activeEmail = email;
+// ── Select a chat
+window.selectChat = function(key) {
+  activeKey = key;
 
-  // Mark all sent messages as read
-  const msgs = loadChat(email).map(m => ({ ...m, adminRead: true }));
-  saveChat(email, msgs);
+  // Mark all sent messages as admin-read
+  const msgs = loadChat(key).map(m => ({ ...m, adminRead: true }));
+  saveChat(key, msgs);
+
+  // Find entry info
+  const entries = getAllChatEntries();
+  const entry   = entries.find(e => e.key === key) || { email: key, matterName: 'Chat' };
 
   // Update header
-  document.getElementById('acHeaderAvatar').textContent = email.charAt(0).toUpperCase();
-  document.getElementById('acHeaderName').textContent   = email;
-  document.getElementById('acHeaderSub').textContent    = `${msgs.length} messages`;
+  document.getElementById('acHeaderAvatar').textContent = entry.email.charAt(0).toUpperCase();
+  document.getElementById('acHeaderName').textContent   = entry.matterName;
+  document.getElementById('acHeaderSub').textContent    = entry.email + ' · ' + msgs.length + ' messages';
 
   // Show chat panel
-  document.getElementById('acNoChat').style.display    = 'none';
+  document.getElementById('acNoChat').style.display     = 'none';
   document.getElementById('acActiveChat').style.display = 'flex';
 
-  renderMessages(msgs);
+  renderMessages(msgs, entry.email);
   renderClientList(document.getElementById('acSearch').value);
 };
 
 // ── Render messages
-function renderMessages(msgs) {
+function renderMessages(msgs, clientEmail) {
   const container = document.getElementById('acMessages');
   container.innerHTML = '';
   let lastLabel = '';
@@ -105,10 +140,9 @@ function renderMessages(msgs) {
       container.innerHTML += `<div class="ac-date-divider"><span>${label}</span></div>`;
     }
 
-    // client sent = 'sent', admin reply = 'received'
     const isAdmin  = msg.type === 'received';
     const rowClass = isAdmin ? 'admin' : 'client';
-    const avText   = isAdmin ? '<i class="fas fa-balance-scale"></i>' : (activeEmail || '?').charAt(0).toUpperCase();
+    const avText   = isAdmin ? '<i class="fas fa-balance-scale"></i>' : (clientEmail || '?').charAt(0).toUpperCase();
 
     let content = '';
     if (msg.fileData) {
@@ -135,22 +169,23 @@ function renderMessages(msgs) {
 
 // ── Send admin reply
 function sendReply() {
-  if (!activeEmail) return;
+  if (!activeKey) return;
   const input = document.getElementById('acInput');
   const text  = input.innerText.trim();
   if (!text) return;
 
-  const msgs = loadChat(activeEmail);
+  const msgs = loadChat(activeKey);
   const msg  = { text, type: 'received', ts: Date.now(), adminRead: true };
   msgs.push(msg);
-  saveChat(activeEmail, msgs);
+  saveChat(activeKey, msgs);
 
   input.innerText = '';
-  renderMessages(msgs);
-  renderClientList(document.getElementById('acSearch').value);
 
-  // Update header sub
-  document.getElementById('acHeaderSub').textContent = `${msgs.length} messages`;
+  const entries = getAllChatEntries();
+  const entry   = entries.find(e => e.key === activeKey) || {};
+  renderMessages(msgs, entry.email);
+  renderClientList(document.getElementById('acSearch').value);
+  document.getElementById('acHeaderSub').textContent = (entry.email || '') + ' · ' + msgs.length + ' messages';
 }
 
 document.getElementById('acSendBtn').addEventListener('click', sendReply);
@@ -160,26 +195,30 @@ document.getElementById('acInput').addEventListener('keydown', e => {
 
 // ── Clear chat
 document.getElementById('acClearBtn').addEventListener('click', () => {
-  if (!activeEmail) return;
-  if (!confirm(`Clear all chat history for ${activeEmail}?`)) return;
-  localStorage.removeItem(`lexfirm_chat_${activeEmail}`);
-  activeEmail = null;
-  document.getElementById('acNoChat').style.display    = 'flex';
+  if (!activeKey) return;
+  const entries = getAllChatEntries();
+  const entry   = entries.find(e => e.key === activeKey) || {};
+  if (!confirm(`Clear all chat history for "${entry.matterName || activeKey}"?`)) return;
+  localStorage.removeItem(activeKey);
+  activeKey = null;
+  document.getElementById('acNoChat').style.display     = 'flex';
   document.getElementById('acActiveChat').style.display = 'none';
   renderClientList();
 });
 
-// ── Search clients
+// ── Search
 document.getElementById('acSearch').addEventListener('input', e => {
   renderClientList(e.target.value);
 });
 
-// ── Auto-refresh client list every 3s to pick up new client messages
+// ── Auto-refresh every 3s
 setInterval(() => {
   renderClientList(document.getElementById('acSearch').value);
-  if (activeEmail) {
-    const msgs = loadChat(activeEmail);
-    renderMessages(msgs);
+  if (activeKey) {
+    const msgs    = loadChat(activeKey);
+    const entries = getAllChatEntries();
+    const entry   = entries.find(e => e.key === activeKey) || {};
+    renderMessages(msgs, entry.email);
   }
 }, 3000);
 

@@ -7,6 +7,260 @@
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ── Big full-width calendar ── */
+    .big-cal-wrap {
+      margin: 24px 28px;
+      background: var(--navy2);
+      border: 1px solid rgba(201,162,39,0.15);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .big-cal-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+    }
+    .big-cal-header-left {
+      display: flex; align-items: center; gap: 14px; flex: 1;
+    }
+    .big-cal-header-left i { font-size: 1.4rem; color: var(--gold); }
+    .big-cal-header-left h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--white);
+    }
+    .big-cal-header-left p { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    .big-cal-nav {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .big-cal-nav span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--white);
+      min-width: 180px; text-align: center;
+    }
+    .big-cal-nav button {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--navy3);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted); cursor: pointer;
+      font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .big-cal-nav button:hover { background: rgba(201,162,39,0.12); color: var(--gold); border-color: rgba(201,162,39,0.3); }
+
+    .big-cal-today-btn {
+      padding: 8px 18px;
+      border-radius: 9px;
+      background: rgba(201,162,39,0.1);
+      border: 1px solid rgba(201,162,39,0.25);
+      color: var(--gold);
+      font-size: 0.82rem; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .big-cal-today-btn:hover { background: rgba(201,162,39,0.2); }
+
+    /* Day names header */
+    .big-cal-days-head {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .big-cal-days-head span {
+      padding: 10px 0;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .big-cal-days-head span:first-child { color: var(--red); opacity: 0.7; }
+    .big-cal-days-head span:last-child  { color: var(--blue); opacity: 0.7; }
+
+    /* Calendar grid */
+    .big-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .bc-day {
+      min-height: 110px;
+      border-right: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding: 8px;
+      position: relative;
+      transition: background 0.15s;
+      vertical-align: top;
+    }
+    .bc-day:nth-child(7n) { border-right: none; }
+    .bc-day.other-month { opacity: 0.3; }
+    .bc-day.today {
+      background: rgba(201,162,39,0.06);
+    }
+    .bc-day.today .bc-day-num {
+      background: var(--gold);
+      color: #1a1200;
+      border-radius: 50%;
+    }
+    .bc-day.selected { background: rgba(201,162,39,0.1); }
+    .bc-day:hover { background: rgba(255,255,255,0.02); cursor: pointer; }
+
+    .bc-day-num {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--white);
+      border-radius: 50%;
+      margin-bottom: 4px;
+      flex-shrink: 0;
+    }
+    .bc-day.other-month .bc-day-num { color: var(--muted); }
+
+    /* Event chips inside day cell */
+    .bc-events { display: flex; flex-direction: column; gap: 3px; }
+    .bc-event {
+      font-size: 0.68rem;
+      font-weight: 500;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      line-height: 1.5;
+    }
+    .bc-event:hover { opacity: 0.8; }
+    .bc-event.type-case      { background: rgba(224,85,85,0.2);   color: #ff8080; }
+    .bc-event.type-notice    { background: rgba(74,144,217,0.2);  color: #7ab8ff; }
+    .bc-event.type-agreement { background: rgba(201,162,39,0.2);  color: var(--gold2); }
+    .bc-event.type-advise    { background: rgba(62,207,142,0.2);  color: var(--green); }
+    .bc-event.type-other     { background: rgba(155,109,255,0.2); color: #c4a0ff; }
+    .bc-event.from-case      { background: rgba(224,85,85,0.18);  color: #ff8080; }
+    .bc-event.from-matter    { background: rgba(155,109,255,0.18);color: #c4a0ff; }
+    .bc-more {
+      font-size: 0.65rem;
+      color: var(--muted);
+      padding: 1px 4px;
+      cursor: pointer;
+    }
+    .bc-more:hover { color: var(--gold); }
+
+    /* ── Hearings section ── */
+    .hearings-section {
+      margin: 0 28px 32px;
+    }
+    .hearings-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .hearings-section-title {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hearings-section-title i { color: var(--gold); font-size: 1.1rem; }
+    .hearings-section-title h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--white);
+    }
+
+    /* Hearings as a responsive grid of cards */
+    .hearings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .hg-card {
+      background: var(--navy2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-left: 4px solid var(--green);
+      border-radius: 14px;
+      padding: 18px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .hg-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); border-left-color: var(--gold); }
+    .hg-card.past  { opacity: 0.6; border-left-color: var(--muted); }
+    .hg-card.today-card { border-left-color: var(--gold); background: rgba(201,162,39,0.04); }
+
+    .hg-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px; gap: 8px;
+    }
+    .hg-date {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; font-weight: 600; color: var(--green);
+    }
+    .hg-card.past .hg-date { color: var(--muted); }
+    .hg-card.today-card .hg-date { color: var(--gold); }
+
+    .hg-matter {
+      font-size: 0.92rem; font-weight: 600;
+      color: var(--white); margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .hg-meta {
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .hg-meta-row {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 0.75rem; color: var(--muted);
+    }
+    .hg-meta-row i { color: var(--gold); font-size: 0.7rem; width: 12px; text-align: center; }
+
+    .hearings-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--muted);
+    }
+    .hearings-empty i { font-size: 2.5rem; color: rgba(201,162,39,0.2); display: block; margin-bottom: 12px; }
+
+    /* Light mode */
+    body.admin-light .big-cal-wrap { border-color: rgba(201,162,39,0.2); }
+    body.admin-light .big-cal-header { border-bottom-color: rgba(0,0,0,0.07); }
+    body.admin-light .big-cal-days-head { border-bottom-color: rgba(0,0,0,0.07); }
+    body.admin-light .bc-day { border-color: rgba(0,0,0,0.05); }
+    body.admin-light .bc-day.today { background: rgba(201,162,39,0.08); }
+    body.admin-light .hg-card { border-color: rgba(0,0,0,0.08); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .big-cal-wrap, .hearings-section { margin-left: 16px; margin-right: 16px; }
+      .bc-day { min-height: 70px; }
+      .bc-event { display: none; }
+      .bc-day.has-event .bc-day-num::after {
+        content: '';
+        display: block;
+        width: 5px; height: 5px;
+        background: var(--gold);
+        border-radius: 50%;
+        margin: 2px auto 0;
+      }
+    }
+    @media (max-width: 600px) {
+      .big-cal-days-head span { font-size: 0.6rem; }
+      .bc-day { min-height: 48px; padding: 4px; }
+      .bc-day-num { width: 22px; height: 22px; font-size: 0.72rem; }
+      .big-cal-nav span { min-width: 130px; font-size: 0.95rem; }
+      .hearings-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body class="dashboard-body">
 
@@ -14,6 +268,7 @@
     <div class="sidebar-brand">
       <i class="fas fa-balance-scale"></i>
       <span>DK CORPORATE LAW FIRM</span>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar"><i class="fas fa-bars"></i></button>
     </div>
     <div class="sidebar-search">
       <i class="fas fa-search"></i>
@@ -38,58 +293,72 @@
     </div>
   </aside>
 
-  <main class="main-content">
-    <h1 class="page-title">Dashboard</h1>
-    <p class="page-sub">Welcome back, Admin. Here's your overview.</p>
+  <main class="main-content" style="padding:0;">
 
-    <div class="cards-grid">
-      <a href="cases.html" class="stat-card card-blue">
-        <div class="card-icon"><i class="fas fa-folder-open"></i></div>
-        <div class="stat-num">55</div>
-        <div class="stat-label">Total Cases</div>
-        <i class="fas fa-arrow-right stat-arrow"></i>
-      </a>
-      <a href="clients.html" class="stat-card card-gold">
-        <div class="card-icon"><i class="fas fa-users"></i></div>
-        <div class="stat-num">63</div>
-        <div class="stat-label">Total Clients</div>
-        <i class="fas fa-arrow-right stat-arrow"></i>
-      </a>
-      <a href="payments.html" class="stat-card card-purple">
-        <div class="card-icon"><i class="fas fa-credit-card"></i></div>
-        <div class="stat-num">$48k</div>
-        <div class="stat-label">Total Payments</div>
-        <i class="fas fa-arrow-right stat-arrow"></i>
-      </a>
-      <a href="matters.html" class="stat-card card-green">
-        <div class="card-icon"><i class="fas fa-scale-balanced"></i></div>
-        <div class="stat-num">42</div>
-        <div class="stat-label">Total Matters</div>
-        <i class="fas fa-arrow-right stat-arrow"></i>
-      </a>
+    <!-- Stat cards -->
+    <div style="padding:28px 28px 0;">
+      <div class="cards-grid">
+        <a href="cases.html" class="stat-card card-blue">
+          <div class="card-icon"><i class="fas fa-folder-open"></i></div>
+          <div class="stat-num" id="sc-cases">0</div>
+          <div class="stat-label">Total Cases</div>
+          <i class="fas fa-arrow-right stat-arrow"></i>
+        </a>
+        <a href="clients.html" class="stat-card card-gold">
+          <div class="card-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-num">63</div>
+          <div class="stat-label">Total Clients</div>
+          <i class="fas fa-arrow-right stat-arrow"></i>
+        </a>
+        <a href="payments.html" class="stat-card card-purple">
+          <div class="card-icon"><i class="fas fa-credit-card"></i></div>
+          <div class="stat-num">$48k</div>
+          <div class="stat-label">Total Payments</div>
+          <i class="fas fa-arrow-right stat-arrow"></i>
+        </a>
+        <a href="matters.html" class="stat-card card-green">
+          <div class="card-icon"><i class="fas fa-scale-balanced"></i></div>
+          <div class="stat-num" id="sc-matters">0</div>
+          <div class="stat-label">Total Matters</div>
+          <i class="fas fa-arrow-right stat-arrow"></i>
+        </a>
+      </div>
     </div>
 
-    <!-- ── HEARING CALENDAR ── -->
-    <div class="dash-calendar-wrap">
-      <div class="dash-cal-panel">
-        <div class="dash-section-head">
+    <!-- Full-width Calendar -->
+    <div class="big-cal-wrap">
+
+      <!-- Calendar header -->
+      <div class="big-cal-header">
+        <div class="big-cal-header-left">
           <i class="fas fa-calendar-days"></i>
-          <h2>Hearing Calendar</h2>
-        </div>
-        <div class="dash-cal">
-          <div class="dash-cal-nav">
-            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-            <span id="calTitle"></span>
-            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+          <div>
+            <h2>Hearing Calendar</h2>
+            <p>All case dates fetched from Cases, Matters &amp; Notices</p>
           </div>
-          <div class="dash-cal-days-head">
-            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-          </div>
-          <div class="dash-cal-grid" id="calGrid"></div>
         </div>
+        <div class="big-cal-nav">
+          <button id="prevMonth" title="Previous month"><i class="fas fa-chevron-left"></i></button>
+          <span id="calTitle"></span>
+          <button id="nextMonth" title="Next month"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <button class="big-cal-today-btn" id="todayBtn">Today</button>
       </div>
-      <div class="dash-hearings-panel">
-        <div class="dash-section-head">
+
+      <!-- Day names -->
+      <div class="big-cal-days-head">
+        <span>Sunday</span><span>Monday</span><span>Tuesday</span><span>Wednesday</span><span>Thursday</span><span>Friday</span><span>Saturday</span>
+      </div>
+
+      <!-- Calendar grid -->
+      <div class="big-cal-grid" id="calGrid"></div>
+
+    </div>
+
+    <!-- Scheduled Hearings list -->
+    <div class="hearings-section">
+      <div class="hearings-section-head">
+        <div class="hearings-section-title">
           <i class="fas fa-gavel"></i>
           <h2>Scheduled Hearings</h2>
           <span class="hearing-count" id="hearingCount">0</span>
@@ -100,11 +369,11 @@
           <button class="hf-btn" data-filter="today">Today</button>
           <button class="hf-btn" data-filter="past">Past</button>
         </div>
-        <div class="hearings-list" id="hearingsList"></div>
       </div>
+      <div class="hearings-grid" id="hearingsList"></div>
     </div>
 
-    <!-- ── HEARING DETAIL MODAL ── -->
+    <!-- Hearing detail modal -->
     <div class="hearing-modal-overlay" id="hearingModalOverlay">
       <div class="hearing-modal" id="hearingModal">
         <button class="modal-close" id="modalClose"><i class="fas fa-xmark"></i></button>
@@ -130,6 +399,15 @@
       document.getElementById('themeToggleBtn').addEventListener('click',function(){
         var n=document.body.classList.contains('admin-light')?'dark':'light';
         localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+    (function(){
+      var s=document.querySelector('.sidebar'),m=document.querySelector('.main-content');
+      var exp=localStorage.getItem('sidebarExpanded')==="1";if(exp){s.classList.add("expanded");}if(m)m.style.marginLeft=exp?"var(--sidebar-w)":"64px";
+      document.getElementById('sidebarToggle').addEventListener('click',function(){
+        var open=s.classList.toggle('expanded');
+        if(m)m.style.marginLeft=open?'var(--sidebar-w)':'64px';
+        localStorage.setItem('sidebarExpanded',open?'1':'0');
       });
     })();
   </script>

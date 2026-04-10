@@ -101,8 +101,7 @@ function closeNoticeModal() {
 }
 
 window.openEdit = function(id) {
-  const n = loadNotices().find(x => x.id === id);
-  if (n) openNoticeModal(n);
+  location.href = 'notices_edit.html?id=' + id;
 };
 
 document.getElementById('btnAddNotice').addEventListener('click',     () => openNoticeModal());

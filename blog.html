@@ -7,6 +7,253 @@
   <link rel="stylesheet" href="css/matter.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .blog-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 36px 20px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ── Heading ── */
+    .blog-heading {
+      text-align: center;
+    }
+    .blog-heading h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .blog-heading p { color: var(--muted); font-size: 0.88rem; }
+    .gold-line {
+      width: 56px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 2px;
+      margin: 12px auto 0;
+    }
+
+    /* ── Stats banner ── */
+    .stats-banner {
+      background: linear-gradient(135deg, #0f1e35 0%, #1a2e4a 50%, #0f1e35 100%);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-banner::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(201,162,39,0.05);
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 8px 16px;
+      position: relative;
+    }
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 10%; bottom: 10%;
+      width: 1px;
+      background: rgba(201,162,39,0.2);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold2);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-num span { font-size: 1.6rem; }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.4px;
+    }
+    .stat-icon {
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    /* ── Section title ── */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title i { color: var(--gold); font-size: 1.1rem; }
+    .section-title h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--white);
+    }
+    .section-title .stitle-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* ── Case cards ── */
+    .cases-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .case-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .case-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201,162,39,0.25);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+    }
+
+    .case-img {
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+    }
+    .case-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .case-card:hover .case-img img { transform: scale(1.05); }
+
+    .case-rank {
+      position: absolute;
+      top: 10px; left: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #1a1200;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+
+    .case-body {
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .case-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .case-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .badge-won      { background: rgba(62,207,142,0.15);  color: var(--green); }
+    .badge-settled  { background: rgba(201,162,39,0.15);  color: var(--gold); }
+    .badge-advisory { background: rgba(74,144,217,0.15);  color: var(--blue); }
+    .badge-corporate{ background: rgba(155,109,255,0.15); color: var(--purple); }
+    .badge-notice   { background: rgba(224,85,85,0.12);   color: var(--red); }
+
+    .case-year {
+      font-size: 0.72rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .case-year i { font-size: 0.65rem; color: var(--gold); }
+
+    .case-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    .case-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .case-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .case-stat {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .case-stat i { color: var(--gold); font-size: 0.7rem; }
+
+    /* Light mode */
+    body.light-mode .stats-banner {
+      background: linear-gradient(135deg, #e0e8f5 0%, #f0f4ff 50%, #e0e8f5 100%);
+      border-color: rgba(201,162,39,0.25);
+    }
+    body.light-mode .case-card {
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    body.light-mode .case-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .stats-banner { padding: 24px 16px; }
+      .stat-num { font-size: 1.8rem; }
+
+      .case-card { grid-template-columns: 1fr; }
+      .case-img { min-height: 180px; max-height: 200px; }
+      .case-body { padding: 16px; }
+      .case-title { font-size: 0.98rem; }
+
+      .blog-heading h1 { font-size: 1.5rem; }
+      .blog-wrap { padding: 24px 14px 40px; gap: 24px; }
+    }
+
+    @media (max-width: 420px) {
+      .stats-banner { grid-template-columns: 1fr; gap: 20px; }
+      .stat-item::after { display: none; }
+      .stat-item { padding: 0; }
+    }
+  </style>
 </head>
 <body>
 
@@ -18,12 +265,12 @@
     </div>
     <ul class="topbar-nav" id="topbarNav">
       <li><a href="matter.html" class="tnav-link">Home</a></li>
-      <li><a href="contact.html" class="tnav-link">Contact Us</a></li>
-      <li><a href="blog.html" class="tnav-link active">Blog</a></li>
       <li><a href="terms.html" class="tnav-link">Terms &amp; Conditions</a></li>
+      <li><a href="blog.html" class="tnav-link active">Blog</a></li>
+      <li><a href="contact.html" class="tnav-link">Contact Us</a></li>
     </ul>
     <div class="topbar-right">
-      <a href="chat.html" class="chat-btn"><i class="fas fa-comments"></i><span class="chat-btn-text"> Chat with Us</span></a>
+
       <div class="topbar-right-icons">
         <div class="notif-wrap" id="notifWrap">
           <button class="notif-btn" id="notifBtn">
@@ -38,7 +285,6 @@
             <div class="notif-list" id="notifList"></div>
           </div>
         </div>
-        <!-- Theme Toggle -->
         <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
           <i class="fas fa-sun" id="themeIcon"></i>
         </button>
@@ -60,31 +306,161 @@
     </div>
   </header>
 
-  <!-- PAGE CONTENT — to be designed later -->
-  <div class="layout">
-    <div style="grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--muted);">
-      <i class="fas fa-newspaper" style="font-size:3rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
-      <h2 style="font-family:'Playfair Display',serif;color:var(--white);margin-bottom:8px;">Blog</h2>
-      <p>This page is coming soon.</p>
+  <div class="blog-wrap">
+
+    <!-- Heading -->
+    <div class="blog-heading">
+      <h1>Our Case Highlights</h1>
+      <p>A glimpse into our legal journey and landmark victories.</p>
+      <div class="gold-line"></div>
+    </div>
+
+    <!-- Stats Banner -->
+    <div class="stats-banner">
+      <div class="stat-item">
+        <div class="stat-icon"><i class="fas fa-folder-open"></i></div>
+        <div class="stat-num">968<span>+</span></div>
+        <div class="stat-label">Cases Handled</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+        <div class="stat-num">850<span>+</span></div>
+        <div class="stat-label">Cases Won / Settled</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon"><i class="fas fa-user-tie"></i></div>
+        <div class="stat-num">12<span>+</span></div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+    </div>
+
+    <!-- Top 5 Cases -->
+    <div class="section-title">
+      <i class="fas fa-gavel"></i>
+      <h2>Top 5 Notable Cases</h2>
+      <div class="stitle-line"></div>
+    </div>
+
+    <div class="cases-list">
+
+      <!-- Case 1 -->
+      <div class="case-card">
+        <div class="case-img">
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=80" alt="Corporate Dispute Case"/>
+          <span class="case-rank">#1</span>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-badge badge-won">Won</span>
+            <span class="case-year"><i class="fas fa-calendar"></i> 2023</span>
+          </div>
+          <div class="case-title">High-Value Corporate Fraud &amp; Asset Recovery</div>
+          <div class="case-desc">Successfully represented a mid-size manufacturing company in a ₹4.2 Cr corporate fraud case. Secured full asset recovery and criminal conviction of the accused directors through meticulous evidence gathering and strategic litigation.</div>
+          <div class="case-footer">
+            <span class="case-stat"><i class="fas fa-scale-balanced"></i> Civil &amp; Criminal</span>
+            <span class="case-stat"><i class="fas fa-location-dot"></i> Gujarat High Court</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case-card">
+        <div class="case-img">
+          <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&q=80" alt="Property Dispute"/>
+          <span class="case-rank">#2</span>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-badge badge-won">Won</span>
+            <span class="case-year"><i class="fas fa-calendar"></i> 2022</span>
+          </div>
+          <div class="case-title">Commercial Property Title Dispute — Rajkot</div>
+          <div class="case-desc">Defended a client's rightful ownership of a prime commercial property worth ₹2.8 Cr against fraudulent title claims. The court upheld our client's title deed and awarded litigation costs, setting a precedent in local property law.</div>
+          <div class="case-footer">
+            <span class="case-stat"><i class="fas fa-scale-balanced"></i> Property Law</span>
+            <span class="case-stat"><i class="fas fa-location-dot"></i> Rajkot Civil Court</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="case-card">
+        <div class="case-img">
+          <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=80" alt="Labour Law Case"/>
+          <span class="case-rank">#3</span>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-badge badge-settled">Settled</span>
+            <span class="case-year"><i class="fas fa-calendar"></i> 2023</span>
+          </div>
+          <div class="case-title">Mass Labour Dispute — 120 Workers' Rights</div>
+          <div class="case-desc">Represented 120 factory workers in an unlawful termination and unpaid wages dispute against a large textile company. Negotiated a favourable out-of-court settlement securing full back-pay, gratuity, and reinstatement for all workers.</div>
+          <div class="case-footer">
+            <span class="case-stat"><i class="fas fa-scale-balanced"></i> Labour Law</span>
+            <span class="case-stat"><i class="fas fa-location-dot"></i> Labour Tribunal, Rajkot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 4 -->
+      <div class="case-card">
+        <div class="case-img">
+          <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80" alt="Contract Advisory"/>
+          <span class="case-rank">#4</span>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-badge badge-advisory">Advisory</span>
+            <span class="case-year"><i class="fas fa-calendar"></i> 2024</span>
+          </div>
+          <div class="case-title">Cross-Border Joint Venture Agreement — ₹10 Cr Deal</div>
+          <div class="case-desc">Provided end-to-end legal advisory for a ₹10 Cr joint venture between an Indian and UAE-based company. Drafted and negotiated all transaction documents, ensuring full regulatory compliance under FEMA and Companies Act 2013.</div>
+          <div class="case-footer">
+            <span class="case-stat"><i class="fas fa-scale-balanced"></i> Corporate Law</span>
+            <span class="case-stat"><i class="fas fa-location-dot"></i> Gujarat &amp; UAE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 5 -->
+      <div class="case-card">
+        <div class="case-img">
+          <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Notice Case"/>
+          <span class="case-rank">#5</span>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-badge badge-notice">Notice</span>
+            <span class="case-year"><i class="fas fa-calendar"></i> 2022</span>
+          </div>
+          <div class="case-title">Cheque Dishonour — NI Act Section 138 Recovery</div>
+          <div class="case-desc">Filed and successfully prosecuted a cheque dishonour case under Section 138 of the Negotiable Instruments Act for a client owed ₹75 Lakh. Secured a conviction and full recovery of the amount along with interest and legal costs within 14 months.</div>
+          <div class="case-footer">
+            <span class="case-stat"><i class="fas fa-scale-balanced"></i> NI Act / Criminal</span>
+            <span class="case-stat"><i class="fas fa-location-dot"></i> Rajkot Magistrate Court</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script>
     const s = sessionStorage.getItem('lexfirm_user');
-    if(s){ const u=JSON.parse(s); document.getElementById('userEmail').textContent=u.email; document.getElementById('userAvatar').textContent=u.email[0].toUpperCase(); }
-    document.getElementById('mobileMenuBtn').addEventListener('click',function(){
+    if (s) { const u = JSON.parse(s); document.getElementById('userEmail').textContent = u.email; document.getElementById('userAvatar').textContent = u.email[0].toUpperCase(); }
+    document.getElementById('mobileMenuBtn').addEventListener('click', function () {
       document.getElementById('topbarNav').classList.toggle('open');
       this.classList.toggle('active');
     });
-    function applyTheme(mode){
-      document.body.classList.toggle('light-mode', mode==='light');
-      const icon = mode==='light' ? 'fa-moon' : 'fa-sun';
-      document.getElementById('themeIcon').className = 'fas '+icon;
-      document.getElementById('themeIconMobile').className = 'fas '+icon;
+    function applyTheme(mode) {
+      document.body.classList.toggle('light-mode', mode === 'light');
+      const icon = mode === 'light' ? 'fa-moon' : 'fa-sun';
+      document.getElementById('themeIcon').className = 'fas ' + icon;
+      document.getElementById('themeIconMobile').className = 'fas ' + icon;
     }
-    const savedTheme = localStorage.getItem('lexfirm_theme') || 'dark';
-    applyTheme(savedTheme);
-    function toggleTheme(){
+    applyTheme(localStorage.getItem('lexfirm_theme') || 'dark');
+    function toggleTheme() {
       const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
       localStorage.setItem('lexfirm_theme', next);
       applyTheme(next);

@@ -20,7 +20,7 @@
           <span id="sideEmail">You</span>
         </div>
         <div class="sidebar-icons">
-          <a href="matter.html" title="Back"><i class="fas fa-arrow-left"></i></a>
+          <a href="matter.html" id="backLink" title="Back"><i class="fas fa-arrow-left"></i></a>
         </div>
       </div>
 
@@ -36,7 +36,7 @@
           </div>
           <div class="contact-info">
             <div class="contact-top">
-              <span class="contact-name">DK LAW Team</span>
+              <span class="contact-name" id="sidebarMatterName">DK LAW Team</span>
               <span class="contact-time" id="lastTime">Now</span>
             </div>
             <div class="contact-preview" id="lastPreview">Hello! How can we help you today?</div>
@@ -51,19 +51,18 @@
       <!-- Chat Header -->
       <div class="chat-header">
         <div class="chat-header-left">
-          <a href="matter.html" class="mobile-back"><i class="fas fa-arrow-left"></i></a>
+          <a href="matter.html" class="mobile-back" id="backLinkMobile"><i class="fas fa-arrow-left"></i></a>
           <div class="contact-avatar firm sm">
             <i class="fas fa-balance-scale"></i>
           </div>
           <div>
-            <div class="chat-name">DK LAW Team</div>
+            <div class="chat-name" id="chatMatterName">DK LAW Team</div>
             <div class="chat-status" id="chatStatus">
-              <span class="status-dot online"></span> Online
+              <span class="status-dot online"></span> <span id="chatMatterNameSub">Online</span>
             </div>
           </div>
         </div>
         <div class="chat-header-right">
-          <button title="Search"><i class="fas fa-magnifying-glass"></i></button>
           <button title="More"><i class="fas fa-ellipsis-vertical"></i></button>
         </div>
       </div>
@@ -114,5 +113,11 @@
   </div>
 
   <script src="script/chat.js"></script>
+  <script>
+    (function () {
+      var t = localStorage.getItem('lexfirm_theme') || 'dark';
+      if (t === 'light') document.body.classList.add('light-mode');
+    })();
+  </script>
 </body>
 </html>

@@ -14,6 +14,7 @@
     <div class="sidebar-brand">
       <i class="fas fa-balance-scale"></i>
       <span>DK CORPORATE LAW FIRM</span>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar"><i class="fas fa-bars"></i></button>
     </div>
     <div class="sidebar-search">
       <i class="fas fa-search"></i>
@@ -152,50 +153,9 @@
       </div>
     </div>
 
-    <!-- HEARING CALENDAR -->
-    <div class="dash-calendar-wrap">
-      <div class="dash-cal-panel">
-        <div class="dash-section-head">
-          <i class="fas fa-calendar-days"></i>
-          <h2>Hearing Calendar</h2>
-        </div>
-        <div class="dash-cal">
-          <div class="dash-cal-nav">
-            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-            <span id="calTitle"></span>
-            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
-          </div>
-          <div class="dash-cal-days-head">
-            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-          </div>
-          <div class="dash-cal-grid" id="calGrid"></div>
-        </div>
-      </div>
-      <div class="dash-hearings-panel">
-        <div class="dash-section-head">
-          <i class="fas fa-gavel"></i>
-          <h2>Scheduled Hearings</h2>
-          <span class="hearing-count" id="hearingCount">0</span>
-        </div>
-        <div class="hearing-filters">
-          <button class="hf-btn active" data-filter="all">All</button>
-          <button class="hf-btn" data-filter="upcoming">Upcoming</button>
-          <button class="hf-btn" data-filter="today">Today</button>
-          <button class="hf-btn" data-filter="past">Past</button>
-        </div>
-        <div class="hearings-list" id="hearingsList"></div>
-      </div>
-    </div>
+    
 
-    <div class="hearing-modal-overlay" id="hearingModalOverlay">
-      <div class="hearing-modal" id="hearingModal">
-        <button class="modal-close" id="modalClose"><i class="fas fa-xmark"></i></button>
-        <div class="modal-badge" id="modalBadge"></div>
-        <h3 class="modal-title" id="modalTitle"></h3>
-        <div class="modal-meta" id="modalMeta"></div>
-        <div class="modal-details" id="modalDetails"></div>
-      </div>
-    </div>
+    
 
   </main>
 
@@ -213,6 +173,15 @@
       document.getElementById('themeToggleBtn').addEventListener('click',function(){
         var n=document.body.classList.contains('admin-light')?'dark':'light';
         localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+    (function(){
+      var s=document.querySelector('.sidebar'),m=document.querySelector('.main-content');
+      var exp=localStorage.getItem("sidebarExpanded")==="1";if(exp){s.classList.add("expanded");}if(m)m.style.marginLeft=exp?"var(--sidebar-w)":"64px";
+      document.getElementById('sidebarToggle').addEventListener('click',function(){
+        var open=s.classList.toggle('expanded');
+        if(m)m.style.marginLeft=open?'var(--sidebar-w)':'64px';
+        localStorage.setItem('sidebarExpanded',open?'1':'0');
       });
     })();
   </script>

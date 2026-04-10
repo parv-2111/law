@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Matters | DK CORPORATE LAW FIRM</title>
+  <link rel="stylesheet" href="css/matter.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ── Page wrap ── */
+    .am-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 48px;
+    }
+
+    /* ── Page header ── */
+    .am-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .am-header-left { display: flex; align-items: center; gap: 12px; }
+    .am-header-left a {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .am-header-left a:hover { background: rgba(201,162,39,0.1); color: var(--gold); border-color: rgba(201,162,39,0.3); }
+    .am-header-left h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+
+    /* ── Stat pills ── */
+    .am-stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .am-stat-pill {
+      display: flex; align-items: center; gap: 7px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1.5px solid;
+    }
+    .am-stat-pill.total   { background: rgba(74,144,217,0.1);  border-color: rgba(74,144,217,0.25);  color: var(--blue); }
+    .am-stat-pill.running { background: rgba(155,109,255,0.1); border-color: rgba(155,109,255,0.25); color: var(--purple); }
+    .am-stat-pill.pending { background: rgba(201,162,39,0.1);  border-color: rgba(201,162,39,0.25);  color: var(--gold); }
+    .am-stat-pill.done    { background: rgba(62,207,142,0.1);  border-color: rgba(62,207,142,0.25);  color: var(--green); }
+
+    /* ── Toolbar ── */
+    .am-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .am-search {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+    .am-search > i {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted); font-size: 0.8rem;
+      pointer-events: none;
+    }
+    .am-search input {
+      width: 100%;
+      padding: 10px 12px 10px 34px;
+      background: var(--dark2);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .am-search input:focus { border-color: var(--gold); }
+    .am-search input::placeholder { color: var(--muted); }
+
+    .am-filter-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .am-fbtn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .am-fbtn:hover { border-color: var(--gold); color: var(--gold); }
+    .am-fbtn.active { background: var(--gold); border-color: var(--gold); color: #1a1200; font-weight: 600; }
+
+    /* ── Cards list ── */
+    .am-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .am-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px 20px;
+      align-items: start;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .am-card:hover {
+      border-color: rgba(201,162,39,0.3);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      transform: translateY(-2px);
+    }
+
+    .am-card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .am-type-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      flex-shrink: 0;
+    }
+    .am-type-badge.notice    { background: rgba(74,144,217,0.15);  color: var(--blue); }
+    .am-type-badge.agreement { background: rgba(201,162,39,0.15);  color: var(--gold); }
+    .am-type-badge.case      { background: rgba(224,85,85,0.15);   color: var(--red); }
+    .am-type-badge.advise    { background: rgba(62,207,142,0.15);  color: var(--green); }
+    .am-type-badge.other     { background: rgba(155,109,255,0.15); color: var(--purple); }
+
+    .am-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .am-card-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .am-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .am-meta-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .am-meta-item i { color: var(--gold); font-size: 0.7rem; }
+
+    /* Status badge — right column */
+    .am-status-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .am-status {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .am-status.running   { background: rgba(155,109,255,0.15); color: var(--purple); }
+    .am-status.pending   { background: rgba(201,162,39,0.15);  color: var(--gold); }
+    .am-status.completed { background: rgba(62,207,142,0.15);  color: var(--green); }
+
+    .am-matter-no {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    /* ── Empty state ── */
+    .am-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .am-empty i { font-size: 3rem; color: rgba(201,162,39,0.2); display: block; margin-bottom: 16px; }
+    .am-empty h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .am-empty p { font-size: 0.85rem; margin-bottom: 20px; }
+    .am-empty a {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border-radius: 10px;
+      color: #1a1200;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(201,162,39,0.3);
+    }
+    .am-empty a:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(201,162,39,0.45); }
+
+    /* ── View arrow ── */
+    .am-view-arrow {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(201,162,39,0.08);
+      color: var(--gold);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .am-card:hover .am-view-arrow { background: rgba(201,162,39,0.18); transform: translateX(3px); }
+    body.light-mode .am-header-left a { border-color: rgba(0,0,0,0.1); }
+    body.light-mode .am-card { border-color: rgba(0,0,0,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    body.light-mode .am-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    body.light-mode .am-search input { border-color: rgba(0,0,0,0.1); }
+    body.light-mode .am-fbtn { border-color: rgba(0,0,0,0.12); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .am-wrap { padding: 18px 14px 40px; }
+      .am-card { grid-template-columns: 1fr; }
+      .am-status-col { flex-direction: row; align-items: center; }
+      .am-header-left h1 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <i class="fas fa-balance-scale"></i>
+      <span class="firm-name">DK CORPORATE LAW FIRM</span>
+    </div>
+    <ul class="topbar-nav" id="topbarNav">
+      <li><a href="matter.html" class="tnav-link">Home</a></li>
+      <li><a href="terms.html" class="tnav-link">Terms &amp; Conditions</a></li>
+      <li><a href="blog.html" class="tnav-link">Blog</a></li>
+      <li><a href="contact.html" class="tnav-link">Contact Us</a></li>
+    </ul>
+    <div class="topbar-right">
+
+      <div class="topbar-right-icons">
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
+          <i class="fas fa-sun" id="themeIcon"></i>
+        </button>
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div class="user-text">
+            <span class="welcome-text">Welcome,</span>
+            <span class="user-email" id="userEmail">user@email.com</span>
+          </div>
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <button class="theme-toggle-btn theme-toggle-mobile" id="themeToggleMobile" title="Toggle light/dark mode">
+            <i class="fas fa-sun" id="themeIconMobile"></i>
+          </button>
+          <a href="login.html" class="logout-btn" title="Logout"><i class="fas fa-right-from-bracket"></i></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="am-wrap">
+
+    <!-- Page header -->
+    <div class="am-header">
+      <div class="am-header-left">
+        <a href="matter.html" title="Back to Home"><i class="fas fa-arrow-left"></i></a>
+        <h1>My Matters</h1>
+      </div>
+      <div class="am-stats" id="amStats"></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="am-toolbar">
+      <div class="am-search">
+        <i class="fas fa-search"></i>
+        <input type="text" id="amSearch" placeholder="Search by name or description…"/>
+      </div>
+      <div class="am-filter-btns">
+        <button class="am-fbtn active" data-filter="all">All</button>
+        <button class="am-fbtn" data-filter="running">Running</button>
+        <button class="am-fbtn" data-filter="pending">Pending</button>
+        <button class="am-fbtn" data-filter="completed">Completed</button>
+      </div>
+    </div>
+
+    <!-- Matters list -->
+    <div class="am-list" id="amList"></div>
+
+  </div>
+
+  <script>
+    /* ── Session ── */
+    const email = sessionStorage.getItem('userEmail') || 'user@email.com';
+    document.getElementById('userEmail').textContent = email;
+    document.getElementById('userAvatar').textContent = email.charAt(0).toUpperCase();
+
+    /* ── Theme ── */
+    function applyTheme(mode) {
+      document.body.classList.toggle('light-mode', mode === 'light');
+      const icon = mode === 'light' ? 'fa-moon' : 'fa-sun';
+      document.getElementById('themeIcon').className = 'fas ' + icon;
+      document.getElementById('themeIconMobile').className = 'fas ' + icon;
+    }
+    applyTheme(localStorage.getItem('lexfirm_theme') || 'dark');
+    function toggleTheme() {
+      const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+      localStorage.setItem('lexfirm_theme', next);
+      applyTheme(next);
+    }
+    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+    document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+
+    /* ── Mobile nav ── */
+    document.getElementById('mobileMenuBtn').addEventListener('click', function () {
+      document.getElementById('topbarNav').classList.toggle('open');
+      this.classList.toggle('active');
+    });
+
+    /* ── Load matters ── */
+    const MATTERS_KEY = `lexfirm_matters_${email}`;
+    function loadMatters() {
+      return JSON.parse(localStorage.getItem(MATTERS_KEY) || '[]');
+    }
+
+    /* ── Helpers ── */
+    const TYPE_LABELS = { notice: 'Notice', agreement: 'Agreement', case: 'Case', advise: 'Legal Advise', other: 'Other' };
+
+    function formatDate(iso) {
+      return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function matterNo(id) {
+      return 'MN-' + String(id).slice(-6);
+    }
+
+    /* ── Render stats ── */
+    function renderStats(matters) {
+      const total     = matters.length;
+      const running   = matters.filter(m => m.status === 'running').length;
+      const pending   = matters.filter(m => m.status === 'pending').length;
+      const completed = matters.filter(m => m.status === 'completed').length;
+      document.getElementById('amStats').innerHTML = `
+        <div class="am-stat-pill total"><i class="fas fa-layer-group"></i> ${total} Total</div>
+        <div class="am-stat-pill running"><i class="fas fa-spinner"></i> ${running} Running</div>
+        <div class="am-stat-pill pending"><i class="fas fa-clock"></i> ${pending} Pending</div>
+        <div class="am-stat-pill done"><i class="fas fa-circle-check"></i> ${completed} Completed</div>
+      `;
+    }
+
+    /* ── Render list ── */
+    function renderList(matters) {
+      const container = document.getElementById('amList');
+      if (!matters.length) {
+        container.innerHTML = `
+          <div class="am-empty">
+            <i class="fas fa-folder-open"></i>
+            <h3>No matters found</h3>
+            <p>No matters match your current filter or search.</p>
+            <a href="matter.html"><i class="fas fa-plus"></i> Submit a Matter</a>
+          </div>`;
+        return;
+      }
+      container.innerHTML = matters.map(m => `
+        <a class="am-card" href="client_matter_detail.html?id=${m.id}">
+          <div class="am-card-body">
+            <div class="am-card-top">
+              <span class="am-type-badge ${m.type}">${TYPE_LABELS[m.type] || m.type}</span>
+              <span class="am-card-title">${m.name}</span>
+            </div>
+            <div class="am-card-desc">${m.desc}</div>
+            <div class="am-card-meta">
+              <span class="am-meta-item"><i class="fas fa-calendar"></i> Submitted: ${formatDate(m.date)}</span>
+              <span class="am-meta-item"><i class="fas fa-hashtag"></i> ${matterNo(m.id)}</span>
+            </div>
+          </div>
+          <div class="am-status-col">
+            <span class="am-status ${m.status}">${m.status.charAt(0).toUpperCase() + m.status.slice(1)}</span>
+            <span class="am-matter-no">${matterNo(m.id)}</span>
+            <div class="am-view-arrow"><i class="fas fa-arrow-right"></i></div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    /* ── Filter & search logic ── */
+    let activeFilter = 'all';
+    let searchQuery  = '';
+
+    function applyFilters() {
+      let matters = loadMatters();
+      if (activeFilter !== 'all') matters = matters.filter(m => m.status === activeFilter);
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        matters = matters.filter(m =>
+          m.name.toLowerCase().includes(q) ||
+          m.desc.toLowerCase().includes(q) ||
+          (TYPE_LABELS[m.type] || '').toLowerCase().includes(q)
+        );
+      }
+      // newest first
+      matters.sort((a, b) => b.id - a.id);
+      renderList(matters);
+    }
+
+    /* ── Init ── */
+    const allMatters = loadMatters();
+    renderStats(allMatters);
+    applyFilters();
+
+    /* ── Filter buttons ── */
+    document.querySelectorAll('.am-fbtn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.am-fbtn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeFilter = this.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    /* ── Search ── */
+    document.getElementById('amSearch').addEventListener('input', function () {
+      searchQuery = this.value.trim();
+      applyFilters();
+    });
+  </script>
+</body>
+</html>

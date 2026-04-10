@@ -14,6 +14,7 @@
     <div class="sidebar-brand">
       <i class="fas fa-balance-scale"></i>
       <span>DK CORPORATE LAW FIRM</span>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar"><i class="fas fa-bars"></i></button>
     </div>
     <div class="sidebar-search">
       <i class="fas fa-search"></i>
@@ -156,6 +157,15 @@
       document.getElementById('themeToggleBtn').addEventListener('click',function(){
         var n=document.body.classList.contains('admin-light')?'dark':'light';
         localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+      });
+    })();
+    (function(){
+      var s=document.querySelector('.sidebar'),m=document.querySelector('.main-content');
+      var exp=localStorage.getItem("sidebarExpanded")==="1";if(exp){s.classList.add("expanded");}if(m)m.style.marginLeft=exp?"var(--sidebar-w)":"64px";
+      document.getElementById('sidebarToggle').addEventListener('click',function(){
+        var open=s.classList.toggle('expanded');
+        if(m)m.style.marginLeft=open?'var(--sidebar-w)':'64px';
+        localStorage.setItem('sidebarExpanded',open?'1':'0');
       });
     })();
   </script>

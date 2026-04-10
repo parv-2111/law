@@ -7,6 +7,208 @@
   <link rel="stylesheet" href="css/matter.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .terms-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 36px 20px 52px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ── Header ── */
+    .terms-header {
+      text-align: center;
+    }
+    .terms-header .th-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, rgba(201,162,39,0.15), rgba(232,200,74,0.1));
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: 18px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .terms-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .terms-header p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .gold-line {
+      width: 56px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+
+    /* ── Last updated pill ── */
+    .terms-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .terms-meta i { color: var(--gold); font-size: 0.72rem; }
+    .terms-meta span { color: var(--gold); font-weight: 600; }
+
+    /* ── Accordion terms ── */
+    .terms-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .term-item {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .term-item.open {
+      border-color: rgba(201,162,39,0.28);
+    }
+
+    .term-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .term-num {
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      background: rgba(201,162,39,0.12);
+      border: 1px solid rgba(201,162,39,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .term-item.open .term-num {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #1a1200;
+      border-color: transparent;
+    }
+
+    .term-icon {
+      font-size: 1rem;
+      color: var(--muted);
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .term-item.open .term-icon { color: var(--gold); }
+
+    .term-title {
+      flex: 1;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    .term-arrow {
+      font-size: 0.78rem;
+      color: var(--muted);
+      transition: transform 0.3s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .term-item.open .term-arrow {
+      transform: rotate(180deg);
+      color: var(--gold);
+    }
+
+    .term-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s ease;
+      padding: 0 20px;
+    }
+    .term-item.open .term-body {
+      max-height: 400px;
+      padding: 0 20px 20px;
+    }
+
+    .term-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 16px;
+    }
+    .term-item.open .term-divider { background: rgba(201,162,39,0.12); }
+
+    .term-body p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .term-body p strong { color: var(--white); }
+
+    /* ── Footer note ── */
+    .terms-footer {
+      background: var(--dark2);
+      border: 1px solid rgba(201,162,39,0.15);
+      border-radius: 14px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .terms-footer i {
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .terms-footer p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .terms-footer p strong { color: var(--white); }
+    .terms-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .terms-footer a:hover { text-decoration: underline; }
+
+    /* Light mode */
+    body.light-mode .term-item { border-color: rgba(0,0,0,0.08); }
+    body.light-mode .term-item.open { border-color: rgba(201,162,39,0.3); }
+    body.light-mode .term-divider { background: rgba(0,0,0,0.07); }
+    body.light-mode .terms-footer { border-color: rgba(201,162,39,0.2); }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .terms-wrap { padding: 24px 14px 40px; gap: 22px; }
+      .terms-header h1 { font-size: 1.5rem; }
+      .term-trigger { padding: 15px 16px; gap: 12px; }
+      .term-body { padding: 0 16px; }
+      .term-item.open .term-body { padding: 0 16px 16px; }
+      .terms-footer { padding: 16px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -18,12 +220,12 @@
     </div>
     <ul class="topbar-nav" id="topbarNav">
       <li><a href="matter.html" class="tnav-link">Home</a></li>
-      <li><a href="contact.html" class="tnav-link">Contact Us</a></li>
-      <li><a href="blog.html" class="tnav-link">Blog</a></li>
       <li><a href="terms.html" class="tnav-link active">Terms &amp; Conditions</a></li>
+      <li><a href="blog.html" class="tnav-link">Blog</a></li>
+      <li><a href="contact.html" class="tnav-link">Contact Us</a></li>
     </ul>
     <div class="topbar-right">
-      <a href="chat.html" class="chat-btn"><i class="fas fa-comments"></i><span class="chat-btn-text"> Chat with Us</span></a>
+
       <div class="topbar-right-icons">
         <div class="notif-wrap" id="notifWrap">
           <button class="notif-btn" id="notifBtn">
@@ -38,7 +240,6 @@
             <div class="notif-list" id="notifList"></div>
           </div>
         </div>
-        <!-- Theme Toggle -->
         <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle light/dark mode">
           <i class="fas fa-sun" id="themeIcon"></i>
         </button>
@@ -60,31 +261,164 @@
     </div>
   </header>
 
-  <!-- PAGE CONTENT — to be designed later -->
-  <div class="layout">
-    <div style="grid-column:1/-1; text-align:center; padding:80px 20px; color:var(--muted);">
-      <i class="fas fa-file-contract" style="font-size:3rem;color:var(--gold);margin-bottom:16px;display:block;"></i>
-      <h2 style="font-family:'Playfair Display',serif;color:var(--white);margin-bottom:8px;">Terms &amp; Conditions</h2>
-      <p>This page is coming soon.</p>
+  <div class="terms-wrap">
+
+    <!-- Header -->
+    <div class="terms-header">
+      <div class="th-icon"><i class="fas fa-file-contract"></i></div>
+      <h1>Terms &amp; Conditions</h1>
+      <p>Please read these terms carefully before using our services. By engaging with DK Corporate Law Firm, you agree to the following.</p>
+      <div class="gold-line"></div>
     </div>
+
+    <!-- Last updated -->
+    <div class="terms-meta">
+      <i class="fas fa-clock"></i> Last updated: <span>January 2025</span>
+    </div>
+
+    <!-- Terms accordion -->
+    <div class="terms-list">
+
+      <div class="term-item open">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">01</div>
+          <i class="term-icon fas fa-handshake"></i>
+          <span class="term-title">Acceptance of Terms</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>By accessing our website, portal, or engaging our legal services, you confirm that you have read, understood, and agree to be bound by these Terms &amp; Conditions. If you do not agree with any part of these terms, you must discontinue use of our services immediately. <strong>These terms apply to all clients, visitors, and users</strong> of DK Corporate Law Firm's platforms and services.</p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">02</div>
+          <i class="term-icon fas fa-user-shield"></i>
+          <span class="term-title">Confidentiality &amp; Attorney-Client Privilege</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>All information shared with DK Corporate Law Firm is treated as <strong>strictly confidential</strong> and protected under attorney-client privilege as per the Bar Council of India Rules. We will not disclose your personal, financial, or case-related information to any third party without your explicit written consent, except where required by law or court order.</p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">03</div>
+          <i class="term-icon fas fa-file-invoice-dollar"></i>
+          <span class="term-title">Fees, Payments &amp; Retainer</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>Legal fees are agreed upon in writing before commencement of any matter. <strong>Retainer fees are non-refundable</strong> once work has commenced. Additional charges may apply for court filings, travel, or third-party expenses and will be communicated in advance. Invoices are due within 7 days of issuance unless otherwise agreed. Late payments may attract interest at 12% per annum.</p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">04</div>
+          <i class="term-icon fas fa-circle-exclamation"></i>
+          <span class="term-title">Limitation of Liability</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>DK Corporate Law Firm provides legal advice based on the facts and information supplied by the client. <strong>We do not guarantee any specific legal outcome</strong>, judgment, or result. Our liability in any matter shall not exceed the total fees paid for that specific matter. We are not liable for losses arising from incomplete or inaccurate information provided by the client.</p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">05</div>
+          <i class="term-icon fas fa-lock"></i>
+          <span class="term-title">Data Privacy &amp; Security</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>We collect only the personal data necessary to provide our legal services. Your data is stored securely and handled in accordance with applicable Indian data protection laws. <strong>We do not sell or share your data</strong> with advertisers or unrelated third parties. You may request access to, correction of, or deletion of your personal data at any time by contacting us at <strong>dkcorporatelawfirm@gmail.com</strong>.</p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">06</div>
+          <i class="term-icon fas fa-ban"></i>
+          <span class="term-title">Termination of Services</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>Either party may terminate the engagement with <strong>14 days' written notice</strong>. The firm reserves the right to withdraw from representation if the client provides false information, fails to pay fees, or requests actions that violate professional ethics or the law. Upon termination, all outstanding fees for work completed remain payable. Client documents will be returned within a reasonable time.</p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">07</div>
+          <i class="term-icon fas fa-globe"></i>
+          <span class="term-title">Intellectual Property</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>All content on this website and client portal — including text, design, logos, and legal templates — is the <strong>intellectual property of DK Corporate Law Firm</strong>. You may not reproduce, distribute, or use any content for commercial purposes without prior written permission. Legal documents drafted specifically for a client remain the client's property upon full payment of fees.</p>
+        </div>
+      </div>
+
+      <div class="term-item">
+        <button class="term-trigger" onclick="toggleTerm(this)">
+          <div class="term-num">08</div>
+          <i class="term-icon fas fa-scale-balanced"></i>
+          <span class="term-title">Governing Law &amp; Jurisdiction</span>
+          <i class="term-arrow fas fa-chevron-down"></i>
+        </button>
+        <div class="term-body">
+          <div class="term-divider"></div>
+          <p>These Terms &amp; Conditions are governed by the laws of <strong>India</strong> and the rules of the Bar Council of Gujarat. Any disputes arising out of or in connection with these terms shall be subject to the <strong>exclusive jurisdiction of the courts in Rajkot, Gujarat</strong>. We encourage resolution of disputes through mutual discussion before initiating formal legal proceedings.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer note -->
+    <div class="terms-footer">
+      <i class="fas fa-circle-info"></i>
+      <p>Have questions about these terms? We're happy to clarify. Reach us at <a href="mailto:dkcorporatelawfirm@gmail.com">dkcorporatelawfirm@gmail.com</a> or call <a href="tel:+919662633144">+91 96626 33144</a>. These terms may be updated periodically — continued use of our services constitutes acceptance of the revised terms.</p>
+    </div>
+
   </div>
 
   <script>
+    function toggleTerm(btn) {
+      const item = btn.closest('.term-item');
+      const isOpen = item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.term-item').forEach(i => i.classList.remove('open'));
+      // open clicked if it was closed
+      if (!isOpen) item.classList.add('open');
+    }
+
     const s = sessionStorage.getItem('lexfirm_user');
-    if(s){ const u=JSON.parse(s); document.getElementById('userEmail').textContent=u.email; document.getElementById('userAvatar').textContent=u.email[0].toUpperCase(); }
-    document.getElementById('mobileMenuBtn').addEventListener('click',function(){
+    if (s) { const u = JSON.parse(s); document.getElementById('userEmail').textContent = u.email; document.getElementById('userAvatar').textContent = u.email[0].toUpperCase(); }
+
+    document.getElementById('mobileMenuBtn').addEventListener('click', function () {
       document.getElementById('topbarNav').classList.toggle('open');
       this.classList.toggle('active');
     });
-    function applyTheme(mode){
-      document.body.classList.toggle('light-mode', mode==='light');
-      const icon = mode==='light' ? 'fa-moon' : 'fa-sun';
-      document.getElementById('themeIcon').className = 'fas '+icon;
-      document.getElementById('themeIconMobile').className = 'fas '+icon;
+
+    function applyTheme(mode) {
+      document.body.classList.toggle('light-mode', mode === 'light');
+      const icon = mode === 'light' ? 'fa-moon' : 'fa-sun';
+      document.getElementById('themeIcon').className = 'fas ' + icon;
+      document.getElementById('themeIconMobile').className = 'fas ' + icon;
     }
-    const savedTheme = localStorage.getItem('lexfirm_theme') || 'dark';
-    applyTheme(savedTheme);
-    function toggleTheme(){
+    applyTheme(localStorage.getItem('lexfirm_theme') || 'dark');
+    function toggleTheme() {
       const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
       localStorage.setItem('lexfirm_theme', next);
       applyTheme(next);
