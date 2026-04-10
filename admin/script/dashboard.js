@@ -1,12 +1,21 @@
-// ── Hardcoded hearings
-const HEARINGS = [
-  { id:1,  date:'2026-03-23', time:'10:00 AM – 12:00 PM', user:'Rahul Sharma',  matter:'Property Dispute – Mumbai',   type:'case',      court:'Bombay High Court, Court No. 4', judge:'Hon. Justice A. Sharma',   notes:'Bring all original property documents and sale deed copies.' },
-  { id:2,  date:'2026-03-27', time:'9:00 AM – 11:00 AM',  user:'Priya Mehta',   matter:'Contract Review – TechCorp',  type:'agreement', court:'Delhi District Court',           judge:'Hon. Justice R. Mehta',    notes:'Final review of vendor agreement. Confirm clause 7 amendments.' },
-  { id:3,  date:'2026-04-05', time:'11:00 AM – 1:00 PM',  user:'Amit Patel',    matter:'Legal Notice – Landlord',     type:'notice',    court:'Pune Civil Court',               judge:'Hon. Justice S. Patil',    notes:'Notice response deadline. Ensure acknowledgment receipt is attached.' },
-  { id:4,  date:'2026-04-15', time:'2:00 PM – 4:00 PM',   user:'Sneha Rao',     matter:'GST Compliance Advice',       type:'advise',    court:'ITAT Mumbai Bench',              judge:'Hon. Member P. Gupta',     notes:'Advisory session on GST input credit dispute. Bring last 3 years of returns.' },
-  { id:5,  date:'2026-04-22', time:'10:30 AM – 12:30 PM', user:'Rahul Sharma',  matter:'Property Dispute – Mumbai',   type:'case',      court:'Bombay High Court, Court No. 4', judge:'Hon. Justice A. Sharma',   notes:'Second hearing. Witness examination scheduled.' },
-  { id:6,  date:'2026-05-08', time:'3:00 PM – 5:00 PM',   user:'Karan Singh',   matter:'Employment Dispute',          type:'case',      court:'Labour Court, Andheri',          judge:'Presiding Officer M. Joshi',notes:'Conciliation meeting. Settlement discussion expected.' },
-];
+// ── No hardcoded hearings — all data comes from localStorage
+
+// ── One-time cleanup of all seeded fake data
+(function() {
+  // Clean cases
+  const cr = localStorage.getItem('dkcorporate_admin_cases');
+  if (cr) { try { const l=JSON.parse(cr); if(l.length<=6 && l.every(c=>c.id<=6 && c.matterNo && c.matterNo.startsWith('MAT-2026'))) localStorage.removeItem('dkcorporate_admin_cases'); } catch(e){} }
+  // Clean matters
+  const mr = localStorage.getItem('dkcorporate_admin_matters');
+  if (mr) { try { const l=JSON.parse(mr); const fc=['Rahul Sharma','Priya Mehta','Amit Patel','Sneha Rao','Karan Singh']; if(l.length<=5 && l.every(m=>fc.includes(m.client))) localStorage.removeItem('dkcorporate_admin_matters'); } catch(e){} }
+  // Clean notices
+  const nr = localStorage.getItem('dkcorporate_admin_notices');
+  if (nr) { try { const l=JSON.parse(nr); if(l.length<=5 && l.every(n=>n.trackId && n.trackId.startsWith('TRACK-2026'))) localStorage.removeItem('dkcorporate_admin_notices'); } catch(e){} }
+})();
+
+function getAllHearings() {
+  return [...getCaseHearings(), ...getMatterHearings(), ...getUserMatters()];
+}
 
 // ── Pull next dates from Cases localStorage
 function getCaseHearings() {
@@ -88,8 +97,8 @@ function updateStatCards() {
   const matters = JSON.parse(localStorage.getItem('dkcorporate_admin_matters') || '[]');
   const scCases   = document.getElementById('sc-cases');
   const scMatters = document.getElementById('sc-matters');
-  if (scCases)   scCases.textContent   = cases.length   || 55;
-  if (scMatters) scMatters.textContent = matters.length || 42;
+  if (scCases)   scCases.textContent   = cases.length;
+  if (scMatters) scMatters.textContent = matters.length;
 }
 
 // ── State

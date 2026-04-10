@@ -1,28 +1,25 @@
 const MATTERS_ADMIN_KEY = 'dkcorporate_admin_matters';
 
-// ── Sample seed data (loads once if storage is empty)
-const SEED = [
-  { id: 1, matterNo: 'MAT-2026-001', name: 'Property Dispute – Mumbai',   client: 'Rahul Sharma',   email: 'rahul@example.com',  fileNo: 'FILE-2026-001', caseNo: 'CASE/2026/101', type: 'case',      status: 'running',   preparedBy: 'Adv. D. Kumar',  docs: 'sale_deed.pdf, property_map.pdf' },
-  { id: 2, matterNo: 'MAT-2026-002', name: 'Contract Review – TechCorp',  client: 'Priya Mehta',    email: 'priya@example.com',  fileNo: 'FILE-2026-002', caseNo: '',             type: 'agreement', status: 'completed', preparedBy: 'Adv. S. Joshi',  docs: 'contract_v2.docx' },
-  { id: 3, matterNo: 'MAT-2026-003', name: 'Legal Notice – Landlord',     client: 'Amit Patel',     email: 'amit@example.com',   fileNo: 'FILE-2026-003', caseNo: '',             type: 'notice',    status: 'pending',   preparedBy: 'Adv. D. Kumar',  docs: '' },
-  { id: 4, matterNo: 'MAT-2026-004', name: 'GST Compliance Advice',       client: 'Sneha Rao',      email: 'sneha@example.com',  fileNo: 'FILE-2026-004', caseNo: 'CASE/2026/104',type: 'advise',    status: 'running',   preparedBy: 'Adv. R. Verma',  docs: 'gst_returns.xlsx' },
-  { id: 5, matterNo: 'MAT-2026-005', name: 'Employment Dispute',          client: 'Karan Singh',    email: 'karan@example.com',  fileNo: 'FILE-2026-005', caseNo: 'CASE/2026/105',type: 'case',      status: 'running',   preparedBy: 'Adv. S. Joshi',  docs: 'appointment_letter.pdf' },
-];
+// ── One-time cleanup: wipe any previously seeded fake data
+(function() {
+  const raw = localStorage.getItem(MATTERS_ADMIN_KEY);
+  if (raw) {
+    try {
+      const list = JSON.parse(raw);
+      // Seed data had ids 1-5 with known fake clients
+      const fakeClients = ['Rahul Sharma','Priya Mehta','Amit Patel','Sneha Rao','Karan Singh'];
+      const allSeed = list.length <= 5 && list.every(m => fakeClients.includes(m.client));
+      if (allSeed) localStorage.removeItem(MATTERS_ADMIN_KEY);
+    } catch(e) { localStorage.removeItem(MATTERS_ADMIN_KEY); }
+  }
+})();
 
 function loadMatters() {
   const raw = localStorage.getItem(MATTERS_ADMIN_KEY);
-  if (!raw) { localStorage.setItem(MATTERS_ADMIN_KEY, JSON.stringify(SEED)); return SEED; }
-  return JSON.parse(raw);
+  return raw ? JSON.parse(raw) : [];
 }
-
-function saveMatters(list) {
-  localStorage.setItem(MATTERS_ADMIN_KEY, JSON.stringify(list));
-}
-
-function nextId(list) {
-  return list.length ? Math.max(...list.map(m => m.id)) + 1 : 1;
-}
-
+function saveMatters(list) { localStorage.setItem(MATTERS_ADMIN_KEY, JSON.stringify(list)); }
+function nextId(list) { return list.length ? Math.max(...list.map(m => m.id)) + 1 : 1; }
 function nextMatterNo(list) {
   const year = new Date().getFullYear();
   const num  = String(list.length + 1).padStart(3, '0');

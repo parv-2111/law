@@ -306,13 +306,13 @@
         </a>
         <a href="clients.html" class="stat-card card-gold">
           <div class="card-icon"><i class="fas fa-users"></i></div>
-          <div class="stat-num">63</div>
+          <div class="stat-num">0</div>
           <div class="stat-label">Total Clients</div>
           <i class="fas fa-arrow-right stat-arrow"></i>
         </a>
         <a href="payments.html" class="stat-card card-purple">
           <div class="card-icon"><i class="fas fa-credit-card"></i></div>
-          <div class="stat-num">$48k</div>
+          <div class="stat-num">&#8377;0</div>
           <div class="stat-label">Total Payments</div>
           <i class="fas fa-arrow-right stat-arrow"></i>
         </a>
@@ -395,10 +395,10 @@
         document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun');
         document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode';
       }
-      var t=localStorage.getItem('dkcorporate_theme')||'dark'; applyTheme(t);
+      var t=localStorage.getItem('dkcorporate_theme_admin')||'dark'; applyTheme(t);
       document.getElementById('themeToggleBtn').addEventListener('click',function(){
         var n=document.body.classList.contains('admin-light')?'dark':'light';
-        localStorage.setItem('dkcorporate_theme',n); applyTheme(n);
+        localStorage.setItem('dkcorporate_theme_admin',n); applyTheme(n);
       });
     })();
     (function(){

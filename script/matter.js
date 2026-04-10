@@ -212,13 +212,8 @@ function showToast() {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ── Calendar
-const events = [
-  { date: '2026-03-23', title: 'Farewell Case Hearing',  time: '10:00 AM – 2:00 PM' },
-  { date: '2026-03-27', title: 'Report Date',            time: '9:00 AM – 11:00 AM' },
-  { date: '2026-04-05', title: 'Contract Review Session',time: '11:00 AM – 1:00 PM' },
-  { date: '2026-04-15', title: 'Property Dispute Hearing',time: '2:00 PM – 4:00 PM' },
-];
+// ── Calendar — no hardcoded events, calendar shows current month only
+const events = [];
 
 let currentDate = new Date();
 

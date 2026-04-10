@@ -1,19 +1,22 @@
 const CASES_KEY = 'dkcorporate_admin_cases';
 
-// ── Seed data
-const SEED = [
-  { id:1, matterNo:'MAT-2026-001', caseNo:'CASE/2026/101', client:'Rahul Sharma',  company:'Sharma Builders Pvt Ltd', applicant:'Rahul Sharma',  opposite:'Mumbai Housing Board',   filingDate:'2025-06-15', nextDate:'2026-03-23', status:'running'   },
-  { id:2, matterNo:'MAT-2026-002', caseNo:'CASE/2026/102', client:'Priya Mehta',   company:'TechCorp Solutions',      applicant:'TechCorp Solutions', opposite:'Vendor XYZ Ltd',      filingDate:'2025-08-20', nextDate:'2026-04-10', status:'pending'   },
-  { id:3, matterNo:'MAT-2026-003', caseNo:'CASE/2026/103', client:'Amit Patel',    company:'',                        applicant:'Amit Patel',     opposite:'Landlord R. Desai',       filingDate:'2025-09-05', nextDate:'2026-03-27', status:'running'   },
-  { id:4, matterNo:'MAT-2026-004', caseNo:'CASE/2026/104', client:'Sneha Rao',     company:'Rao Enterprises',         applicant:'Sneha Rao',      opposite:'GST Department',          filingDate:'2025-11-12', nextDate:'2026-04-15', status:'running'   },
-  { id:5, matterNo:'MAT-2026-005', caseNo:'CASE/2026/105', client:'Karan Singh',   company:'Singh & Co.',             applicant:'Karan Singh',    opposite:'Former Employer ABC Ltd', filingDate:'2026-01-08', nextDate:'2026-04-22', status:'running'   },
-  { id:6, matterNo:'MAT-2026-006', caseNo:'CASE/2025/088', client:'Neha Gupta',    company:'Gupta Textiles',          applicant:'Gupta Textiles', opposite:'State Tax Authority',     filingDate:'2025-03-18', nextDate:'',           status:'completed' },
-];
+// ── One-time cleanup: wipe any previously seeded fake data
+(function() {
+  const raw = localStorage.getItem(CASES_KEY);
+  if (raw) {
+    try {
+      const list = JSON.parse(raw);
+      // Seed data had ids 1-6 with matterNo starting MAT-2026
+      // If ALL entries look like seed (id <= 6 and matterNo starts with MAT-2026), wipe them
+      const allSeed = list.every(c => c.id <= 6 && c.matterNo && c.matterNo.startsWith('MAT-2026'));
+      if (allSeed) localStorage.removeItem(CASES_KEY);
+    } catch(e) { localStorage.removeItem(CASES_KEY); }
+  }
+})();
 
 function loadCases() {
   const raw = localStorage.getItem(CASES_KEY);
-  if (!raw) { localStorage.setItem(CASES_KEY, JSON.stringify(SEED)); return SEED; }
-  return JSON.parse(raw);
+  return raw ? JSON.parse(raw) : [];
 }
 function saveCases(list) { localStorage.setItem(CASES_KEY, JSON.stringify(list)); }
 function nextId(list)    { return list.length ? Math.max(...list.map(c => c.id)) + 1 : 1; }

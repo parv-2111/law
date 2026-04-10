@@ -35,7 +35,7 @@
       <div class="notif-wrap" id="notifWrap">
         <button class="notif-btn" id="notifBtn">
           <i class="fas fa-bell"></i>
-          <span class="notif-badge" id="notifBadge">2</span>
+          <span class="notif-badge hidden" id="notifBadge">0</span>
         </button>
         <div class="notif-dropdown" id="notifDropdown">
           <div class="notif-header">
@@ -43,27 +43,6 @@
             <button id="markAllRead">Mark all read</button>
           </div>
           <div class="notif-list" id="notifList">
-            <div class="notif-item unread" data-id="1">
-              <div class="notif-dot"></div>
-              <div class="notif-body">
-                <p>Your matter <strong>"Property Dispute"</strong> has received a reply from the admin.</p>
-                <span>2 hours ago</span>
-              </div>
-            </div>
-            <div class="notif-item unread" data-id="2">
-              <div class="notif-dot"></div>
-              <div class="notif-body">
-                <p>New hearing date added: <strong>23 Mar 2026</strong> at 10:00 AM.</p>
-                <span>Yesterday</span>
-              </div>
-            </div>
-            <div class="notif-item read" data-id="3">
-              <div class="notif-dot"></div>
-              <div class="notif-body">
-                <p>Your matter <strong>"Contract Review"</strong> has been accepted.</p>
-                <span>3 days ago</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -235,11 +214,11 @@
       document.getElementById('themeIcon').className = 'fas '+icon;
       document.getElementById('themeIconMobile').className = 'fas '+icon;
     }
-    const savedTheme = localStorage.getItem('dkcorporate_theme') || 'dark';
+    const savedTheme = localStorage.getItem('dkcorporate_theme_client') || 'dark';
     applyTheme(savedTheme);
     function toggleTheme(){
       const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-      localStorage.setItem('dkcorporate_theme', next);
+      localStorage.setItem('dkcorporate_theme_client', next);
       applyTheme(next);
     }
     document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);

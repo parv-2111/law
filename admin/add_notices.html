@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Notice | DK CORPORATE LAW FIRM Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .ep-topbar{position:sticky;top:0;z-index:50;background:var(--navy2);border-bottom:1px solid rgba(201,162,39,0.15);padding:14px 28px;display:flex;align-items:center;gap:16px;}
+    .ep-back{width:38px;height:38px;border-radius:10px;background:var(--navy3);border:1px solid rgba(255,255,255,0.08);color:var(--muted);font-size:0.95rem;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background 0.2s,color 0.2s;flex-shrink:0;}
+    .ep-back:hover{background:rgba(201,162,39,0.12);color:var(--gold);}
+    .ep-title-wrap{flex:1;}
+    .ep-title-wrap h1{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--white);line-height:1.2;}
+    .ep-title-wrap p{font-size:0.78rem;color:var(--muted);margin-top:2px;}
+    .ep-actions{display:flex;align-items:center;gap:10px;}
+    .ep-btn-cancel{padding:9px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:var(--muted);font-size:0.85rem;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;transition:background 0.2s,color 0.2s;}
+    .ep-btn-cancel:hover{background:rgba(255,255,255,0.1);color:var(--white);}
+    .ep-btn-save{display:inline-flex;align-items:center;gap:8px;padding:9px 22px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:9px;color:#1a1200;font-size:0.85rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(201,162,39,0.3);}
+    .ep-btn-save:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(201,162,39,0.45);}
+    .ep-hero{background:linear-gradient(135deg,#0f1e35 0%,#1a2e4a 60%,#0f1e35 100%);border-bottom:1px solid rgba(201,162,39,0.15);padding:28px;display:flex;align-items:center;gap:20px;}
+    .ep-hero-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,rgba(201,162,39,0.2),rgba(232,200,74,0.1));border:1px solid rgba(201,162,39,0.3);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--gold);flex-shrink:0;}
+    .ep-hero-info h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin-bottom:4px;}
+    .ep-hero-info p{font-size:0.82rem;color:var(--muted);}
+    .ep-body{padding:28px;display:flex;flex-direction:column;gap:24px;}
+    .ep-section{background:var(--navy2);border:1px solid rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;}
+    .ep-section-head{display:flex;align-items:center;gap:12px;padding:16px 22px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.06);}
+    .ep-section-head i{color:var(--gold);font-size:1rem;width:20px;text-align:center;}
+    .ep-section-head h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);}
+    .ep-section-head span{margin-left:auto;font-size:0.72rem;color:var(--muted);}
+    .ep-fields{padding:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+    .ep-fields.cols2{grid-template-columns:repeat(2,1fr);}
+    .ep-fields.cols1{grid-template-columns:1fr;}
+    .ep-full{grid-column:1/-1;}
+    .ef{display:flex;flex-direction:column;gap:7px;}
+    .ef label{font-size:0.75rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px;}
+    .ef label i{color:var(--gold);font-size:0.7rem;}
+    .ef label .req{color:var(--red);}
+    .ef-input-wrap{position:relative;}
+    .ef-input-wrap>.ef-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:0.82rem;pointer-events:none;}
+    .ef input,.ef select{width:100%;padding:12px 14px 12px 38px;background:var(--navy3);border:1.5px solid rgba(255,255,255,0.07);border-radius:10px;color:var(--white);font-size:0.88rem;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.25s,box-shadow 0.25s,background 0.25s;appearance:none;}
+    .ef input:focus,.ef select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,0.12);background:rgba(201,162,39,0.04);}
+    .ef input::placeholder{color:var(--muted);}
+    .ef select option{background:var(--navy3);}
+    .ef-err{font-size:0.72rem;color:var(--red);min-height:14px;padding-left:2px;}
+    .ef select.status-sent{border-color:rgba(74,144,217,0.4);color:#4a90d9;}
+    .ef select.status-received{border-color:rgba(62,207,142,0.4);color:var(--green);}
+    .ef select.status-returned{border-color:rgba(224,85,85,0.4);color:var(--red);}
+    .ef select.status-pending{border-color:rgba(201,162,39,0.4);color:var(--gold);}
+    .dt-bar{display:flex;align-items:center;gap:0;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;}
+    .dt-step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:70px;}
+    .dt-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;border:2px solid rgba(255,255,255,0.1);background:var(--navy3);color:var(--muted);transition:all 0.3s;}
+    .dt-dot.active{background:rgba(201,162,39,0.15);border-color:var(--gold);color:var(--gold);}
+    .dt-dot.done{background:rgba(62,207,142,0.15);border-color:var(--green);color:var(--green);}
+    .dt-dot.fail{background:rgba(224,85,85,0.12);border-color:var(--red);color:var(--red);}
+    .dt-label{font-size:0.68rem;color:var(--muted);text-align:center;white-space:nowrap;}
+    .dt-line{flex:1;height:2px;background:rgba(255,255,255,0.07);min-width:20px;}
+    .toast{position:fixed;bottom:28px;right:28px;background:var(--navy3);border:1px solid rgba(62,207,142,0.3);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--white);box-shadow:0 8px 24px rgba(0,0,0,0.4);transform:translateY(80px);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;z-index:999;}
+    .toast.show{transform:translateY(0);opacity:1;}
+    .toast i{color:var(--green);font-size:1.1rem;}
+    body.admin-light .ep-section{border-color:rgba(0,0,0,0.08);}
+    body.admin-light .ep-section-head{border-bottom-color:rgba(0,0,0,0.07);}
+    body.admin-light .dt-bar{border-bottom-color:rgba(0,0,0,0.07);}
+    body.admin-light .ep-hero{background:linear-gradient(135deg,#e0e8f5 0%,#f0f4ff 60%,#e0e8f5 100%);border-bottom-color:rgba(201,162,39,0.2);}
+    body.admin-light .ef input,body.admin-light .ef select{border-color:rgba(0,0,0,0.1);color:var(--white);}
+    @media(max-width:900px){.ep-fields{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:600px){.ep-fields,.ep-fields.cols2{grid-template-columns:1fr;}.ep-body{padding:16px;gap:16px;}.ep-topbar{padding:12px 16px;}.ep-hero{padding:20px 16px;}}
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <i class="fas fa-balance-scale"></i>
+      <span>DK CORPORATE LAW FIRM</span>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar"><i class="fas fa-bars"></i></button>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="index.html"><i class="fas fa-gauge-high"></i><span>Dashboard</span></a></li>
+      <li><a href="cases.html"><i class="fas fa-folder-open"></i><span>Cases</span></a></li>
+      <li><a href="notice.html" class="active"><i class="fas fa-envelope"></i><span>Notice</span></a></li>
+      <li><a href="clients.html"><i class="fas fa-users"></i><span>Clients</span></a></li>
+      <li><a href="payments.html"><i class="fas fa-credit-card"></i><span>Payments</span></a></li>
+      <li><a href="matters.html"><i class="fas fa-scale-balanced"></i><span>Matters</span></a></li>
+      <li><a href="admin_chat.html"><i class="fas fa-comments"></i><span>Chat</span></a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="theme-toggle-btn" id="themeToggleBtn"><i class="fas fa-sun" id="themeIcon"></i><span id="themeLabel">Light Mode</span></button>
+      <a href="login.html"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
+    </div>
+  </aside>
+
+  <main class="main-content" style="padding:0;">
+    <form id="addForm" novalidate>
+
+      <div class="ep-topbar">
+        <a href="notice.html" class="ep-back"><i class="fas fa-arrow-left"></i></a>
+        <div class="ep-title-wrap">
+          <h1>Add New Notice</h1>
+          <p>Fill in all required fields to create a new notice record</p>
+        </div>
+        <div class="ep-actions">
+          <a href="notice.html" class="ep-btn-cancel">Discard</a>
+          <button type="submit" class="ep-btn-save"><i class="fas fa-plus"></i> Add Notice</button>
+        </div>
+      </div>
+
+      <div class="ep-hero">
+        <div class="ep-hero-icon"><i class="fas fa-envelope"></i></div>
+        <div class="ep-hero-info">
+          <h2>New Notice</h2>
+          <p>Enter the notice details below. Fields marked <span style="color:var(--red);">*</span> are required.</p>
+        </div>
+      </div>
+
+      <div class="ep-body">
+
+        <div class="ep-section">
+          <div class="ep-section-head">
+            <i class="fas fa-user"></i>
+            <h3>Recipient Details</h3>
+            <span>Client name, address &amp; tracking</span>
+          </div>
+          <div class="ep-fields">
+            <div class="ef">
+              <label><i class="fas fa-user"></i> Client Name <span class="req">*</span></label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-user"></i><input type="text" id="f-client" placeholder="Full client name"/></div>
+              <span class="ef-err" id="e-client"></span>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-barcode"></i> Track ID <span class="req">*</span></label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-barcode"></i><input type="text" id="f-trackid" placeholder="e.g. TRACK-2026-001"/></div>
+              <span class="ef-err" id="e-trackid"></span>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-circle-dot"></i> Status <span class="req">*</span></label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-circle-dot"></i>
+                <select id="f-status">
+                  <option value="" disabled selected>Select status</option>
+                  <option value="sent">Sent</option>
+                  <option value="received">Received</option>
+                  <option value="returned">Returned</option>
+                  <option value="pending">Pending</option>
+                </select>
+              </div>
+              <span class="ef-err" id="e-status"></span>
+            </div>
+            <div class="ef ep-full">
+              <label><i class="fas fa-location-dot"></i> Postal Address <span class="req">*</span></label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-location-dot"></i><input type="text" id="f-address" placeholder="Full postal address including PIN code"/></div>
+              <span class="ef-err" id="e-address"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ep-section">
+          <div class="ep-section-head">
+            <i class="fas fa-truck"></i>
+            <h3>Delivery Timeline</h3>
+            <span>Track notice delivery progress</span>
+          </div>
+          <div class="dt-bar" id="dtBar">
+            <div class="dt-step"><div class="dt-dot active" id="dt-sent"><i class="fas fa-paper-plane"></i></div><div class="dt-label">Sent</div></div>
+            <div class="dt-line"></div>
+            <div class="dt-step"><div class="dt-dot" id="dt-received"><i class="fas fa-inbox"></i></div><div class="dt-label">Received</div></div>
+            <div class="dt-line"></div>
+            <div class="dt-step"><div class="dt-dot" id="dt-returned"><i class="fas fa-rotate-left"></i></div><div class="dt-label">Returned</div></div>
+          </div>
+          <div class="ep-fields">
+            <div class="ef">
+              <label><i class="fas fa-calendar-plus"></i> Send Date <span class="req">*</span></label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-calendar-plus"></i><input type="date" id="f-senddate" style="color-scheme:dark;"/></div>
+              <span class="ef-err" id="e-senddate"></span>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-calendar-check"></i> Received Date</label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-calendar-check"></i><input type="date" id="f-receiveddate" style="color-scheme:dark;"/></div>
+            </div>
+            <div class="ef">
+              <label><i class="fas fa-calendar-xmark"></i> Returned Date</label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-calendar-xmark"></i><input type="date" id="f-returneddate" style="color-scheme:dark;"/></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ep-section">
+          <div class="ep-section-head">
+            <i class="fas fa-circle-exclamation"></i>
+            <h3>Return Information</h3>
+            <span>Only fill if notice was returned</span>
+          </div>
+          <div class="ep-fields cols1">
+            <div class="ef">
+              <label><i class="fas fa-comment-dots"></i> Reason for Return</label>
+              <div class="ef-input-wrap"><i class="ef-icon fas fa-comment-dots"></i><input type="text" id="f-returnreason" placeholder="e.g. Address not found, Refused by recipient…"/></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </main>
+
+  <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span>Notice added successfully!</span></div>
+
+  <script>
+    const NOTICE_KEY = 'dkcorporate_admin_notices';
+    function load() { return JSON.parse(localStorage.getItem(NOTICE_KEY) || '[]'); }
+    function save(list) { localStorage.setItem(NOTICE_KEY, JSON.stringify(list)); }
+    function nextId(list) { return list.length ? Math.max(...list.map(n => n.id)) + 1 : 1; }
+
+    const sel = document.getElementById('f-status');
+    function updateTimeline(v) {
+      document.getElementById('dt-sent').className     = 'dt-dot ' + (v==='sent'||v==='received'||v==='returned' ? 'done' : 'active');
+      document.getElementById('dt-received').className = 'dt-dot ' + (v==='received' ? 'done' : v==='returned' ? 'fail' : '');
+      document.getElementById('dt-returned').className = 'dt-dot ' + (v==='returned' ? 'fail' : '');
+    }
+    sel.addEventListener('change', () => { sel.className = sel.value ? 'status-' + sel.value : ''; updateTimeline(sel.value); });
+
+    document.getElementById('addForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let valid = true;
+      const req = (fid, eid) => {
+        const v = document.getElementById(fid).value.trim();
+        if (!v) { document.getElementById(eid).textContent = 'This field is required.'; valid = false; return ''; }
+        document.getElementById(eid).textContent = ''; return v;
+      };
+      const client   = req('f-client',   'e-client');
+      const trackId  = req('f-trackid',  'e-trackid');
+      const address  = req('f-address',  'e-address');
+      const sendDate = req('f-senddate', 'e-senddate');
+      const status   = req('f-status',   'e-status');
+      if (!valid) return;
+
+      const list = load();
+      list.push({
+        id: nextId(list), client, trackId, address, sendDate, status,
+        receivedDate: document.getElementById('f-receiveddate').value,
+        returnedDate: document.getElementById('f-returneddate').value,
+        returnReason: document.getElementById('f-returnreason').value.trim(),
+      });
+      save(list);
+
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => { t.classList.remove('show'); location.href = 'notice.html'; }, 1500);
+    });
+
+    (function(){
+      function applyTheme(m){ document.body.classList.toggle('admin-light',m==='light'); document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun'); document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode'; }
+      var t=localStorage.getItem('dkcorporate_theme_admin')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){ var n=document.body.classList.contains('admin-light')?'dark':'light'; localStorage.setItem('dkcorporate_theme_admin',n); applyTheme(n); });
+    })();
+    (function(){
+      var s=document.querySelector('.sidebar'),m=document.querySelector('.main-content');
+      var exp=localStorage.getItem('sidebarExpanded')==='1'; if(exp)s.classList.add('expanded');
+      if(m)m.style.marginLeft=exp?'var(--sidebar-w)':'64px';
+      document.getElementById('sidebarToggle').addEventListener('click',function(){ var open=s.classList.toggle('expanded'); if(m)m.style.marginLeft=open?'var(--sidebar-w)':'64px'; localStorage.setItem('sidebarExpanded',open?'1':'0'); });
+    })();
+  </script>
+</body>
+</html>

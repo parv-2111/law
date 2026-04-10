@@ -1,17 +1,21 @@
 const NOTICE_KEY = 'dkcorporate_admin_notices';
 
-const SEED = [
-  { id:1, client:'Rahul Sharma',  address:'12, Shivaji Nagar, Mumbai – 400001',          trackId:'TRACK-2026-001', sendDate:'2026-01-10', receivedDate:'2026-01-14', returnedDate:'',           returnReason:'',                        status:'received' },
-  { id:2, client:'Priya Mehta',   address:'45, Connaught Place, New Delhi – 110001',      trackId:'TRACK-2026-002', sendDate:'2026-01-18', receivedDate:'',           returnedDate:'2026-01-22', returnReason:'Address not found',       status:'returned' },
-  { id:3, client:'Amit Patel',    address:'7, MG Road, Pune – 411001',                   trackId:'TRACK-2026-003', sendDate:'2026-02-05', receivedDate:'',           returnedDate:'',           returnReason:'',                        status:'sent'     },
-  { id:4, client:'Sneha Rao',     address:'22, Brigade Road, Bengaluru – 560001',         trackId:'TRACK-2026-004', sendDate:'2026-02-20', receivedDate:'',           returnedDate:'2026-02-25', returnReason:'Refused by recipient',    status:'returned' },
-  { id:5, client:'Karan Singh',   address:'88, Park Street, Kolkata – 700016',            trackId:'TRACK-2026-005', sendDate:'2026-03-01', receivedDate:'2026-03-06', returnedDate:'',           returnReason:'',                        status:'received' },
-];
+// ── One-time cleanup: wipe any previously seeded fake data
+(function() {
+  const raw = localStorage.getItem(NOTICE_KEY);
+  if (raw) {
+    try {
+      const list = JSON.parse(raw);
+      // Seed data had ids 1-5 with known fake track IDs
+      const allSeed = list.length <= 5 && list.every(n => n.trackId && n.trackId.startsWith('TRACK-2026'));
+      if (allSeed) localStorage.removeItem(NOTICE_KEY);
+    } catch(e) { localStorage.removeItem(NOTICE_KEY); }
+  }
+})();
 
 function loadNotices() {
   const raw = localStorage.getItem(NOTICE_KEY);
-  if (!raw) { localStorage.setItem(NOTICE_KEY, JSON.stringify(SEED)); return SEED; }
-  return JSON.parse(raw);
+  return raw ? JSON.parse(raw) : [];
 }
 function saveNotices(list) { localStorage.setItem(NOTICE_KEY, JSON.stringify(list)); }
 function nextId(list) { return list.length ? Math.max(...list.map(n => n.id)) + 1 : 1; }
