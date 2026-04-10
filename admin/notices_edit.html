@@ -282,7 +282,7 @@
   <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span>Notice updated successfully!</span></div>
 
   <script>
-    const NOTICE_KEY = 'lexfirm_admin_notices';
+    const NOTICE_KEY = 'dkcorporate_admin_notices';
     const id = parseInt(new URLSearchParams(location.search).get('id'));
     function load() { return JSON.parse(localStorage.getItem(NOTICE_KEY) || '[]'); }
     function save(list) { localStorage.setItem(NOTICE_KEY, JSON.stringify(list)); }
@@ -350,8 +350,8 @@
 
     (function(){
       function applyTheme(m){ document.body.classList.toggle('admin-light',m==='light'); document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun'); document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode'; }
-      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
-      document.getElementById('themeToggleBtn').addEventListener('click',function(){ var n=document.body.classList.contains('admin-light')?'dark':'light'; localStorage.setItem('lexfirm_theme',n); applyTheme(n); });
+      var t=localStorage.getItem('dkcorporate_theme')||'dark'; applyTheme(t);
+      document.getElementById('themeToggleBtn').addEventListener('click',function(){ var n=document.body.classList.contains('admin-light')?'dark':'light'; localStorage.setItem('dkcorporate_theme',n); applyTheme(n); });
     })();
     (function(){
       var s=document.querySelector('.sidebar'),mc=document.querySelector('.main-content');

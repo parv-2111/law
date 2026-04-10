@@ -9,7 +9,7 @@ document.getElementById('sideAvatar').textContent = email.charAt(0).toUpperCase(
 document.getElementById('sideEmail').textContent  = email;
 
 // ── Per-matter storage key: unique per user + matter
-const STORAGE_KEY = `lexfirm_chat_${email}_${matterId}`;
+const STORAGE_KEY = `dkcorporate_chat_${email}_${matterId}`;
 
 // ── Update chat header & sidebar with matter name
 document.getElementById('chatMatterName').textContent    = matterName;

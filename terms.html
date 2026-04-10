@@ -403,7 +403,7 @@
       if (!isOpen) item.classList.add('open');
     }
 
-    const s = sessionStorage.getItem('lexfirm_user');
+    const s = sessionStorage.getItem('dkcorporate_user');
     if (s) { const u = JSON.parse(s); document.getElementById('userEmail').textContent = u.email; document.getElementById('userAvatar').textContent = u.email[0].toUpperCase(); }
 
     document.getElementById('mobileMenuBtn').addEventListener('click', function () {
@@ -417,10 +417,10 @@
       document.getElementById('themeIcon').className = 'fas ' + icon;
       document.getElementById('themeIconMobile').className = 'fas ' + icon;
     }
-    applyTheme(localStorage.getItem('lexfirm_theme') || 'dark');
+    applyTheme(localStorage.getItem('dkcorporate_theme') || 'dark');
     function toggleTheme() {
       const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-      localStorage.setItem('lexfirm_theme', next);
+      localStorage.setItem('dkcorporate_theme', next);
       applyTheme(next);
     }
     document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);

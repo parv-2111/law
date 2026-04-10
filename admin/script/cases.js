@@ -1,4 +1,4 @@
-const CASES_KEY = 'lexfirm_admin_cases';
+const CASES_KEY = 'dkcorporate_admin_cases';
 
 // ── Seed data
 const SEED = [

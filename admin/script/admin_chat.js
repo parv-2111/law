@@ -11,22 +11,22 @@ function getDateLabel(ts) {
 }
 
 // ── Load all per-matter chat keys from localStorage
-// Key format: lexfirm_chat_{email}_{matterId}
+// Key format: dkcorporate_chat_{email}_{matterId}
 function getAllChatEntries() {
   const entries = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (!key.startsWith('lexfirm_chat_')) continue;
+    if (!key.startsWith('dkcorporate_chat_')) continue;
 
     // Strip prefix
-    const rest = key.replace('lexfirm_chat_', '');
+    const rest = key.replace('dkcorporate_chat_', '');
 
     // Split on last underscore to separate email from matterId
     // email can contain underscores so we split from the right
     // matterId is numeric (Date.now()) or 'general'
     const lastUnderscore = rest.lastIndexOf('_');
     if (lastUnderscore === -1) {
-      // Old format: lexfirm_chat_{email} — treat as general
+      // Old format: dkcorporate_chat_{email} — treat as general
       entries.push({ key, email: rest, matterId: 'general', matterName: 'General Chat' });
     } else {
       const email    = rest.slice(0, lastUnderscore);
@@ -42,7 +42,7 @@ function getAllChatEntries() {
 function getMatterName(email, matterId) {
   if (matterId === 'general') return 'General Chat';
   try {
-    const matters = JSON.parse(localStorage.getItem(`lexfirm_matters_${email}`) || '[]');
+    const matters = JSON.parse(localStorage.getItem(`dkcorporate_matters_${email}`) || '[]');
     const m = matters.find(x => String(x.id) === String(matterId));
     return m ? m.name : `Matter #${String(matterId).slice(-6)}`;
   } catch(e) { return `Matter #${String(matterId).slice(-6)}`; }

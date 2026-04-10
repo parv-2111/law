@@ -311,10 +311,10 @@
       document.getElementById('themeIcon').className = 'fas ' + icon;
       document.getElementById('themeIconMobile').className = 'fas ' + icon;
     }
-    applyTheme(localStorage.getItem('lexfirm_theme') || 'dark');
+    applyTheme(localStorage.getItem('dkcorporate_theme') || 'dark');
     function toggleTheme() {
       const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-      localStorage.setItem('lexfirm_theme', next);
+      localStorage.setItem('dkcorporate_theme', next);
       applyTheme(next);
     }
     document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
@@ -328,7 +328,7 @@
 
     /* ── Load matter ── */
     const matterId = parseInt(new URLSearchParams(location.search).get('id'));
-    const MATTERS_KEY = `lexfirm_matters_${email}`;
+    const MATTERS_KEY = `dkcorporate_matters_${email}`;
     const matters = JSON.parse(localStorage.getItem(MATTERS_KEY) || '[]');
     const m = matters.find(x => x.id === matterId);
 

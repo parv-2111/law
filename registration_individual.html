@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Individual Registration | DK CORPORATE LAW FIRM</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ── Registration type toggle ── */
+    .reg-type-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+    .reg-type-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 14px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      color: rgba(255,255,255,0.45);
+      border: none;
+      background: none;
+    }
+    .reg-type-btn.active {
+      background: linear-gradient(135deg, #c9a227, #e8c84a);
+      color: #1a1200;
+      box-shadow: 0 2px 10px rgba(201,162,39,0.3);
+    }
+    .reg-type-btn:not(.active):hover { color: rgba(255,255,255,0.75); }
+  </style>
+</head>
+<body>
+
+  <div class="bg-overlay"></div>
+
+  <div class="container">
+    <div class="form-card">
+
+      <div class="form-header">
+        <div class="logo">
+          <i class="fas fa-balance-scale"></i>
+        </div>
+        <h1>DK CORPORATE LAW FIRM</h1>
+        <p>Individual Registration</p>
+      </div>
+
+      <!-- Registration type toggle -->
+      <div class="reg-type-bar">
+        <a href="registration_company.html" class="reg-type-btn">
+          <i class="fas fa-building"></i> Company
+        </a>
+        <button class="reg-type-btn active">
+          <i class="fas fa-user"></i> Individual
+        </button>
+      </div>
+
+      <form id="registerForm" novalidate>
+
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="fullname" placeholder="Full Name" required />
+          <span class="error-msg" id="err-fullname"></span>
+        </div>
+
+        <div class="row-two">
+          <div class="input-group">
+            <i class="fas fa-phone"></i>
+            <input type="tel" id="mobile" placeholder="Mobile No." required />
+            <span class="error-msg" id="err-mobile"></span>
+          </div>
+
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email Address" required />
+            <span class="error-msg" id="err-email"></span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-map-marker-alt"></i>
+          <input type="text" id="city" placeholder="City" required />
+          <span class="error-msg" id="err-city"></span>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Password" required />
+          <i class="fas fa-eye toggle-pw" id="togglePw"></i>
+          <span class="error-msg" id="err-password"></span>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>Create Individual Account</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+
+      </form>
+
+      <div class="login-line">
+        Already a client? &nbsp;<a href="login.html">Log in to continue</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ── Card entrance animation
+    document.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.querySelector('.form-card').classList.add('visible');
+      });
+      document.querySelectorAll('.input-group, .row-two, .btn-submit').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = `opacity 0.5s ease ${0.3 + i * 0.08}s, transform 0.5s ease ${0.3 + i * 0.08}s`;
+        setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 50);
+      });
+    });
+
+    // ── Password toggle
+    document.getElementById('togglePw').addEventListener('click', function () {
+      const pw = document.getElementById('password');
+      const isText = pw.type === 'text';
+      pw.type = isText ? 'password' : 'text';
+      this.classList.toggle('fa-eye', isText);
+      this.classList.toggle('fa-eye-slash', !isText);
+    });
+
+    // ── Validation rules
+    const rules = {
+      fullname: { el:'fullname', err:'err-fullname', test: v => v.trim().length >= 3,                          msg:'Enter at least 3 characters.' },
+      mobile:   { el:'mobile',   err:'err-mobile',   test: v => /^[0-9]{10}$/.test(v.trim()),                  msg:'Mobile number must be exactly 10 digits.' },
+      email:    { el:'email',    err:'err-email',     test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),  msg:'Enter a valid email address.' },
+      city:     { el:'city',     err:'err-city',      test: v => v.trim().length >= 2,                          msg:'Enter your city.' },
+      password: { el:'password', err:'err-password',  test: v => v.length >= 8,                                 msg:'Password must be at least 8 characters.' },
+    };
+
+    function validate(key) {
+      const r = rules[key];
+      const el = document.getElementById(r.el);
+      const errEl = document.getElementById(r.err);
+      const ok = r.test(el.value);
+      el.classList.toggle('valid', ok);
+      el.classList.toggle('invalid', !ok);
+      errEl.textContent = ok ? '' : r.msg;
+      return ok;
+    }
+
+    Object.keys(rules).forEach(key => {
+      document.getElementById(rules[key].el).addEventListener('blur',  () => validate(key));
+      document.getElementById(rules[key].el).addEventListener('input', () => {
+        if (document.getElementById(rules[key].el).classList.contains('invalid')) validate(key);
+      });
+    });
+
+    // ── Form submit
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const allValid = Object.keys(rules).map(validate).every(Boolean);
+      if (!allValid) return;
+
+      const btn = document.querySelector('.btn-submit');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing…';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-check"></i> Account Created!';
+        btn.style.background = 'linear-gradient(135deg,#4caf82,#2e7d5e)';
+        btn.style.color = '#fff';
+        setTimeout(() => { window.location.href = 'login.html'; }, 800);
+      }, 1800);
+    });
+  </script>
+</body>
+</html>

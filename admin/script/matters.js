@@ -1,4 +1,4 @@
-const MATTERS_ADMIN_KEY = 'lexfirm_admin_matters';
+const MATTERS_ADMIN_KEY = 'dkcorporate_admin_matters';
 
 // ── Sample seed data (loads once if storage is empty)
 const SEED = [

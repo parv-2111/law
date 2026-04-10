@@ -1,4 +1,4 @@
-const NOTICE_KEY = 'lexfirm_admin_notices';
+const NOTICE_KEY = 'dkcorporate_admin_notices';
 
 const SEED = [
   { id:1, client:'Rahul Sharma',  address:'12, Shivaji Nagar, Mumbai – 400001',          trackId:'TRACK-2026-001', sendDate:'2026-01-10', receivedDate:'2026-01-14', returnedDate:'',           returnReason:'',                        status:'received' },

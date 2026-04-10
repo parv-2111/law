@@ -108,16 +108,16 @@
           <div class="mstat-num" id="statTotal">0</div>
           <div class="mstat-label">Total Matters</div>
         </a>
-        <div class="mstat-card card-purple">
+        <a href="client_all_matters.html?filter=running" class="mstat-card card-purple" style="text-decoration:none;">
           <div class="mstat-icon"><i class="fas fa-spinner"></i></div>
           <div class="mstat-num" id="statRunning">0</div>
           <div class="mstat-label">Running Matters</div>
-        </div>
-        <div class="mstat-card card-green">
+        </a>
+        <a href="client_all_matters.html?filter=completed" class="mstat-card card-green" style="text-decoration:none;">
           <div class="mstat-icon"><i class="fas fa-circle-check"></i></div>
           <div class="mstat-num" id="statCompleted">0</div>
           <div class="mstat-label">Completed Matters</div>
-        </div>
+        </a>
       </div>
 
       <!-- Matter Form -->
@@ -235,11 +235,11 @@
       document.getElementById('themeIcon').className = 'fas '+icon;
       document.getElementById('themeIconMobile').className = 'fas '+icon;
     }
-    const savedTheme = localStorage.getItem('lexfirm_theme') || 'dark';
+    const savedTheme = localStorage.getItem('dkcorporate_theme') || 'dark';
     applyTheme(savedTheme);
     function toggleTheme(){
       const next = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-      localStorage.setItem('lexfirm_theme', next);
+      localStorage.setItem('dkcorporate_theme', next);
       applyTheme(next);
     }
     document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);

@@ -4,7 +4,7 @@ document.getElementById('userEmail').textContent = email;
 document.getElementById('userAvatar').textContent = email.charAt(0).toUpperCase();
 
 // ── Matter stats storage key per user
-const MATTERS_KEY = `lexfirm_matters_${email}`;
+const MATTERS_KEY = `dkcorporate_matters_${email}`;
 
 function loadMatters() {
   const stored = localStorage.getItem(MATTERS_KEY);
@@ -33,7 +33,7 @@ const notifBtn      = document.getElementById('notifBtn');
 const notifDropdown = document.getElementById('notifDropdown');
 const notifBadge    = document.getElementById('notifBadge');
 const notifList     = document.getElementById('notifList');
-const NOTIF_KEY     = `lexfirm_notif_read_${email}`;
+const NOTIF_KEY     = `dkcorporate_notif_read_${email}`;
 
 // Load saved read IDs from localStorage and apply to DOM
 function loadNotifState() {

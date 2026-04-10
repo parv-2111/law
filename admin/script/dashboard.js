@@ -11,7 +11,7 @@ const HEARINGS = [
 // ── Pull next dates from Cases localStorage
 function getCaseHearings() {
   try {
-    const cases = JSON.parse(localStorage.getItem('lexfirm_admin_cases') || '[]');
+    const cases = JSON.parse(localStorage.getItem('dkcorporate_admin_cases') || '[]');
     return cases.filter(c => c.nextDate).map((c, i) => ({
       id: 2000 + i,
       date: c.nextDate,
@@ -30,7 +30,7 @@ function getCaseHearings() {
 // ── Pull from admin Matters localStorage
 function getMatterHearings() {
   try {
-    const matters = JSON.parse(localStorage.getItem('lexfirm_admin_matters') || '[]');
+    const matters = JSON.parse(localStorage.getItem('dkcorporate_admin_matters') || '[]');
     return matters.filter(m => m.status === 'running' || m.status === 'pending').map((m, i) => ({
       id: 3000 + i,
       date: getOffsetDate(7 + i * 3),
@@ -51,10 +51,10 @@ function getUserMatters() {
   const results = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (!key.startsWith('lexfirm_matters_')) continue;
+    if (!key.startsWith('dkcorporate_matters_')) continue;
     try {
       const matters = JSON.parse(localStorage.getItem(key)) || [];
-      const email = key.replace('lexfirm_matters_', '');
+      const email = key.replace('dkcorporate_matters_', '');
       matters.forEach((m, idx) => results.push({
         id: 4000 + results.length,
         date: getOffsetDate(7, m.date),
@@ -84,8 +84,8 @@ function getAllHearings() {
 
 // ── Update stat cards from localStorage
 function updateStatCards() {
-  const cases   = JSON.parse(localStorage.getItem('lexfirm_admin_cases')   || '[]');
-  const matters = JSON.parse(localStorage.getItem('lexfirm_admin_matters') || '[]');
+  const cases   = JSON.parse(localStorage.getItem('dkcorporate_admin_cases')   || '[]');
+  const matters = JSON.parse(localStorage.getItem('dkcorporate_admin_matters') || '[]');
   const scCases   = document.getElementById('sc-cases');
   const scMatters = document.getElementById('sc-matters');
   if (scCases)   scCases.textContent   = cases.length   || 55;

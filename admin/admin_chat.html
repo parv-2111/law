@@ -249,10 +249,10 @@
         document.getElementById('themeIcon').className='fas '+(m==='light'?'fa-moon':'fa-sun');
         document.getElementById('themeLabel').textContent=m==='light'?'Dark Mode':'Light Mode';
       }
-      var t=localStorage.getItem('lexfirm_theme')||'dark'; applyTheme(t);
+      var t=localStorage.getItem('dkcorporate_theme')||'dark'; applyTheme(t);
       document.getElementById('themeToggleBtn').addEventListener('click',function(){
         var n=document.body.classList.contains('admin-light')?'dark':'light';
-        localStorage.setItem('lexfirm_theme',n); applyTheme(n);
+        localStorage.setItem('dkcorporate_theme',n); applyTheme(n);
       });
     })();
 
